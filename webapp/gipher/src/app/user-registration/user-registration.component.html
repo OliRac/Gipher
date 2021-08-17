@@ -1,0 +1,18 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <label>Username</label>
+    <input formControlName="username" type="text"  placeholder="Enter Blog Title" ng-required>
+
+    <label>Password</label>
+    <input formControlName="password" type="password"  placeholder="Enter Author Name">
+
+    <label>Image</label>
+    <input type="file" formControlName="image" accept="image/png, image/jpeg"/>
+
+    <button mat-raised-button type="submit">Submit</button>
+</form>
+
+<!-- write logic to display message -->
+<div class="bg-warning text-dark" *ngIf="message">
+  {{message}}
+</div>
