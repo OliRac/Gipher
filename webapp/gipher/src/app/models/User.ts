@@ -1,6 +1,6 @@
 export class User {
     username?: string;
     password?: string;
-    image?: string;
+    image?: any;
     id?: number;
 }

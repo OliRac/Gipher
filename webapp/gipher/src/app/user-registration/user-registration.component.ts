@@ -12,13 +12,13 @@ export class UserRegistrationComponent implements OnInit {
 
   form: FormGroup;
   message: string;
-  imageData: string;
+  imageData: any;
 
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.form = this.formBuilder.group({
       username: new FormControl("", [Validators.required]),
       password: new FormControl("", [Validators.required]),
-      image: new FormControl("", [Validators.required])
+      img: new FormControl("", [Validators.required])
     })
   }
 
@@ -44,18 +44,9 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   onFileChange(event: any) {
-    let reader = new FileReader();
-
     //making sure the event object holds the information we need
     if(event.target.files && event.target.files.length) {
-      let imagePath = event.target.files[0];
-
-      reader.onloadend = (e) => {       
-        this.imageData = reader.result.toString().split(",")[1]; //image data is found after ',' in the result string
-        console.log(this.imageData);
-      }
-
-      reader.readAsDataURL(imagePath);
+      this.imageData = event.target.files[0];
     }
   }
 }

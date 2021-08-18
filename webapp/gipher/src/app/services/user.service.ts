@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserService {
-  url: string = "http://localhost:3000/users"
+  url: string = "http://localhost:8080/register"
 
   constructor(private http: HttpClient) { }
 
@@ -24,7 +24,7 @@ export class UserService {
     headers.append("Accept", "application/json");
 
     let options = {
-      headers: headers
+      headers: headers,
     }
 
     return this.http.post(this.url, formData, options);

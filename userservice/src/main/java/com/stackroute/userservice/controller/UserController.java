@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@CrossOrigin
 @RestController
 public class UserController {
 
@@ -29,7 +30,7 @@ public class UserController {
     /**
      * Save a new user
      */
-    @CrossOrigin(origins = "http://localhost:8080")
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@ModelAttribute("user") User user, @RequestParam("img") MultipartFile file) throws IOException, UserAlreadyExistException {
         try {
