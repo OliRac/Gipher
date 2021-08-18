@@ -34,11 +34,11 @@ export class UserRegistrationComponent implements OnInit {
         password: this.form.get("password").value,
         image: this.imageData
       }
-  
+
       this.userService.registerUser(user).subscribe(data => {
-  
+        console.log(data);
       }, (error) => {
-        console.log(error)
+        console.log(error);
       })
     }
   }
@@ -52,6 +52,7 @@ export class UserRegistrationComponent implements OnInit {
 
       reader.onloadend = (e) => {       
         this.imageData = reader.result.toString().split(",")[1]; //image data is found after ',' in the result string
+        console.log(this.imageData);
       }
 
       reader.readAsDataURL(imagePath);
