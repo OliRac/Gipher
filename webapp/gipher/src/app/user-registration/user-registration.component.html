@@ -1,18 +1,33 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <label>Username</label>
-    <input formControlName="username" type="text"  placeholder="Enter Blog Title" ng-required>
+    <input formControlName="username" type="text"  placeholder="username" ng-required>
 
     <label>Password</label>
-    <input formControlName="password" type="password"  placeholder="Enter Author Name" ng-required>
+    <input formControlName="password" type="password"  placeholder="password" ng-required>
 
     <label>Image</label>
-    <input type="file" formControlName="img" accept="image/png, image/jpeg" (change)="onFileChange($event)">
+    <input type="file" formControlName="img" accept="image/png, image/jpeg" (change)="onFileChange($event)" data-max-size="10" >
 
     <button mat-raised-button type="submit">Submit</button>
 </form>
 
-<!-- write logic to display message -->
-<div class="bg-warning text-dark" *ngIf="message">
+<div *ngIf="message">
   {{message}}
 </div>
+
+<div *ngIf="username.errors?.minlength" id="minLengthErr">
+  <p>Username must be at least 3 characters long.</p>  
+</div> 
+
+<div *ngIf="username.errors?.maxlength">
+  <p>Username must be less or equal than 25 characters long.</p>
+</div> 
+
+<div *ngIf="password.errors?.minlength">
+  <p>Password must be at least 8 characters long.</p> 
+</div> 
+
+<div *ngIf="password.errors?.maxlength">
+  <p>Password must be less or equal than 25 characters long.</p> 
+</div> 
