@@ -35,11 +35,9 @@ public class UserController {
     public ResponseEntity<?> registerUser(@ModelAttribute("user") User user, @RequestParam("img") MultipartFile file) throws IOException, UserAlreadyExistException {
         try {
             User savedUser = userService.registerUser(user);
-            String filename = "";
+
             //id + gets the .jpg or .png image
-            if(file != null && savedUser != null){
-                filename = savedUser.getUserId() + file.getOriginalFilename().substring(file.getOriginalFilename().length()-4);
-            }
+            String filename = savedUser.getUserId() + file.getOriginalFilename().substring(file.getOriginalFilename().length()-4);
 
             //Moving the file into the image directory
             Path fileNameAndPath = Paths.get(uploadDirectory, filename);
