@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+
 public class SearchEngine {
     private int userID;
     private Set<String> searchTerm = new HashSet<String>();

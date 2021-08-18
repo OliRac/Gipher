@@ -1,26 +1,35 @@
 package com.stackroute.searchservice.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Collections;
+
+@Document(collection="gifSearch")
+
 public class Gif {
-    private String gifID;
+    @Id
+    private String id;
     private String title;
-    private String gifUrl;
+    private String url;
 
     public Gif() {
 
     }
 
-    public Gif(String gifID, String title, String gifUrl) {
-        this.gifID = gifID;
+    public Gif(String gifID, String title, String url) {
+        this.id = gifID;
         this.title = title;
-        this.gifUrl = gifUrl;
+        this.url = url;
     }
 
-    public String getGifID() {
-        return gifID;
+    public String getId() {
+        return id;
     }
 
-    public void setGifID(String gifID) {
-        this.gifID = gifID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -31,11 +40,11 @@ public class Gif {
         this.title = title;
     }
 
-    public String getGifUrl() {
-        return gifUrl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setGifUrl(String gifUrl) {
-        this.gifUrl = gifUrl;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
