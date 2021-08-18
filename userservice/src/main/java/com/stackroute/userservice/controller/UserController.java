@@ -29,6 +29,7 @@ public class UserController {
     /**
      * Save a new user
      */
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@ModelAttribute("user") User user, @RequestParam("img") MultipartFile file) throws IOException, UserAlreadyExistException {
         try {
