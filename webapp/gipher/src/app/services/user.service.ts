@@ -8,12 +8,12 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserService {
-  url: string = "TBD"
+  url: string = "http://localhost:3000/users"
 
   constructor(private http: HttpClient) { }
 
   registerUser(user: User): Observable<any> {
-    return null;
+    return this.http.post(this.url, user);
   }
 
   login(user: User): Observable<any> {
