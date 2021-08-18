@@ -36,7 +36,7 @@ public class UserController {
             String filename = "";
             //id + gets the .jpg or .png image
             if(file != null && savedUser != null){
-                filename = String.valueOf(savedUser.getUserId());
+                filename = savedUser.getUserId() + file.getOriginalFilename().substring(file.getOriginalFilename().length()-4);
             }
 
             //Moving the file into the image directory
