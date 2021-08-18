@@ -43,13 +43,13 @@ public class UserController {
 
             //Moving the file into the image directory
             Path fileNameAndPath = Paths.get(uploadDirectory, filename);
-            if(file != null && savedUser != null){
+            if(file != null && savedUser != null && savedUser.getUserId() != -1){
                 Files.write(fileNameAndPath, file.getBytes());
             }
 
             userService.updatedUserPhotoPath(savedUser, filename);
 
-            responseEntity = new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+            responseEntity = new ResponseEntity<>(savedUser, HttpStatus.OK);
         }
         catch (UserAlreadyExistException e) {
             responseEntity = new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);

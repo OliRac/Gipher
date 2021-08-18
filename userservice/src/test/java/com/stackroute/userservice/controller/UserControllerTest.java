@@ -13,15 +13,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.nio.charset.StandardCharsets;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -46,10 +42,9 @@ public class UserControllerTest {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(userController).setControllerAdvice(new GlobalExceptionHandler()).build();
         user = new User();
-        user.setUserId(1);
+        user.setUserId(-1);
         user.setUsername("leo");
         user.setPassword("leo123");
-        user.setPhoto("7.jpg");
     }
 
     @AfterEach
@@ -59,8 +54,8 @@ public class UserControllerTest {
 
     @Test
     void givenUserToSaveThenShouldReturnSavedUser() throws Exception {
-        MockMultipartFile file1 = new MockMultipartFile("img", "zoro.jpg", "image/jpeg", "Zoro Content".getBytes());
-        MockMultipartFile file2 = new MockMultipartFile("user", "", "application/json", asJsonString(user).getBytes());
+        MockMultipartFile file1 = new MockMultipartFile("img", "testFile", "image/jpeg", "testFile".getBytes());
+        MockMultipartFile file2 = new MockMultipartFile("user", "user", "application/json", asJsonString(user).getBytes());
 
         when(userService.registerUser(any())).thenReturn(user);
         mockMvc.perform(
@@ -73,8 +68,8 @@ public class UserControllerTest {
 
     @Test
     void givenUserToSaveThenShouldNotReturnSavedUser() throws Exception {
-        MockMultipartFile file1 = new MockMultipartFile("img", "zoro.png", "image/png", "Zoro Content".getBytes());
-        MockMultipartFile file2 = new MockMultipartFile("user", "", "application/json", asJsonString(user).getBytes());
+        MockMultipartFile file1 = new MockMultipartFile("img", "testFile", "image/png", "testFile".getBytes());
+        MockMultipartFile file2 = new MockMultipartFile("user", "user", "application/json", asJsonString(user).getBytes());
 
         when(userService.registerUser((User) any())).thenThrow(UserAlreadyExistException.class);
         mockMvc.perform(
