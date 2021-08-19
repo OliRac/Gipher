@@ -29,8 +29,8 @@ export class UserService {
 
     console.log(user);
 
-    //return this.http.post(this.url, formData, options);
-    return new Observable();
+    return this.http.post(this.url, formData, options);
+    //return new Observable();
   }
 
   login(user: User): Observable<any> {
