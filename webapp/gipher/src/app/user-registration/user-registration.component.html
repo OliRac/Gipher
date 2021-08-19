@@ -7,13 +7,13 @@
     <input formControlName="password" type="password"  placeholder="password" ng-required>
 
     <label>Image</label>
-    <input type="file" formControlName="img" accept="image/png, image/jpeg" (change)="onFileChange($event)" data-max-size="10" >
+    <input type="file" accept="image/png, image/jpeg" (change)="onFileChange($event)" id="imageInput">
 
     <button mat-raised-button type="submit">Submit</button>
 </form>
 
 <div *ngIf="errorMsg">
-  {{errorMsg}}
+  <p>{{errorMsg}}</p>
 </div>
 
 <div *ngIf="username.errors?.required" >
@@ -39,7 +39,3 @@
 <div *ngIf="password.errors?.maxlength">
   <p id="passwordMaxLength">Password must be less or equal than 25 characters long.</p> 
 </div> 
-
-<div *ngIf="image.errors?.required">
-  <p id="imageRequired">Image is missing!</p>
-</div>
