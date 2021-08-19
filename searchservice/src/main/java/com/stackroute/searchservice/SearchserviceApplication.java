@@ -18,8 +18,8 @@ public class SearchserviceApplication {
 		SpringApplication.run(SearchserviceApplication.class, args);
 	}
 	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.build();
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
 	}
 
 	}

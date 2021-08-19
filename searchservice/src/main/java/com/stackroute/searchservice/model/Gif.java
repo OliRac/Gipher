@@ -4,13 +4,11 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 //to indicate that any properties not bound in this type should be ignored
-//@Document(collection="gifSearch")
+@Document(collection="gifSearch")
 @Data
-@Entity
+
 public class Gif {
     private String type;
     private String id;

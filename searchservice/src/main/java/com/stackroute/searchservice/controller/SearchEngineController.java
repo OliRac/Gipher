@@ -15,8 +15,9 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 
 public class SearchEngineController {
-    private final String apiUrl = "https://api.giphy.com/v1/gifs/search?";
-    private final String query = "&q=";
+//    private final String apiUrl = "https://api.giphy.com/v1/gifs/search?";
+    private final String URL = "https://g.tenor.com/v1/search?q=";
+    //private final String query = "q=";
     @Value("${api.key}")
     private String apiKey;
     @Autowired
@@ -24,12 +25,15 @@ public class SearchEngineController {
 
     @GetMapping("/search")
 //    test http://localhost:8082/search?searchTerm=book
-    public String getGifByName(@RequestParam(value="searchTerm")  String searchTerm) throws JsonProcessingException {
-        String searchSrt= apiUrl + "api_key=" + apiKey + query + searchTerm;
-        log.info("searchstring url:   " + searchSrt);
-        Object obj = restTemplate.getForObject(searchSrt, Gif.class);
-        return new ObjectMapper().writeValueAsString(obj);
-
+    public ResponseEntity<String> getGifByName(@RequestParam(value="searchTerm")  String searchTerm) throws JsonProcessingException {
+      //  String searchSrt= URL + "api_key=" + apiKey + query + searchTerm;
+        String searchURL = URL + searchTerm + "&key=" + apiKey;
+        log.info("searchstring url:   " + searchURL);
+//        Object obj = restTemplate.getForObject(searchSrt, String.class);
+//        log.info("Is the object: " + (obj==null));
+//        return new ObjectMapper().writeValueAsString(obj);
+        ResponseEntity<String> response = restTemplate.getForEntity(searchURL , String.class);
+        return response;
     }
 
 }
