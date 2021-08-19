@@ -1,12 +1,41 @@
 package com.stackroute.userservice.entity;
 
-import lombok.Data;
-
 import javax.persistence.*;
 
 @Entity
-@Data
 public class User {
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
