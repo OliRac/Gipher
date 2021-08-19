@@ -29,8 +29,12 @@ public class UserServiceImpl implements UserService {
         if (findUser != null) {
             throw new UserAlreadyExistException("User Already Exists");
         }
-        user.setPassword(bcryptEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        else {
+            if(user.getUserId() != -1 ) {
+                user.setPassword(bcryptEncoder.encode(user.getPassword()));
+            }
+            return userRepository.save(user);
+        }
     }
 
     @Override

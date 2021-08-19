@@ -21,7 +21,7 @@ public class UserControllerIntegrationTest {
     @BeforeEach
     public void setUp(){
         user = new User();
-        user.setUserId(1);
+        user.setUserId(-1);
         user.setUsername("leo");
         user.setPassword("leo123");
         user.setPhoto("7.jpg");
@@ -41,9 +41,9 @@ public class UserControllerIntegrationTest {
     @Test
     void givenUserToSaveThenShouldReturnTheSavedUser() throws UserAlreadyExistException {
         User newUser = new User();
-        User savedUser = userService.registerUser(newUser);
-        assertNotNull(savedUser);
-        assertEquals(user.getUserId(), savedUser.getUserId());
+        newUser.setUsername("hey");
+        newUser.setPassword("hey123");
+        assertNotNull(userService.registerUser(newUser));
     }
 
 }

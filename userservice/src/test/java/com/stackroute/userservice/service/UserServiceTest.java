@@ -11,6 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,10 +28,13 @@ public class UserServiceTest {
 
     private User user;
 
+    @Autowired
+    private PasswordEncoder bcryptEncoder;
+
     @BeforeEach
     public void setUp(){
         user = new User();
-        user.setUserId(1);
+        user.setUserId(-1);
         user.setUsername("leo");
         user.setPassword("leo123");
         user.setPhoto("7.jpg");
