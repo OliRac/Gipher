@@ -1,18 +1,18 @@
 package com.stackroute.searchservice.model;
 
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.Collections;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
+//to indicate that any properties not bound in this type should be ignored
 @Document(collection="gifSearch")
-
+@Data
 public class Gif {
-    @Id
+    private String type;
     private String id;
     private String title;
-    private String url;
+    private String embed_url;
 
     public Gif() {
 
@@ -21,30 +21,17 @@ public class Gif {
     public Gif(String gifID, String title, String url) {
         this.id = gifID;
         this.title = title;
-        this.url = url;
+        this.embed_url = url;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    @Override
+    public String toString() {
+        return "Gif{" +
+                "type='" + type + '\'' +
+                ", id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", embed_url='" + embed_url + '\'' +
+                '}';
     }
 }
+
