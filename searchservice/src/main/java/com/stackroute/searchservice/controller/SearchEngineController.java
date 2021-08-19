@@ -1,5 +1,7 @@
 package com.stackroute.searchservice.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stackroute.searchservice.model.Gif;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,11 @@ public class SearchEngineController {
 
     @GetMapping("/search")
 //    test http://localhost:8082/search?searchTerm=book
-    public ResponseEntity<?> getGifByName(@RequestParam(value="searchTerm")  String searchTerm){
+    public String getGifByName(@RequestParam(value="searchTerm")  String searchTerm) throws JsonProcessingException {
         String searchSrt= apiUrl + "api_key=" + apiKey + query + searchTerm;
         log.info("searchstring url:   " + searchSrt);
-        return restTemplate.getForEntity(searchSrt, Gif.class);
+        Object obj = restTemplate.getForObject(searchSrt, Gif.class);
+        return new ObjectMapper().writeValueAsString(obj);
 
     }
 
