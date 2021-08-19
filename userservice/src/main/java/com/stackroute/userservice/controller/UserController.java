@@ -3,6 +3,8 @@ package com.stackroute.userservice.controller;
 import com.stackroute.userservice.entity.User;
 import com.stackroute.userservice.exception.UserAlreadyExistException;
 import com.stackroute.userservice.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ public class UserController {
     private UserService userService;
     ResponseEntity<?> responseEntity;
     public static String uploadDirectory = System.getProperty("user.dir") + "/webapp/assets/images";
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     public UserController(UserService userService){
@@ -48,9 +51,12 @@ public class UserController {
             userService.updatedUserPhotoPath(savedUser, filename);
 
             responseEntity = new ResponseEntity<>(savedUser, HttpStatus.OK);
+
+            logger.info("User created successfully!");
         }
         catch (UserAlreadyExistException e) {
             responseEntity = new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+            logger.info("User already exists!!");
         }
         catch(IOException e){
             e.printStackTrace();
