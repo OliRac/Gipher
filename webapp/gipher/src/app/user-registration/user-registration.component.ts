@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { REGISTER_FAIL, REGISTER_SUCCESS } from '../messages/registration.messages';
+import { REGISTER_FAIL, REGISTER_SUCCESS, USERNAME_MISSING } from '../messages/registration.messages';
 import { User } from '../models/User';
 import { UserService } from '../services/user.service';
 
@@ -19,7 +19,7 @@ const USERNAME_MAX_SIZE = 25
 export class UserRegistrationComponent implements OnInit {
 
   form: FormGroup;
-  message: string;
+  response: string;
   imageData: File;
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
@@ -44,13 +44,13 @@ export class UserRegistrationComponent implements OnInit {
       }
 
       this.userService.registerUser(user).subscribe(data => {
-        this.message = REGISTER_SUCCESS;
+        this.response = REGISTER_SUCCESS;
         //wait 5 sec and redirect to login
         setTimeout(() => {
           this.router.navigate(["/"])
         }, 5000);
       }, (error) => {
-        this.message = REGISTER_FAIL;
+        this.response = REGISTER_FAIL;
       })
     }
   }
@@ -91,5 +91,9 @@ export class UserRegistrationComponent implements OnInit {
 
   get password() {
     return this.form.get("password");
+  }
+
+  get image() {
+    return this.form.get("img");
   }
 }

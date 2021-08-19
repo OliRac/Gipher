@@ -12,8 +12,12 @@
     <button mat-raised-button type="submit">Submit</button>
 </form>
 
-<div *ngIf="message">
-  {{message}}
+<div *ngIf="response">
+  {{response}}
+</div>
+
+<div *ngIf="username.errors?.required">
+  <p>Username is missing!</p>
 </div>
 
 <div *ngIf="username.errors?.minlength">
@@ -24,6 +28,10 @@
   <p>Username must be less or equal than 25 characters long.</p>
 </div> 
 
+<div *ngIf="password.errors?.required">
+  <p>Password is missing!</p>
+</div>
+
 <div *ngIf="password.errors?.minlength">
   <p>Password must be at least 8 characters long.</p> 
 </div> 
@@ -31,3 +39,7 @@
 <div *ngIf="password.errors?.maxlength">
   <p>Password must be less or equal than 25 characters long.</p> 
 </div> 
+
+<div *ngIf="image.errors?.required">
+  <p>Image is missing!</p>
+</div>
