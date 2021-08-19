@@ -1,7 +1,8 @@
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { REGISTER_FAIL, REGISTER_SUCCESS, USERNAME_MISSING } from '../messages/registration.messages';
+import { IMAGE_TOO_BIG, REGISTER_FAIL, REGISTER_SUCCESS, USERNAME_MISSING } from '../messages/registration.messages';
 import { User } from '../models/User';
 import { UserService } from '../services/user.service';
 
@@ -19,7 +20,7 @@ const USERNAME_MAX_SIZE = 25
 export class UserRegistrationComponent implements OnInit {
 
   form: FormGroup;
-  response: string;
+  errorMsg: string;
   imageData: File;
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
@@ -44,13 +45,13 @@ export class UserRegistrationComponent implements OnInit {
       }
 
       this.userService.registerUser(user).subscribe(data => {
-        this.response = REGISTER_SUCCESS;
+        this.errorMsg = REGISTER_SUCCESS;
         //wait 5 sec and redirect to login
         setTimeout(() => {
           this.router.navigate(["/"])
         }, 5000);
-      }, (error) => {
-        this.response = REGISTER_FAIL;
+      }, (error: HttpErrorResponse) => {
+        this.errorMsg = error.error;
       })
     }
   }
@@ -61,28 +62,10 @@ export class UserRegistrationComponent implements OnInit {
     //making sure the event object holds the information we need
     if(imgFile && imgFile.size < MAX_FILE_SIZE) {
       this.imageData = imgFile;   //typescript does not like me calling this.form.get("").setValue() here :(
+    } else {
+      this.errorMsg = IMAGE_TOO_BIG;
+      event.target.value = null;
     }
-  }
-
-  passwordValidator(control: FormControl) {
-    let length = control.value?.length;
-
-    if(length >= PASSWORD_MIN_SIZE && length <= PASSWORD_MAX_SIZE) {
-      return {"validSize": true};
-    }
-
-    return {"validSize": false};
-  }
-
-  //Code duplication hmmmm! double check your things
-  usernameValidator(control: FormControl) {
-    let length = control.value?.length;
-
-    if(length >= USERNAME_MIN_SIZE && length <= USERNAME_MAX_SIZE) {
-      return {"validSize": true};
-    }
-
-    return {"validSize": false};
   }
 
   get username() {

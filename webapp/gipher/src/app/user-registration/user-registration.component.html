@@ -12,8 +12,8 @@
     <button mat-raised-button type="submit">Submit</button>
 </form>
 
-<div *ngIf="response">
-  {{response}}
+<div *ngIf="errorMsg">
+  {{errorMsg}}
 </div>
 
 <div *ngIf="username.errors?.required">
