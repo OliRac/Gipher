@@ -1,13 +1,22 @@
 package com.stackroute.userservice.controller;
 
+import com.stackroute.userservice.entity.JwtRequest;
+import com.stackroute.userservice.entity.JwtResponse;
 import com.stackroute.userservice.entity.User;
 import com.stackroute.userservice.exception.UserAlreadyExistException;
+import com.stackroute.userservice.service.JwtUserDetailsService;
 import com.stackroute.userservice.service.UserService;
+import com.stackroute.userservice.service.UserServiceImpl;
+import com.stackroute.userservice.utility.JWTUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,19 +30,21 @@ import java.nio.file.Paths;
 public class UserController {
 
     private UserService userService;
+
     ResponseEntity<?> responseEntity;
     public static String uploadDirectory = System.getProperty("user.dir") + "/webapp/assets/images";
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
+
     @Autowired
     public UserController(UserService userService){
         this.userService = userService;
+
     }
 
     /**
      * Save a new user
      */
-
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@ModelAttribute("user") User user, @RequestParam("img") MultipartFile file) throws IOException, UserAlreadyExistException {
         try {
@@ -63,6 +74,11 @@ public class UserController {
         }
 
         return responseEntity;
+    }
+
+    @GetMapping("/hello")
+    public String firstPage() {
+        return "Hello World";
     }
 
 }
