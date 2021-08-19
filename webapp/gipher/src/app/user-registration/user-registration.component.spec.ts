@@ -1,8 +1,10 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { $ } from 'protractor';
 import { of } from 'rxjs';
-import { IMAGE_MISSING, PASSWORD_MISSING, PASSWORD_TOO_BIG, PASSWORD_TOO_SHORT, REGISTER_SUCCESS, USERNAME_MISSING, USERNAME_TOO_BIG } from '../messages/registration.messages';
+import { IMAGE_MISSING, IMAGE_TOO_BIG, PASSWORD_MISSING, PASSWORD_TOO_BIG, PASSWORD_TOO_SHORT, REGISTER_SUCCESS, USERNAME_MISSING, USERNAME_TOO_BIG, USERNAME_TOO_SHORT } from '../messages/registration.messages';
 import { UserService } from '../services/user.service';
 import { UserRegistrationComponent } from './user-registration.component';
 
@@ -11,18 +13,17 @@ describe('UserRegistrationComponent', () => {
   let fixture: ComponentFixture<UserRegistrationComponent>;
   let userService: UserService;
 
-  let blobArray = new Array<Blob>();
-  let goodMockFile = new File(blobArray, "", {type: "image/png"});
+  let loremIpsum: string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientModule, ReactiveFormsModule],
+      imports: [HttpClientModule, ReactiveFormsModule, RouterModule.forRoot([])],
       declarations: [UserRegistrationComponent],
       providers: [UserService]
     })
     .compileComponents();
     userService = TestBed.inject(UserService);
-    spyOn(userService, "registerUser").and.returnValue(of(""));
+    spyOn(userService, "registerUser").and.returnValue(of(REGISTER_SUCCESS));
   });
 
   beforeEach(() => {
@@ -36,70 +37,87 @@ describe('UserRegistrationComponent', () => {
   });
 
   it("should show message if username is missing", () => {
-    component.form.get("username").setValue(null);
-    component.form.get("password").setValue("test");
-    component.imageData = goodMockFile;
-    component.onSubmit();
-    expect(component.message).toEqual(USERNAME_MISSING);
+    let usernameRequired = fixture.nativeElement.querySelector("#usernameRequired");
+    expect(usernameRequired).toBeTruthy();
+    expect(usernameRequired.textContent).toEqual(USERNAME_MISSING);
   })
 
   it("should show message if password is missing", () => {
-    component.form.get("username").setValue("test");
-    component.form.get("password").setValue(null);
-    component.form.get("img").setValue("");
-    component.onSubmit();
-    expect(component.message).toEqual(PASSWORD_MISSING); 
+    let passwordRequired = fixture.nativeElement.querySelector("#passwordRequired");
+    expect(passwordRequired).toBeTruthy();
+    expect(passwordRequired.textContent).toEqual(PASSWORD_MISSING);
   })
 
+  /*Because of the behaviour of formControl & input type file, I needed to make the image non required and do the validation manually in onSubmit()*/
   it("should show message if image is missing", () => {
-    component.form.get("username").setValue("test");
-    component.form.get("password").setValue("test");
-    component.form.get("img").setValue("");
     component.onSubmit();
-    expect(component.message).toEqual(IMAGE_MISSING);
+    expect(component.errorMsg).toBeTruthy();
+    expect(component.errorMsg).toEqual(IMAGE_MISSING);
   })
 
   it("should show message if username is too long", () => {
-    component.form.get("username").setValue("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
-    component.form.get("password").setValue("test");
-    component.form.get("img").setValue("");
-    component.onSubmit();
-    expect(component.message).toEqual(USERNAME_TOO_BIG);
+    component.username.setValue(loremIpsum);
+    fixture.detectChanges();
+    let usernameMaxLength = fixture.nativeElement.querySelector("#usernameMaxLength");
+    expect(usernameMaxLength).toBeTruthy();
+    expect(usernameMaxLength.textContent).toEqual(USERNAME_TOO_BIG);
   })
 
   it("should show message if username is too short", () => {
-    component.form.get("username").setValue("a");
-    component.form.get("password").setValue("test");
-    component.form.get("img").setValue("");
-    component.onSubmit();
-    expect(component.message).toEqual(USERNAME_TOO_BIG);
+    component.username.setValue("a");
+    fixture.detectChanges();
+    let usernameMinLength = fixture.nativeElement.querySelector("#usernameMinLength");
+    expect(usernameMinLength).toBeTruthy();
+    expect(usernameMinLength.textContent).toEqual(USERNAME_TOO_SHORT);
   })
 
   it("should show message if password is too long", () => {
-    component.form.get("password").setValue("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
-    component.form.get("username").setValue("test");
-    component.form.get("img").setValue("");
-    component.onSubmit();
-    expect(component.message).toEqual(PASSWORD_TOO_BIG);
+    component.password.setValue(loremIpsum);
+    fixture.detectChanges();
+    let passwordMaxLength = fixture.nativeElement.querySelector("#passwordMaxLength");
+    expect(passwordMaxLength).toBeTruthy();
+    expect(passwordMaxLength.textContent).toEqual(PASSWORD_TOO_BIG);
   })
 
   it("should show message if password is too short", () => {
-    component.form.get("username").setValue("test");
-    component.form.get("password").setValue("a");
-    component.form.get("img").setValue("");
-    component.onSubmit();
-    expect(component.message).toEqual(PASSWORD_TOO_SHORT);
+    component.password.setValue("a");
+    fixture.detectChanges();
+    let passwordMinLength = fixture.nativeElement.querySelector("#passwordMinLength");
+    expect(passwordMinLength).toBeTruthy();
+    expect(passwordMinLength.textContent).toEqual(PASSWORD_TOO_SHORT);
   })
 
   it("should show if image is too big", () => {
+    let file = createTestImage(Math.pow(2, 30));  //creating a 1gb image
+    let event = {target: {files: [file]}}
 
+    component.onFileChange(event);
+    fixture.detectChanges();
+
+    expect(component.errorMsg).toBeTruthy();
+    expect(component.errorMsg).toEqual(IMAGE_TOO_BIG);
   })
 
   it("should register user if form is correct", () => {
-      component.form.get("username").setValue("test");
-      component.form.get("password").setValue("a");
-      component.form.get("img").setValue("");
+      component.username.setValue("username");
+      component.password.setValue("password12345");
+      
+      let file = createTestImage(100);
+      let event = {target: {files: [file]}}
+
+      component.onFileChange(event);
+      fixture.detectChanges();
+
       component.onSubmit();
-      expect(component.message).toEqual(REGISTER_SUCCESS);
+      fixture.detectChanges();
+
+      expect(component.errorMsg).toEqual(REGISTER_SUCCESS);
   })
 });
+
+//Mocks an image with passed size
+function createTestImage(size: number): File {
+  let image = new File([""], "test.png");
+  Object.defineProperty(image, "size", {value: size, writable: false});
+  return image;
+}
