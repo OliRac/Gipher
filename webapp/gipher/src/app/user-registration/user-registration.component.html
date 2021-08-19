@@ -16,30 +16,30 @@
   {{errorMsg}}
 </div>
 
-<div *ngIf="username.errors?.required">
-  <p>Username is missing!</p>
+<div *ngIf="username.errors?.required" >
+  <p id="usernameRequired">Username is missing!</p>
 </div>
 
 <div *ngIf="username.errors?.minlength">
-  <p>Username must be at least 3 characters long.</p>  
+  <p id="usernameMinLength">Username must be at least 3 characters long.</p>  
 </div> 
 
 <div *ngIf="username.errors?.maxlength">
-  <p>Username must be less or equal than 25 characters long.</p>
+  <p id="usernameMaxLength">Username must be less or equal than 25 characters long.</p>
 </div> 
 
 <div *ngIf="password.errors?.required">
-  <p>Password is missing!</p>
+  <p id="passwordRequired">Password is missing!</p>
 </div>
 
 <div *ngIf="password.errors?.minlength">
-  <p>Password must be at least 8 characters long.</p> 
+  <p id="passwordMinLength">Password must be at least 8 characters long.</p> 
 </div> 
 
 <div *ngIf="password.errors?.maxlength">
-  <p>Password must be less or equal than 25 characters long.</p> 
+  <p id="passwordMaxLength">Password must be less or equal than 25 characters long.</p> 
 </div> 
 
 <div *ngIf="image.errors?.required">
-  <p>Image is missing!</p>
+  <p id="imageRequired">Image is missing!</p>
 </div>
