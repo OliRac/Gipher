@@ -33,7 +33,9 @@ public class JwtAuthenticationFilter implements GatewayFilter {
         Predicate<ServerHttpRequest> isApiSecured = r -> apiEndpoints.stream()
                 .noneMatch(uri -> r.getURI().getPath().contains(uri));
 
+        //If the endpoint does not contain /register or /login
         if (isApiSecured.test(request)) {
+            //If there is no authorization header for the request
             if (!request.getHeaders().containsKey("Authorization")) {
                 ServerHttpResponse response = exchange.getResponse();
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -41,9 +43,11 @@ public class JwtAuthenticationFilter implements GatewayFilter {
                 return response.setComplete();
             }
 
+            //Get the token without the Bearer and space
             final String token = request.getHeaders().getOrEmpty("Authorization").get(0).substring(7);
 
             try {
+                //verify if token is valid, if so, user is authenticated
                 jwtUtil.validateToken(token);
             } catch (JwtTokenMalformedException | JwtTokenMissingException e) {
                 // e.printStackTrace();
@@ -53,8 +57,6 @@ public class JwtAuthenticationFilter implements GatewayFilter {
                 return response.setComplete();
             }
 
-            Claims claims = jwtUtil.getClaims(token);
-            exchange.getRequest().mutate().header("id", String.valueOf(claims.get("id"))).build();
         }
 
         return chain.filter(exchange);

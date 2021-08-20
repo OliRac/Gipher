@@ -12,19 +12,9 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
-    public Claims getClaims(final String token) {
-        try {
-            Claims body = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
-            return body;
-        } catch (Exception e) {
-            System.out.println(e.getMessage() + " => " + e);
-        }
-        return null;
-    }
-
     public void validateToken(final String token) throws JwtTokenMalformedException, JwtTokenMissingException {
         try {
-                Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+                Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
         } catch (SignatureException ex) {
             throw new JwtTokenMalformedException("Invalid JWT signature");
         } catch (MalformedJwtException ex) {

@@ -74,6 +74,9 @@ public class UserController {
         return responseEntity;
     }
 
+    /**
+     * Authenticate user and return a json token if valid
+     */
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody JwtRequest jwtRequest) {
         User findUser = userService.findUserByUsername(jwtRequest.getUsername());
