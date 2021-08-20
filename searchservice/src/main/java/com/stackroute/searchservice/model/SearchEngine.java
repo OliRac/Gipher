@@ -1,43 +1,35 @@
 package com.stackroute.searchservice.model;
 
-import javax.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.Id;
 import java.util.HashSet;
 import java.util.Set;
-
-
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
+@Document(collection="searchHistory")
 public class SearchEngine {
-    private int userID;
-    private Set<String> searchTerm = new HashSet<String>();
+    @Id
+    private int userId;
+    private String searchTerm;
+    private Set<String> searchTermSet = new HashSet<String>();
 
     public SearchEngine() {
     }
 
-    public SearchEngine(int userID, Set<String> searchTerm) {
-        this.userID = userID;
-        this.searchTerm = searchTerm;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public Set<String> getSearchTerm() {
-        return searchTerm;
-    }
-
-    public void setSearchTerm(Set<String> searchTerm) {
-        this.searchTerm = searchTerm;
+    public SearchEngine(int userId, Set<String> searchTermSet) {
+        this.userId = userId;
+        this.searchTermSet = searchTermSet;
     }
 
     @Override
     public String toString() {
         return "SearchEngine{" +
-                "userID=" + userID +
-                ", searchTerm=" + searchTerm +
+                "userID=" + userId +
+                ", searchTermSet =" + searchTermSet +
+
                 '}';
     }
 }

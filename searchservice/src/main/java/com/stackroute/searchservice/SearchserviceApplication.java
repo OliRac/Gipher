@@ -1,6 +1,7 @@
 package com.stackroute.searchservice;
 
 import com.stackroute.searchservice.model.Gif;
+import com.stackroute.searchservice.model.SearchEngine;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -21,7 +22,10 @@ public class SearchserviceApplication {
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
-
+	@Bean
+	public SearchEngine getSearchEngin(){
+		return new SearchEngine();
+	}
 	}
 
 
