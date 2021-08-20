@@ -94,7 +94,10 @@ public class FavoriteServiceImpl implements FavoriteService{
         if (!favoriteRepository.existsById(userId)) {
             throw new NoFavoriteGifFoundException();
         } else {
-            return favoriteRepository.findById(userId).get().getFavoriteList();
+            HashSet<String> h = favoriteRepository.findById(userId).get().getFavoriteList();
+            LOG.info("done");
+            return h;
+
         }
     }
 
