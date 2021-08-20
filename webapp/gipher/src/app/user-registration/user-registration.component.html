@@ -7,27 +7,35 @@
     <input formControlName="password" type="password"  placeholder="password" ng-required>
 
     <label>Image</label>
-    <input type="file" formControlName="img" accept="image/png, image/jpeg" (change)="onFileChange($event)" data-max-size="10" >
+    <input type="file" accept="image/png, image/jpeg" (change)="onFileChange($event)" id="imageInput">
 
     <button mat-raised-button type="submit">Submit</button>
 </form>
 
-<div *ngIf="message">
-  {{message}}
+<div *ngIf="errorMsg">
+  <p>{{errorMsg}}</p>
 </div>
 
-<div *ngIf="username.errors?.minlength" id="minLengthErr">
-  <p>Username must be at least 3 characters long.</p>  
+<div *ngIf="username.errors?.required" >
+  <p id="usernameRequired">Username is missing!</p>
+</div>
+
+<div *ngIf="username.errors?.minlength">
+  <p id="usernameMinLength">Username must be at least 3 characters long.</p>  
 </div> 
 
 <div *ngIf="username.errors?.maxlength">
-  <p>Username must be less or equal than 25 characters long.</p>
+  <p id="usernameMaxLength">Username must be less or equal than 25 characters long.</p>
 </div> 
 
+<div *ngIf="password.errors?.required">
+  <p id="passwordRequired">Password is missing!</p>
+</div>
+
 <div *ngIf="password.errors?.minlength">
-  <p>Password must be at least 8 characters long.</p> 
+  <p id="passwordMinLength">Password must be at least 8 characters long.</p> 
 </div> 
 
 <div *ngIf="password.errors?.maxlength">
-  <p>Password must be less or equal than 25 characters long.</p> 
+  <p id="passwordMaxLength">Password must be less or equal than 25 characters long.</p> 
 </div> 
