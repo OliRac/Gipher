@@ -1,50 +1,61 @@
 package com.tackroute.favoriteservice.controller;
 
-import com.tackroute.favoriteservice.model.Selection;
-import com.tackroute.favoriteservice.repository.FavoriteRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.tackroute.favoriteservice.exception.GifAlreadyExistException;
+import com.tackroute.favoriteservice.exception.GifNotFoundException;
+import com.tackroute.favoriteservice.exception.NoFavoriteGifFoundException;
+import com.tackroute.favoriteservice.domain.Selection;
+import com.tackroute.favoriteservice.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
+
+@CrossOrigin
 @RestController
-@RequestMapping(value = "/api/v1/")
+@RequestMapping(value = "/api/v1")
 public class FavoriteController {
 
-    private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 
-    private FavoriteRepository favoriteRepository;
+    private FavoriteService favoriteService;
+
 
     @Autowired
-    public FavoriteController(FavoriteRepository favoriteRepository){
-        this.favoriteRepository =favoriteRepository;
+    public FavoriteController(FavoriteService favoriteService){
+        this.favoriteService =favoriteService;
     }
 
-    @RequestMapping(value = "/favorites/{userId}", method = RequestMethod.GET)
-    public Selection getAllFavorites(@PathVariable int userId) {
-        LOG.info("Getting user with ID: {}.", userId);
-        return favoriteRepository.findById(userId).get();
+    @GetMapping(value = "/favorites/{userId}")
+    public ResponseEntity<HashSet<String>> getAllFavorites(@PathVariable int userId) throws NoFavoriteGifFoundException{
+        return new ResponseEntity<HashSet<String>>( favoriteService.getAllFavorites(userId), HttpStatus.OK);
+
     }
 
-    @RequestMapping(value = "/createFavoriteList/{userId}", method = RequestMethod.POST)
-    public Selection addFirstFavorite(@RequestBody Selection selection) {
-        LOG.info("Saving user.");
-        return favoriteRepository.save(selection);
+
+
+    @PostMapping(value = "/addFavorite/{userId}/{gifUrl}")
+    public ResponseEntity<Selection> addFavorite(@PathVariable int userId, @PathVariable String gifUrl) throws GifAlreadyExistException {
+        return new ResponseEntity<Selection>(favoriteService.addFavorite(userId,gifUrl), HttpStatus.OK);
+
     }
 
-    @RequestMapping(value = "/addFavorite/{userId}/{gifUrl}", method = RequestMethod.GET)
-    public String addUserSetting(@PathVariable int userId, @PathVariable String gifUrl) {
-        Selection selection = favoriteRepository.findById(userId).get();
-        if (user != null) {
-            user.getUserSettings().put(key, value);
-            userRepository.save(user);
-            return "Key added";
-        } else {
-            return "User not found.";
-        }
+    @PostMapping(value = "/removeFavorite/{userId}/{gifUrl}")
+    public ResponseEntity<HashSet<String>> removeFavorite(@PathVariable int userId, @PathVariable String gifUrl)  throws GifNotFoundException{
+        return new ResponseEntity<HashSet<String>>(favoriteService.removeFavorite(userId,gifUrl), HttpStatus.OK);
+
     }
 
+    @DeleteMapping(value = "/emptyFavoriteList/{userId}")
+    public ResponseEntity<HashSet<String>> emptyFavoriteList(@PathVariable int userId) throws NoFavoriteGifFoundException {
+        return new ResponseEntity<HashSet<String>>(favoriteService.emptyFavoriteList(userId), HttpStatus.OK);
+    }
+
+    @GetMapping("/favorite/{userId}/{gifUrl}")
+    public ResponseEntity<Boolean> checkIfFavoriteByUrl(@PathVariable(value="userId") int userId, @PathVariable String gifUrl) throws NoFavoriteGifFoundException {
+        return new ResponseEntity<Boolean>(favoriteService.checkIfFavoriteByUrl(userId, gifUrl), HttpStatus.OK);
+    }
 
 
 

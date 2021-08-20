@@ -3,7 +3,7 @@ package com.tackroute.favoriteservice.controller;
 import com.tackroute.favoriteservice.exception.GifAlreadyExistException;
 import com.tackroute.favoriteservice.exception.GifNotFoundException;
 import com.tackroute.favoriteservice.exception.NoFavoriteGifFoundException;
-import com.tackroute.favoriteservice.model.Selection;
+import com.tackroute.favoriteservice.domain.Selection;
 import com.tackroute.favoriteservice.service.FavoriteService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,15 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
 public class FavoriteControllerIntegrationTest {
+
+    @Autowired
+    private FavoriteService favoriteService;
+
+    private Selection selection;
 
     String gif1 = "https://giphy.com/stories/some-bb23-cute-moments-1b9c561f-c095";
     String gif2 = "https://giphy.com/stories/welcome-to-the-high-rollers-room-8d7b09cb-a920";
@@ -30,14 +33,11 @@ public class FavoriteControllerIntegrationTest {
         add(gif2);
 
     }};
-    @Autowired
-    private FavoriteService favoriteService;
-    private Selection selection;
+
 
     @BeforeEach
     void setUp() {
         selection = new Selection(1, favoriteList );
-
     }
 
     @AfterEach

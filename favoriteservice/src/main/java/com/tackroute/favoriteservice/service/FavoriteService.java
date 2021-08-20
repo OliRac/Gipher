@@ -3,9 +3,8 @@ package com.tackroute.favoriteservice.service;
 import com.tackroute.favoriteservice.exception.GifAlreadyExistException;
 import com.tackroute.favoriteservice.exception.GifNotFoundException;
 import com.tackroute.favoriteservice.exception.NoFavoriteGifFoundException;
-import com.tackroute.favoriteservice.model.Selection;
+import com.tackroute.favoriteservice.domain.Selection;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 public interface FavoriteService {
@@ -23,7 +22,7 @@ public interface FavoriteService {
     /**
      * Abstract Method to delete remove all the favorites from the list
      */
-    HashSet<String> emptyFavoriteList(int userId);
+    HashSet<String> emptyFavoriteList(int userId) throws NoFavoriteGifFoundException;
 
     /**
      * Abstract Method to delete get all the gifs in the favorite list
@@ -33,7 +32,7 @@ public interface FavoriteService {
     /**
      * Abstract Method to check if a gif belongs to the favorites list
      */
-    boolean checkIfFavoriteByUrl( int userId, String gifUrl);
+    boolean checkIfFavoriteByUrl( int userId, String gifUrl) throws  NoFavoriteGifFoundException;
 
 
 

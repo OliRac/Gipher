@@ -1,28 +1,19 @@
 package com.tackroute.favoriteservice.service;
 
-import com.tackroute.favoriteservice.exception.GifAlreadyExistException;
-import com.tackroute.favoriteservice.exception.GifNotFoundException;
-import com.tackroute.favoriteservice.exception.NoFavoriteGifFoundException;
-import com.tackroute.favoriteservice.model.Selection;
+import com.tackroute.favoriteservice.domain.Selection;
 import com.tackroute.favoriteservice.repository.FavoriteRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.awt.*;
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class FavoriteServiceTest {

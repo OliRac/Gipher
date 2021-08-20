@@ -1,11 +1,12 @@
 package com.tackroute.favoriteservice.repository;
 
 
-import com.tackroute.favoriteservice.model.Selection;
+import com.tackroute.favoriteservice.domain.Selection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.*;
@@ -13,12 +14,12 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@ExtendWith(SpringExtension.class)
-@DataJpaTest
+@SpringBootTest
 public class FavoriteRepositoryIntegrationTest {
 
     @Autowired
     private FavoriteRepository favoriteRepository;
+
     private String gif1 = "https://giphy.com/stories/some-bb23-cute-moments-1b9c561f-c095";
     String gif2 = "https://giphy.com/stories/welcome-to-the-high-rollers-room-8d7b09cb-a920";
 
@@ -27,8 +28,6 @@ public class FavoriteRepositoryIntegrationTest {
         add(gif2);
 
     }};
-
-    @Autowired
     private Selection selection;
 
     @Test

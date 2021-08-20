@@ -1,17 +1,12 @@
-package com.tackroute.favoriteservice.model;
+package com.tackroute.favoriteservice.domain;
 
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 
-@Document(collection = "selections")
+@Document()
 public class Selection {
 
     @Id
