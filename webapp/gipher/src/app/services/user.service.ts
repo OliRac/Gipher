@@ -8,8 +8,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserService {
-  url: string = "http://localhost:8080/register"
-  //url: string = "http://localhost:3000/users"
+  registerURL: string = "http://localhost:8080/register"
+  loginURL: string = "http://localhost:8080/login"
 
   constructor(private http: HttpClient) { }
 
@@ -28,7 +28,7 @@ export class UserService {
       headers: headers,
     }
 
-    return this.http.post(this.url, formData, options);
+    return this.http.post(this.registerURL, formData, options);
   }
 
   login(user: User): Observable<any> {
