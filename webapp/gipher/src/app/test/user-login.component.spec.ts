@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { PASSWORD_MISSING, USERNAME_MISSING } from '../messages/registration.messages';
 import { UserService } from '../services/user.service';
 
-import { UserLoginComponent } from './user-login.component';
+import { UserLoginComponent } from '../user-login/user-login.component';
 
 describe('UserLoginComponent', () => {
   let component: UserLoginComponent;

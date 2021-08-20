@@ -32,6 +32,18 @@ export class UserService {
   }
 
   login(user: User): Observable<any> {
-    return null;
+    let formData: FormData = new FormData();
+
+    formData.append("username", user.username);
+    formData.append("password", user.password);
+
+    let headers = new HttpHeaders();
+    headers.append("Accept", "application/json");
+
+    let options = {
+      headers: headers,
+    }
+
+    return this.http.post(this.loginURL, formData, options);
   }
 }

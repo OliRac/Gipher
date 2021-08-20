@@ -6,7 +6,8 @@ import { $ } from 'protractor';
 import { of } from 'rxjs';
 import { IMAGE_MISSING, IMAGE_TOO_BIG, PASSWORD_MISSING, PASSWORD_TOO_BIG, PASSWORD_TOO_SHORT, REGISTER_SUCCESS, USERNAME_MISSING, USERNAME_TOO_BIG, USERNAME_TOO_SHORT } from '../messages/registration.messages';
 import { UserService } from '../services/user.service';
-import { UserRegistrationComponent } from './user-registration.component';
+import { UserRegistrationComponent } from '../user-registration/user-registration.component';
+import { createTestImage } from './util';
 
 describe('UserRegistrationComponent', () => {
   let component: UserRegistrationComponent;
@@ -114,10 +115,3 @@ describe('UserRegistrationComponent', () => {
       expect(component.errorMsg).toEqual(REGISTER_SUCCESS);
   })
 });
-
-//Mocks an image with passed size
-function createTestImage(size: number): File {
-  let image = new File([""], "test.png");
-  Object.defineProperty(image, "size", {value: size, writable: false});
-  return image;
-}
