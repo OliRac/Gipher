@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  USER_SERVICE_URL: "http://localhost:8080",
+  SEARCH_SERVICE_URL: "http://localhost:8081",
+  FAVORITE_SERVICE_URL: "http://localhost:8082",
+  RECOMM_SERVICE_URL: "http://localhost:8083"
 };
 
 /*

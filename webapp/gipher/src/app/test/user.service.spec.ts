@@ -8,7 +8,7 @@ describe('UserService', () => {
   let userService: UserService;
   let httpMock: HttpTestingController
 
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       imports:[HttpClientTestingModule],
       providers:[UserService]
@@ -21,18 +21,43 @@ describe('UserService', () => {
     expect(userService).toBeTruthy();
   });
 
-  it("registerUser() should register a new user", () => {
+  it("registerUser() should return a user", () => {
     let user: User = {
+      id: 1,
       username: "someuser",
       password: "somepassword",
       image: createTestImage(100)
     }
 
     userService.registerUser(user).subscribe(data => {
-
+      expect(data.id).toBeTruthy();
+      expect(data.username).toBeTruthy();
+      expect(data.password).toBeTruthy();
+      expect(data.image).toBeTruthy();
     })
 
     const req = httpMock.expectOne(userService.registerURL);
     expect(req.request.method).toEqual("POST");
+    req.flush(user);
+
+    httpMock.verify();
+  });
+
+  it("login() should return a user", () => {
+    let user: User = {
+      username: "someuser",
+      password: "somepassword"
+    }
+
+    userService.login(user).subscribe(data => {
+      expect(data.username).toBeTruthy();
+      expect(data.password).toBeTruthy();
+    })
+
+    const req = httpMock.expectOne(userService.loginURL);
+    expect(req.request.method).toEqual("POST");
+    req.flush(user);
+
+    httpMock.verify();
   });
 });

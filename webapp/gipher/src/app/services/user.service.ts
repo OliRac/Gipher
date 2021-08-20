@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/User';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  registerURL: string = "http://localhost:8080/register"
-  loginURL: string = "http://localhost:8080/login"
+  registerURL: string = environment.USER_SERVICE_URL + "/register"
+  loginURL: string = environment.USER_SERVICE_URL + "/login"
 
   constructor(private http: HttpClient) { }
 
