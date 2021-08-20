@@ -25,23 +25,19 @@ public class FavoriteServiceImpl implements FavoriteService{
 
     @Override
     public Selection addFavorite(int userId, String gifUrl) throws GifAlreadyExistException {
+        System.out.println(favoriteRepository.existsByUserId(userId));
 
-       Selection savedSelection;
-       if(!favoriteRepository.existsById(userId)){
-           Selection s = new Selection(userId, new HashSet<String>(){{add(gifUrl);}});
-           savedSelection = favoriteRepository.save(s);
-       }
-       else{
-           HashSet<String> h = favoriteRepository.findById(userId).get().getFavoriteList();
-           if(h.contains(gifUrl)){
-               throw new GifAlreadyExistException();
-           }
-           else{
-               h.add(gifUrl);
-               savedSelection= favoriteRepository.save(new Selection(userId, h));
-           }
-       }
-       return savedSelection;
+        Selection userSelections = favoriteRepository.findByUserId(userId);
+
+        if(userSelections != null) {
+            userSelections.getFavoriteList().add(gifUrl);
+        } else {
+            var set = new HashSet<String>();
+            set.add(gifUrl);
+            userSelections = new Selection(userId, set);
+        }
+
+        return favoriteRepository.save(userSelections);
    }
 
 

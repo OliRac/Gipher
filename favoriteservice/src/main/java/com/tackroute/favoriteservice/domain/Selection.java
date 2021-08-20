@@ -1,27 +1,40 @@
 package com.tackroute.favoriteservice.domain;
 
 
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.annotation.processing.Generated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.HashSet;
 
-@Document()
+@Document(collection = "selection")
 public class Selection {
 
     @Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     private int userId;
     private HashSet<String> favoriteList = new HashSet<String>();
 
     public Selection() {
     }
 
-    public Selection(int userId,  HashSet<String> favoriteList) {
+    public Selection(int userId, HashSet<String> favoriteList) {
         this.userId = userId;
         this.favoriteList = favoriteList;
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public int getUserId() {
         return userId;
