@@ -1,7 +1,5 @@
 package com.stackroute.userservice.controller;
 
-import java.util.Objects;
-
 import com.stackroute.userservice.entity.JwtRequest;
 import com.stackroute.userservice.entity.JwtResponse;
 import com.stackroute.userservice.service.JwtUserDetailsService;
