@@ -43,10 +43,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.data</groupId>-->
-<!--            <artifactId>spring-data-mongodb</artifactId>-->
-<!--        </dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -65,24 +61,7 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5.13</version>
 		</dependency>
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-ribbon &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.cloud</groupId>-->
-<!--			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>-->
-<!--			<version>2.2.3.RELEASE</version>-->
-<!--		</dependency>-->
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/com.netflix.ribbon/ribbon-httpclient &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>com.netflix.ribbon</groupId>-->
-<!--			<artifactId>ribbon-httpclient</artifactId>-->
-<!--			<version>2.3.0</version>-->
-<!--		</dependency>-->
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/io.github.openfeign/feign-okhttp &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>io.github.openfeign</groupId>-->
-<!--			<artifactId>feign-httpclient</artifactId>-->
-<!--			<version>11.5</version>-->
-<!--		</dependency>-->
+
 
 	</dependencies>
 

@@ -12,6 +12,7 @@ import java.util.Set;
 @Document(collection="searchHistory")
 public class SearchEngine {
     @Id
+    private String id;
     private int userId;
     private String searchTerm;
     private Set<String> searchTermSet = new HashSet<String>();

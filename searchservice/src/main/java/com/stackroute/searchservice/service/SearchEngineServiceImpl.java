@@ -6,8 +6,12 @@ import com.stackroute.searchservice.repository.SearchRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -17,8 +21,10 @@ import java.util.Set;
 public class SearchEngineServiceImpl implements SearchEngineService{
     @Autowired
     SearchRepository searchRepository;
-    @Autowired
-    SearchEngine searchEngine1;
+
+    public SearchEngineServiceImpl(SearchRepository searchRepository) {
+        this.searchRepository = searchRepository;
+    }
 
     /***
      * Saves the searchEngine object into db.
@@ -30,25 +36,16 @@ public class SearchEngineServiceImpl implements SearchEngineService{
     @Override
     public SearchEngine addSearchInfo(int userId, String searchTerm) throws UserNotFoundException {
         log.info("Adding search info into db");
-        SearchEngine search = null;
-        Optional optional = searchRepository.findById(userId);
+        SearchEngine searchInfo = searchRepository.findByUserId(userId);
+        if(searchInfo != null) {
+            searchInfo.getSearchTermSet().add(searchTerm);
+        }else{
+            Set<String> searchSet = new HashSet<String>();
+            searchSet.add(searchTerm);
+            searchInfo = new SearchEngine(userId , searchSet);
 
-        if(optional.isPresent()){
-            search = searchRepository.findById(userId).get();
-            log.info("search for the user id " + userId + "exists so adding searchTerm to the set");
-            Set<String> searchList = search.getSearchTermSet();
-            searchList.add(searchTerm);
-            search.setSearchTermSet(searchList);
-            return searchRepository.save(search);
         }
-//        SearchEngine search = searchRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-//        SearchEngine search = new SearchEngine();
-        search = new SearchEngine();
-        search.setUserId(userId);
-        search.getSearchTermSet().add(searchTerm);
-        search.setSearchTermSet(search.getSearchTermSet());
-        return searchRepository.save(search);
-
+        return searchRepository.save(searchInfo);
 
     }
 
@@ -62,8 +59,4 @@ public class SearchEngineServiceImpl implements SearchEngineService{
         return null;
     }
 
-//    @Override
-//    public SearchEngine getSearchInfoByUserId(int userId) {
-//        return searchRepository.findById(userId).orElseThrow();
-//    }
 }

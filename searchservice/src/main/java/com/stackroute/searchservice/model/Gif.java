@@ -6,9 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 //to indicate that any properties not bound in this type should be ignored
-@Document(collection="gifSearch")
+//@Document(collection="gifSearch")
 @Data
-
 public class Gif {
     private String type;
     private String id;
