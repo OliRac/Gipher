@@ -2,6 +2,7 @@ package com.stackroute.userservice.service;
 
 import com.stackroute.userservice.entity.User;
 import com.stackroute.userservice.exception.UserAlreadyExistException;
+import com.stackroute.userservice.exception.UserNotFoundException;
 import com.stackroute.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,8 +48,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByUsername(String username) {
         User findUser = userRepository.findUserByUsername(username);
+
         if (findUser == null) {
-            throw new UserAlreadyExistException("User Not Found");
+            throw new UserNotFoundException("User Not Found");
         }
         return findUser;
     }
