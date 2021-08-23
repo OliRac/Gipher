@@ -18,6 +18,8 @@ import { SearchComponent } from './search/search.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { RecommendedComponent } from './recommended/recommended.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { LandingComponent } from './landing/landing.component';
+import { LogoutComponent } from './logout/logout.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     SearchComponent,
     FavoritesComponent,
     RecommendedComponent,
-    DashboardComponent
+    DashboardComponent,
+    LandingComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

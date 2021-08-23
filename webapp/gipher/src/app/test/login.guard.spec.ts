@@ -24,6 +24,10 @@ describe('LoginGuard', () => {
     router = TestBed.inject(Router);
   });
 
+  afterEach(() => {
+    sessionStorage.clear();
+  });
+
   it('should be created', () => {
     expect(guard).toBeTruthy();
   });
@@ -31,7 +35,6 @@ describe('LoginGuard', () => {
   it("should return true if user is authenticated", () => {
     sessionStorage.setItem("user", JSON.stringify(mockUser));
     expect(guard.canActivate(null, null)).toBeTruthy();
-    sessionStorage.removeItem("user");
   });
 
   it("should return false if user is not authenticated", () => {
