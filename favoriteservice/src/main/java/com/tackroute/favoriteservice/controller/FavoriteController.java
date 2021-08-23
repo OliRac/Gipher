@@ -42,7 +42,7 @@ public class FavoriteController {
     }
 
     @PostMapping(value = "/removeFavorite/{userId}/{gifUrl}")
-    public ResponseEntity<HashSet<String>> removeFavorite(@PathVariable int userId, @PathVariable String gifUrl)  throws GifNotFoundException{
+    public ResponseEntity<HashSet<String>> removeFavorite(@PathVariable int userId, @PathVariable String gifUrl)  throws GifNotFoundException, NoFavoriteGifFoundException{
         return new ResponseEntity<HashSet<String>>(favoriteService.removeFavorite(userId,gifUrl), HttpStatus.OK);
 
     }

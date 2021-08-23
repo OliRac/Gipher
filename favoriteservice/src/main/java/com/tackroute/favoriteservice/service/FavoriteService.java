@@ -17,7 +17,7 @@ public interface FavoriteService {
     /**
      * Abstract Method to remove a particular gif of the favorite list
      */
-    HashSet<String> removeFavorite( int userId, String gifUrl) throws GifNotFoundException;
+    HashSet<String> removeFavorite( int userId, String gifUrl) throws GifNotFoundException, NoFavoriteGifFoundException;
 
     /**
      * Abstract Method to delete remove all the favorites from the list
