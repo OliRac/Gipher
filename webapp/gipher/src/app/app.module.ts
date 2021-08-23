@@ -19,6 +19,8 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { RecommendedComponent } from './recommended/recommended.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import {MatCardModule} from '@angular/material/card';
     FooterComponent,
     SearchComponent,
     FavoritesComponent,
-    RecommendedComponent
+    RecommendedComponent,
+    DashboardComponent
   ],
   imports: [
     MatCardModule,
