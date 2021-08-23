@@ -85,7 +85,7 @@ public class UserController {
         }
         final String token = jwtUtil.generateToken(findUser.getUsername());
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(new JwtResponse(token, findUser));
     }
 
 }

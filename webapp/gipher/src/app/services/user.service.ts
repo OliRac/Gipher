@@ -33,15 +33,7 @@ export class UserService {
   }
 
   login(user: User): Observable<any> {
-    /*let formData: FormData = new FormData();
-
-    formData.append("username", user.username);
-    formData.append("password", user.password);*/
-
     let headers = new HttpHeaders();
-    //headers.append("Content-Type","application/json;");
-    //headers.delete("Content-Type", "text/plain");
-    //headers.append("Accept", "application/json");
 
     headers.append('Content-Type','application/json');
     headers.append("Accept", "application/json");

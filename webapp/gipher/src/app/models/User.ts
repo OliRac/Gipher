@@ -3,4 +3,5 @@ export class User {
     password?: string;
     image?: File;
     id?: number;
+    token?: string;
 }
