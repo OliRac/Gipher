@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 public class TestController {
-    @GetMapping("/hello")
+    @GetMapping("favorite-service/hello")
     public String firstPage() {
         return "Hello World";
     }

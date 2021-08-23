@@ -44,4 +44,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(updatedUser);
     }
 
+    @Override
+    public User findUserByUsername(String username) {
+        User findUser = userRepository.findUserByUsername(username);
+        if (findUser == null) {
+            throw new UserAlreadyExistException("User Not Found");
+        }
+        return findUser;
+    }
+
 }

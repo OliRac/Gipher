@@ -1,15 +1,15 @@
-package com.tackroute.favoriteservice;
+package com.stackroute.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-@SpringBootApplication
 @EnableEurekaClient
-public class FavoriteserviceApplication {
+@SpringBootApplication
+public class SpringCloudGatewayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FavoriteserviceApplication.class, args);
+		SpringApplication.run(SpringCloudGatewayApplication.class, args);
 	}
 
 }

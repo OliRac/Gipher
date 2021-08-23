@@ -1,8 +1,12 @@
 package com.stackroute.userservice.controller;
 
+import com.stackroute.userservice.entity.JwtRequest;
+import com.stackroute.userservice.entity.JwtResponse;
 import com.stackroute.userservice.entity.User;
 import com.stackroute.userservice.exception.UserAlreadyExistException;
+import com.stackroute.userservice.exception.UserNotFoundException;
 import com.stackroute.userservice.service.UserService;
+import com.stackroute.userservice.utility.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,9 @@ import java.nio.file.Paths;
 @RestController
 public class UserController {
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     private UserService userService;
 
     ResponseEntity<?> responseEntity;
@@ -36,7 +43,7 @@ public class UserController {
     /**
      * Save a new user
      */
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public ResponseEntity<?> registerUser(@ModelAttribute("user") User user, @RequestParam("img") MultipartFile file) throws IOException, UserAlreadyExistException {
         try {
             User savedUser = userService.registerUser(user);
@@ -67,9 +74,18 @@ public class UserController {
         return responseEntity;
     }
 
-    @GetMapping("/hello")
-    public String firstPage() {
-        return "Hello World";
+    /**
+     * Authenticate user and return a json token if valid
+     */
+    @PostMapping("/auth/login")
+    public ResponseEntity<?> login(@RequestBody JwtRequest jwtRequest) {
+        User findUser = userService.findUserByUsername(jwtRequest.getUsername());
+        if(findUser == null){
+            throw new UserNotFoundException("User Not Found");
+        }
+        final String token = jwtUtil.generateToken(findUser.getUsername());
+
+        return ResponseEntity.ok(new JwtResponse(token));
     }
 
 }
