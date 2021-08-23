@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/User';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  url: string = "http://localhost:8080/register"
-  //url: string = "http://localhost:3000/users"
+  registerURL: string = environment.USER_SERVICE_URL + "/auth/register";
+  loginURL: string = environment.USER_SERVICE_URL + "/auth/login";
 
   constructor(private http: HttpClient) { }
 
@@ -28,10 +29,19 @@ export class UserService {
       headers: headers,
     }
 
-    return this.http.post(this.url, formData, options);
+    return this.http.post(this.registerURL, formData, options);
   }
 
   login(user: User): Observable<any> {
-    return null;
+    let headers = new HttpHeaders();
+
+    headers.append('Content-Type','application/json');
+    headers.append("Accept", "application/json");
+
+    let options = {
+      headers: headers,
+    }
+
+    return this.http.post(this.loginURL, user, options);
   }
 }

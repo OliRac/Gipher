@@ -4,9 +4,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { $ } from 'protractor';
 import { of } from 'rxjs';
-import { IMAGE_MISSING, IMAGE_TOO_BIG, PASSWORD_MISSING, PASSWORD_TOO_BIG, PASSWORD_TOO_SHORT, REGISTER_SUCCESS, USERNAME_MISSING, USERNAME_TOO_BIG, USERNAME_TOO_SHORT } from '../messages/registration.messages';
+import { messages } from '../messages/registration.messages';
 import { UserService } from '../services/user.service';
-import { UserRegistrationComponent } from './user-registration.component';
+import { UserRegistrationComponent } from '../user-registration/user-registration.component';
+import { createTestImage } from './util';
 
 describe('UserRegistrationComponent', () => {
   let component: UserRegistrationComponent;
@@ -23,7 +24,7 @@ describe('UserRegistrationComponent', () => {
     })
     .compileComponents();
     userService = TestBed.inject(UserService);
-    spyOn(userService, "registerUser").and.returnValue(of(REGISTER_SUCCESS));
+    spyOn(userService, "registerUser").and.returnValue(of(messages.REGISTER_SUCCESS));
   });
 
   beforeEach(() => {
@@ -39,20 +40,20 @@ describe('UserRegistrationComponent', () => {
   it("should show message if username is missing", () => {
     let usernameRequired = fixture.nativeElement.querySelector("#usernameRequired");
     expect(usernameRequired).toBeTruthy();
-    expect(usernameRequired.textContent).toEqual(USERNAME_MISSING);
+    expect(usernameRequired.textContent).toEqual(messages.USERNAME_MISSING);
   })
 
   it("should show message if password is missing", () => {
     let passwordRequired = fixture.nativeElement.querySelector("#passwordRequired");
     expect(passwordRequired).toBeTruthy();
-    expect(passwordRequired.textContent).toEqual(PASSWORD_MISSING);
+    expect(passwordRequired.textContent).toEqual(messages.PASSWORD_MISSING);
   })
 
   /*Because of the behaviour of formControl & input type file, I needed to make the image non required and do the validation manually in onSubmit()*/
   it("should show message if image is missing", () => {
     component.onSubmit();
     expect(component.errorMsg).toBeTruthy();
-    expect(component.errorMsg).toEqual(IMAGE_MISSING);
+    expect(component.errorMsg).toEqual(messages.IMAGE_MISSING);
   })
 
   it("should show message if username is too long", () => {
@@ -60,7 +61,7 @@ describe('UserRegistrationComponent', () => {
     fixture.detectChanges();
     let usernameMaxLength = fixture.nativeElement.querySelector("#usernameMaxLength");
     expect(usernameMaxLength).toBeTruthy();
-    expect(usernameMaxLength.textContent).toEqual(USERNAME_TOO_BIG);
+    expect(usernameMaxLength.textContent).toEqual(messages.USERNAME_TOO_BIG);
   })
 
   it("should show message if username is too short", () => {
@@ -68,7 +69,7 @@ describe('UserRegistrationComponent', () => {
     fixture.detectChanges();
     let usernameMinLength = fixture.nativeElement.querySelector("#usernameMinLength");
     expect(usernameMinLength).toBeTruthy();
-    expect(usernameMinLength.textContent).toEqual(USERNAME_TOO_SHORT);
+    expect(usernameMinLength.textContent).toEqual(messages.USERNAME_TOO_SHORT);
   })
 
   it("should show message if password is too long", () => {
@@ -76,7 +77,7 @@ describe('UserRegistrationComponent', () => {
     fixture.detectChanges();
     let passwordMaxLength = fixture.nativeElement.querySelector("#passwordMaxLength");
     expect(passwordMaxLength).toBeTruthy();
-    expect(passwordMaxLength.textContent).toEqual(PASSWORD_TOO_BIG);
+    expect(passwordMaxLength.textContent).toEqual(messages.PASSWORD_TOO_BIG);
   })
 
   it("should show message if password is too short", () => {
@@ -84,7 +85,7 @@ describe('UserRegistrationComponent', () => {
     fixture.detectChanges();
     let passwordMinLength = fixture.nativeElement.querySelector("#passwordMinLength");
     expect(passwordMinLength).toBeTruthy();
-    expect(passwordMinLength.textContent).toEqual(PASSWORD_TOO_SHORT);
+    expect(passwordMinLength.textContent).toEqual(messages.PASSWORD_TOO_SHORT);
   })
 
   it("should show if image is too big", () => {
@@ -95,7 +96,7 @@ describe('UserRegistrationComponent', () => {
     fixture.detectChanges();
 
     expect(component.errorMsg).toBeTruthy();
-    expect(component.errorMsg).toEqual(IMAGE_TOO_BIG);
+    expect(component.errorMsg).toEqual(messages.IMAGE_TOO_BIG);
   })
 
   it("should register user if form is correct", () => {
@@ -111,13 +112,6 @@ describe('UserRegistrationComponent', () => {
       component.onSubmit();
       fixture.detectChanges();
 
-      expect(component.errorMsg).toEqual(REGISTER_SUCCESS);
+      expect(component.errorMsg).toEqual(messages.REGISTER_SUCCESS);
   })
 });
-
-//Mocks an image with passed size
-function createTestImage(size: number): File {
-  let image = new File([""], "test.png");
-  Object.defineProperty(image, "size", {value: size, writable: false});
-  return image;
-}

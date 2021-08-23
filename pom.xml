@@ -55,6 +55,8 @@
 
 
 	<modules>
+        <module>gateway</module>
+        <module>eureka-server</module>
 		<module>userservice</module>
 		<module>searchservice</module>
 		<module>favoriteservice</module>

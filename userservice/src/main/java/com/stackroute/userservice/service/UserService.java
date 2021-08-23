@@ -14,6 +14,11 @@ public interface UserService {
      */
     User updatedUserPhotoPath(User user, String filename);
 
+    /**
+     * AbstractMethod to find a user by username
+     */
+    User findUserByUsername(String filename);
+
 
 
 }

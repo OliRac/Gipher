@@ -1,13 +1,17 @@
-export const USERNAME_MISSING: string = "Username is missing!";
-export const PASSWORD_MISSING: string = "Password is missing!";
-export const IMAGE_MISSING: string = "Image is missing!";
+export const messages = {
+    USERNAME_MISSING: "Username is missing!",
+    PASSWORD_MISSING: "Password is missing!",
+    IMAGE_MISSING: "Image is missing!",
 
-export const USERNAME_TOO_BIG: string = "Username must be less or equal than 25 characters long.";
-export const PASSWORD_TOO_BIG: string = "Password must be less or equal than 25 characters long.";
-export const IMAGE_TOO_BIG: string = "The image should be less than 100mb";
+    USERNAME_TOO_BIG: "Username must be less or equal than 25 characters long.",
+    PASSWORD_TOO_BIG: "Password must be less or equal than 25 characters long.",
+    IMAGE_TOO_BIG: "The image should be less than 100mb",
 
-export const USERNAME_TOO_SHORT: string = "Username must be at least 3 characters long.";
-export const PASSWORD_TOO_SHORT: string = "Password must be at least 8 characters long.";
+    USERNAME_TOO_SHORT: "Username must be at least 3 characters long.",
+    PASSWORD_TOO_SHORT: "Password must be at least 8 characters long.",
 
-export const REGISTER_FAIL: string = "Failed to register! There was a server error.";
-export const REGISTER_SUCCESS: string = "Sucessfully registered! Redirecting to home in 5...";
+    REGISTER_FAIL: "Failed to register! There was a server error.",
+    REGISTER_SUCCESS: "Sucessfully registered! Redirecting to home in 5...",
+
+    LOGIN_GREET: "Welcome! Redirecting to your dashboard in 5..."
+}

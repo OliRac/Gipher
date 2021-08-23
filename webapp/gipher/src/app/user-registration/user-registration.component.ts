@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IMAGE_MISSING, IMAGE_TOO_BIG, REGISTER_FAIL, REGISTER_SUCCESS, USERNAME_MISSING } from '../messages/registration.messages';
+import { messages } from '../messages/registration.messages';
 import { User } from '../models/User';
 import { UserService } from '../services/user.service';
 
@@ -37,7 +37,7 @@ export class UserRegistrationComponent implements OnInit {
   /*Validate form data, call registerUser from the userService*/
   onSubmit(): void {
     if(!this.imageData) {
-      this.errorMsg = IMAGE_MISSING;
+      this.errorMsg = messages.IMAGE_MISSING;
       return;
     }
 
@@ -49,8 +49,8 @@ export class UserRegistrationComponent implements OnInit {
       }
 
       this.userService.registerUser(user).subscribe(data => {
-        this.errorMsg = REGISTER_SUCCESS;
-        //wait 5 sec and redirect to login
+        this.errorMsg = messages.REGISTER_SUCCESS;
+
         setTimeout(() => {
           this.router.navigate(["/"])
         }, 5000);
@@ -67,7 +67,7 @@ export class UserRegistrationComponent implements OnInit {
     if(imgFile && imgFile.size < MAX_FILE_SIZE) {
       this.imageData = imgFile;   //typescript does not like me calling this.form.get("").setValue() here :(
     } else {
-      this.errorMsg = IMAGE_TOO_BIG;
+      this.errorMsg = messages.IMAGE_TOO_BIG;
       event.target.value = null;
     }
   }

@@ -1,13 +1,19 @@
 package com.stackroute.userservice.controller;
 
+import com.stackroute.userservice.entity.JwtRequest;
+import com.stackroute.userservice.entity.JwtResponse;
 import com.stackroute.userservice.entity.User;
+import com.stackroute.userservice.exception.InvalidPasswordException;
 import com.stackroute.userservice.exception.UserAlreadyExistException;
+import com.stackroute.userservice.exception.UserNotFoundException;
 import com.stackroute.userservice.service.UserService;
+import com.stackroute.userservice.utility.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,25 +22,33 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 public class UserController {
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private UserService userService;
+
     ResponseEntity<?> responseEntity;
     public static String uploadDirectory = System.getProperty("user.dir") + "/webapp/assets/images";
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
+
     @Autowired
     public UserController(UserService userService){
         this.userService = userService;
+
     }
 
     /**
      * Save a new user
      */
-
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public ResponseEntity<?> registerUser(@ModelAttribute("user") User user, @RequestParam("img") MultipartFile file) throws IOException, UserAlreadyExistException {
         try {
             User savedUser = userService.registerUser(user);
@@ -63,6 +77,24 @@ public class UserController {
         }
 
         return responseEntity;
+    }
+
+    /**
+     * Authenticate user and return a json token if valid
+     */
+    @PostMapping("/auth/login")
+    public ResponseEntity<?> login(@RequestBody JwtRequest jwtRequest) {
+        User findUser = userService.findUserByUsername(jwtRequest.getUsername());
+
+        boolean isValidPw = passwordEncoder.matches(jwtRequest.getPassword(), findUser.getPassword());
+
+        if(!isValidPw) {
+            throw new InvalidPasswordException("Invalid Password");
+        }
+
+        final String token = jwtUtil.generateToken(findUser.getUsername());
+
+        return ResponseEntity.ok(new JwtResponse(token, findUser));
     }
 
 }
