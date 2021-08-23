@@ -39,7 +39,7 @@ public class FavoriteRepositoryIntegrationTest {
 
         selection = new Selection(1, favoriteList1);
         favoriteRepository.save(selection);
-        Selection selection1 = favoriteRepository.findById(selection.getUserId()).get();
+        Selection selection1 = favoriteRepository.findByUserId(selection.getUserId());
         selection1.setUserId(selection.getUserId());
         selection1.addFavoriteItem(gif3);
         Selection updatedSelection = favoriteRepository.save(selection1);
@@ -51,7 +51,7 @@ public class FavoriteRepositoryIntegrationTest {
     public void givenGifUrlToRemoveThenShouldReturnRemovedGif() {
         selection = new Selection(1, favoriteList1);
         favoriteRepository.save(selection);
-        Selection selection1 = favoriteRepository.findById(selection.getUserId()).get();
+        Selection selection1 = favoriteRepository.findByUserId(selection.getUserId());
         selection1.setUserId(selection.getUserId());
         selection1.removeFavoriteItem(gif2);
         Selection updatedSelection = favoriteRepository.save(selection1);
@@ -63,7 +63,7 @@ public class FavoriteRepositoryIntegrationTest {
     public void givenUserIdThenShouldReturnEmptyFavoriteList(){
         Selection selection2 = new Selection(1, new HashSet<String>());
 
-        Selection selection1 = favoriteRepository.findById(selection.getUserId()).get();
+        Selection selection1 = favoriteRepository.findByUserId(selection.getUserId());
         selection1.emptyFavoriteList();
         Selection emptySelection = favoriteRepository.save(selection1);
         assertEquals(emptySelection, selection2);
@@ -86,7 +86,7 @@ public class FavoriteRepositoryIntegrationTest {
             add(gif2);
         }};
 
-        HashSet<String> favorites = favoriteRepository.findById(selection.getUserId()).get().getFavoriteList();
+        HashSet<String> favorites = favoriteRepository.findByUserId(selection.getUserId()).getFavoriteList();
         assertEquals(favList, favorites );
     }
 

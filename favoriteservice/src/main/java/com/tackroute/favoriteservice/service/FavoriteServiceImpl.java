@@ -25,34 +25,74 @@ public class FavoriteServiceImpl implements FavoriteService{
 
     @Override
     public Selection addFavorite(int userId, String gifUrl) throws GifAlreadyExistException {
-        System.out.println(favoriteRepository.existsByUserId(userId));
+//        System.out.println(favoriteRepository.existsByUserId(userId));
 
         Selection userSelections = favoriteRepository.findByUserId(userId);
 
-        if(userSelections != null) {
-            userSelections.getFavoriteList().add(gifUrl);
+        if(userSelections !=null) {
+            if(userSelections.getFavoriteList().contains(gifUrl)){
+                throw new GifAlreadyExistException();
+            }
+            else {
+                userSelections.getFavoriteList().add(gifUrl);
+            }
         } else {
-            var set = new HashSet<String>();
-            set.add(gifUrl);
-            userSelections = new Selection(userId, set);
+
+                var set = new HashSet<String>();
+                set.add(gifUrl);
+                userSelections = new Selection(userId, set);
+
         }
 
         return favoriteRepository.save(userSelections);
-   }
+
+
+    }
+
+
+//
+//        Selection savedSelection;
+//        if(favoriteRepository.findByUserId(userId)==null){
+//            LOG.info("Selection don't exist yet");
+//            Selection s = new Selection(userId, new HashSet<String>(){{add(gifUrl);}});
+//            savedSelection = favoriteRepository.save(s);
+//        }
+//        else{
+//            HashSet<String> h = ( (Selection) favoriteRepository.findByUserId(userId)).getFavoriteList();
+//            LOG.info(h.toArray()+ ", " + h.contains(gifUrl));
+//            try{
+//                h.add(gifUrl);
+//                savedSelection= favoriteRepository.save(new Selection(userId, h));
+//            }
+//            catch (GifAlreadyExistException e){
+//                throw new GifAlreadyExistException();
+//            }
+////            if( (favoriteRepository.findByUserIdAndGifUrl(userId,gifUrl))==null){
+////                h.add(gifUrl);
+////                savedSelection= favoriteRepository.save(new Selection(userId, h));
+////
+////            }
+////            else {
+////                LOG.info("exist already");
+////                throw new GifAlreadyExistException();
+////                  }
+//        }
+//        return savedSelection;
+
 
 
     @Override
     public HashSet<String> removeFavorite(int userId, String gifUrl) throws GifNotFoundException {
         Selection updatedSelection;
-        if(!favoriteRepository.existsById(userId)){
+        if(!favoriteRepository.existsByUserId(userId)){
             throw new GifNotFoundException();
         }
         else{
-            HashSet<String> h = favoriteRepository.findById(userId).get().getFavoriteList();
+            HashSet<String> h = favoriteRepository.findByUserId(userId).getFavoriteList();
             if(h.contains(gifUrl)){
                 h.remove(gifUrl);
                 if(h.isEmpty()){
-                    favoriteRepository.deleteById(userId);
+                    favoriteRepository.deleteByUserId(userId);
                     updatedSelection= new Selection(userId, new HashSet<String>());
                 }
                 else {
@@ -69,16 +109,16 @@ public class FavoriteServiceImpl implements FavoriteService{
 
     @Override
     public HashSet<String> emptyFavoriteList(int userId) throws NoFavoriteGifFoundException {
-        if(!favoriteRepository.existsById(userId)){
+        if(!favoriteRepository.existsByUserId(userId)){
             throw new NoFavoriteGifFoundException();
         }
         else{
-            HashSet<String> h = favoriteRepository.findById(userId).get().getFavoriteList();
+            HashSet<String> h = favoriteRepository.findByUserId(userId).getFavoriteList();
             if(h.isEmpty()){
                 throw new NoFavoriteGifFoundException();
             }
             else{
-                favoriteRepository.deleteById(userId);
+                favoriteRepository.deleteByUserId(userId);
                 LOG.info("favorite list successfully deleted");
             }
             return new HashSet<String>();
@@ -87,10 +127,10 @@ public class FavoriteServiceImpl implements FavoriteService{
 
     @Override
     public HashSet<String> getAllFavorites(int userId)  throws NoFavoriteGifFoundException {
-        if (!favoriteRepository.existsById(userId)) {
+        if (!favoriteRepository.existsByUserId(userId)) {
             throw new NoFavoriteGifFoundException();
         } else {
-            HashSet<String> h = favoriteRepository.findById(userId).get().getFavoriteList();
+            HashSet<String> h = favoriteRepository.findByUserId(userId).getFavoriteList();
             LOG.info("done");
             return h;
 
@@ -99,11 +139,11 @@ public class FavoriteServiceImpl implements FavoriteService{
 
     @Override
     public boolean checkIfFavoriteByUrl(int userId, String gifUrl) throws NoFavoriteGifFoundException{
-        if(!favoriteRepository.existsById(userId)){
+        if(!favoriteRepository.existsByUserId(userId)){
             throw new NoFavoriteGifFoundException();
         }
         else{
-            HashSet<String> list = favoriteRepository.findById(userId).get().getFavoriteList();
+            HashSet<String> list = favoriteRepository.findByUserId(userId).getFavoriteList();
             return list.contains(gifUrl);
         }
 

@@ -15,10 +15,10 @@ import java.util.HashSet;
 public class Selection {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+    @Indexed(unique = true)
     private int userId;
-    private HashSet<String> favoriteList = new HashSet<String>();
+    private HashSet<String> favoriteList ;
 
     public Selection() {
     }
@@ -27,6 +27,14 @@ public class Selection {
         this.userId = userId;
         this.favoriteList = favoriteList;
     }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (!(o instanceof Name))
+//            return false;
+//        Name n = (Name) o;
+//        return n.first.equals(first) && n.last.equals(last);
+//    }
 
     public String getId() {
         return id;
@@ -45,7 +53,7 @@ public class Selection {
     }
 
     public HashSet<String> getFavoriteList() {
-        return favoriteList;
+        return this.favoriteList;
     }
 
     public void setFavoriteList(HashSet<String> favoriteList) {

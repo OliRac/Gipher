@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = NoFavoriteGifFoundException.class)
     public ResponseEntity<String> NoFavoriteGifFoundException(NoFavoriteGifFoundException noFavoriteGifFoundException) {
-        return new ResponseEntity<>(message2, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(message3, HttpStatus.NOT_FOUND);
     }
 
 }
