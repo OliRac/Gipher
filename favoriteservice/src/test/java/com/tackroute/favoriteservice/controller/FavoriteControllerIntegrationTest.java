@@ -8,8 +8,11 @@ import com.tackroute.favoriteservice.service.FavoriteService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
@@ -17,7 +20,9 @@ import java.util.HashSet;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Transactional
+//@Transactional
+//@DataMongoTest
+//@ExtendWith(SpringExtension.class)
 public class FavoriteControllerIntegrationTest {
 
     @Autowired
@@ -29,19 +34,17 @@ public class FavoriteControllerIntegrationTest {
     String gif2 = "https://giphy.com/stories/welcome-to-the-high-rollers-room-8d7b09cb-a920";
 
 
-    private HashSet<String> favoriteList = new HashSet<String>() {{
-        add(gif2);
-
-    }};
-
+    private HashSet<String> favoriteList;
 
     @BeforeEach
     void setUp() {
+        favoriteList = new HashSet<String>() {{ add(gif1);}};
         selection = new Selection(1, favoriteList );
     }
 
     @AfterEach
     public void tearDown() {
+        favoriteList=null;
         selection = null;
     }
 
@@ -61,16 +64,22 @@ public class FavoriteControllerIntegrationTest {
     }
 
     @Test
-    void givenFavoriteGifToRemoveThenShouldReturnTheRemovedGif() throws GifNotFoundException {
+    void givenFavoriteGifToRemoveThenShouldReturnTheRemovedGif() throws GifNotFoundException, NoFavoriteGifFoundException {
         assertNotNull(favoriteService.addFavorite(1, gif1));
         HashSet<String> updatedSelection = favoriteService.removeFavorite(1, gif1);
         assertNotNull(updatedSelection);
     }
 
     @Test
-    void givenFavoriteGifToRemoveThenThrowException() throws GifNotFoundException {
-        assertThrows(GifAlreadyExistException.class, () -> favoriteService.removeFavorite(1, gif1));
+    void givenFavoriteGifToRemoveThenThrowNoGifFoundException() throws RuntimeException {
+        assertThrows(RuntimeException.class,  () -> favoriteService.removeFavorite(1, gif1));
+//        assertThrows()
     }
+//    @Test
+//    void givenFavoriteGifToRemoveThenThrowNoGifExistException() throws NoFavoriteGifFoundException {
+//        assertThrows(NoFavoriteGifFoundException.class,  () -> favoriteService.removeFavorite(1, gif1));
+//
+//    }
 
     @Test
     void givenCallToGetAllFavoriteGifsThenListShouldReturnAllFavorites() throws NoFavoriteGifFoundException {
@@ -90,10 +99,10 @@ public class FavoriteControllerIntegrationTest {
     @Test
     void givenUserIdThenShouldReturnEmptyFavoriteList() throws NoFavoriteGifFoundException {
        Selection selection1 = favoriteService.addFavorite(1, gif1);
-       Selection selection2= new Selection(selection1.getUserId(), new HashSet<String>());
+       HashSet<String> emptySet=  new HashSet<String>();
         HashSet<String> emptyList= favoriteService.emptyFavoriteList(selection1.getUserId());
 
-        assertEquals(selection2, new Selection(1, emptyList));
+        assertEquals(emptySet,  emptyList);
     }
 
     @Test

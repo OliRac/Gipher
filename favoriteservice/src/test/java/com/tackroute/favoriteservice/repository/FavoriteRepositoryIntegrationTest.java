@@ -3,20 +3,15 @@ package com.tackroute.favoriteservice.repository;
 
 import com.tackroute.favoriteservice.domain.Selection;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-@ExtendWith(SpringExtension.class)
+//@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class FavoriteRepositoryIntegrationTest {
 
@@ -31,6 +26,9 @@ public class FavoriteRepositoryIntegrationTest {
         add(gif2);
 
     }};
+    private HashSet<String> favoriteList2 = new HashSet<String>() {{
+        add(gif1);
+    }};
     private Selection selection;
 
     @Test
@@ -40,7 +38,7 @@ public class FavoriteRepositoryIntegrationTest {
         selection = new Selection(1, favoriteList1);
         favoriteRepository.save(selection);
         Selection selection1 = favoriteRepository.findByUserId(selection.getUserId());
-        selection1.setUserId(selection.getUserId());
+        selection1.getFavoriteList().add(gif3);
         selection1.addFavoriteItem(gif3);
         Selection updatedSelection = favoriteRepository.save(selection1);
         assertEquals(selection1.getUserId(), updatedSelection.getUserId());
@@ -52,42 +50,43 @@ public class FavoriteRepositoryIntegrationTest {
         selection = new Selection(1, favoriteList1);
         favoriteRepository.save(selection);
         Selection selection1 = favoriteRepository.findByUserId(selection.getUserId());
-        selection1.setUserId(selection.getUserId());
-        selection1.removeFavoriteItem(gif2);
+        selection1.getFavoriteList().remove(gif2);
         Selection updatedSelection = favoriteRepository.save(selection1);
         assertEquals(selection1.getUserId(), updatedSelection.getUserId());
-        assertEquals(selection1.getFavoriteList(), updatedSelection.getFavoriteList());
+        assertEquals(updatedSelection.getFavoriteList(), favoriteList2);
     }
 
     @Test
-    public void givenUserIdThenShouldReturnEmptyFavoriteList(){
-        Selection selection2 = new Selection(1, new HashSet<String>());
+    public void givenLastFavoriteToRemoveThenShouldDeleteFavoriteList() {
+        Selection emptySelection = new Selection(1, new HashSet<String>());
+        selection = new Selection(1, favoriteList2);
+        Selection selection1 = favoriteRepository.save(selection);
+        selection1.getFavoriteList().remove(gif1);
+        favoriteRepository.deleteByUserId(1);
+        assertEquals(favoriteRepository.findByUserId(1), null);
+        assertEquals(selection1.getFavoriteList(),emptySelection.getFavoriteList());
 
-        Selection selection1 = favoriteRepository.findByUserId(selection.getUserId());
-        selection1.emptyFavoriteList();
-        Selection emptySelection = favoriteRepository.save(selection1);
-        assertEquals(emptySelection, selection2);
+    }
+
+        @Test
+        public void givenUserIdThenShouldEmptyFavoriteList(){
+        selection = new Selection(1, favoriteList1);
+        favoriteRepository.save(selection);
+        favoriteRepository.deleteByUserId(selection.getUserId());
+//        Selection selection1 = favoriteRepository.findByUserId(selection.getUserId());
+//        selection1.emptyFavoriteList();
+//        Selection emptySelection = favoriteRepository.save(selection1);
+        assertEquals(favoriteRepository.findByUserId(selection.getUserId()), null);
 
     }
 
     @Test
     public void givenUserIdThenShouldReturnListOfAllFavorites(){
         selection = new Selection(1, favoriteList1);
-
-        Selection selection2 = new Selection(1, new HashSet<String>() {
-            {add("https://giphy.com/gifs/mlb-y0FfnDHoT6BKfKzzMZ");}
-        });
-
-        favoriteRepository.save(selection2);
-        favoriteRepository.save(selection);
-
-        HashSet<String> favList = new HashSet<String >() {{
-            add(gif1);
-            add(gif2);
-        }};
-
-        HashSet<String> favorites = favoriteRepository.findByUserId(selection.getUserId()).getFavoriteList();
-        assertEquals(favList, favorites );
+        Selection sel= favoriteRepository.save(selection);
+//        favoriteRepository.findByUserId(selection.getUserId())
+        HashSet<String> favorites = sel.getFavoriteList();
+        assertEquals(favorites, favoriteList1 );
     }
 
 //    @Test

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tackroute.favoriteservice.exception.GifAlreadyExistException;
 import com.tackroute.favoriteservice.exception.GifNotFoundException;
 import com.tackroute.favoriteservice.domain.Selection;
+import com.tackroute.favoriteservice.exception.GlobalExceptionHandler;
 import com.tackroute.favoriteservice.service.FavoriteService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,13 +40,12 @@ public class FavoriteControllerTest {
     Selection selection;
 //    List<Blog> blogList;
 
-    String gif1 = "https://giphy.com/stories/some-bb23-cute-moments-1b9c561f-c095";
-    String gif2 = "https://giphy.com/stories/welcome-to-the-high-rollers-room-8d7b09cb-a920";
+    String gif1 = "gif1";
+    String gif2 = "gif2";
 
 
     private HashSet<String> favoriteList = new HashSet<String>() {{
         add(gif1);
-        add(gif2);
 
     }};
 
@@ -56,7 +56,7 @@ public class FavoriteControllerTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(favoriteController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(favoriteController).setControllerAdvice(new GlobalExceptionHandler()).build();
         selection = new Selection(1, favoriteList );
 
     }
@@ -66,35 +66,32 @@ public class FavoriteControllerTest {
         selection = null;
     }
 
-    @Test
-    public void givenGifToSaveAsFavoriteThenShouldCreateUserSelectionAndAddGif() throws Exception {
-        String gif3 = "https://giphy.com/gifs/mlb-y0FfnDHoT6BKfKzzMZ";
-        HashSet<String> favoriteList1 = new HashSet<String>();
-        HashSet<String> favoriteList2 = new HashSet<String>(){
-            {add(gif3);}
-        };
-        Selection selection1 = new Selection(selection.getUserId(), favoriteList2);
-
-        when(favoriteService.addFavorite(selection.getUserId(),gif3)).thenReturn(selection1);
-        mockMvc.perform(put("/api/v1/addFavorite/1/gif3")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(selection1)))
-                .andExpect(status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-        verify(favoriteService).addFavorite(selection.getUserId(),gif3);
-    }
+//    @Test
+//    public void givenGifToSaveAsFavoriteThenShouldCreateUserSelectionAndAddGif() throws Exception {
+//        String gif3 = "https://giphy.com/gifs/mlb-y0FfnDHoT6BKfKzzMZ";
+//        HashSet<String> favoriteList1 = new HashSet<String>();
+//        HashSet<String> favoriteList2 = new HashSet<String>(){
+//            {add(gif3);}
+//        };
+//        Selection selection1 = new Selection(selection.getUserId(), favoriteList2);
+//
+//        when(favoriteService.addFavorite(selection.getUserId(),gif3)).thenReturn(selection1);
+//        mockMvc.perform(post("/api/v1/addFavorite/1/gif3")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(asJsonString(selection1)))
+//                .andExpect(status().isOk())
+//                .andDo(MockMvcResultHandlers.print());
+//        verify(favoriteService).addFavorite(selection.getUserId(),gif3);
+//    }
 
     @Test
     public void givenGifToSaveAsFavoriteThenShouldReturnSavedGif() throws Exception {
-        String gif3 = "https://giphy.com/gifs/mlb-y0FfnDHoT6BKfKzzMZ";
-        HashSet<String> favoriteList2 = new HashSet<String>(){
-                                            { add(gif1);
-                                                add(gif2);
-                                                add(gif3);}
-                                        };
+//
+        String gif="111";
+        HashSet<String> favoriteList2 = new HashSet<String>(){  { add(gif);} };
         Selection selection1 = new Selection(selection.getUserId(), favoriteList2);
-        when(favoriteService.addFavorite(selection.getUserId(), gif3)).thenReturn(selection1);
-        mockMvc.perform(put("/api/v1/addFavorite/1/gif3")
+        when(favoriteService.addFavorite(selection.getUserId(),  "111")).thenReturn(selection1);
+        mockMvc.perform(post("/api/v1/addFavorite/1/111")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(selection1)))
                 .andExpect(status().isOk())
@@ -103,11 +100,11 @@ public class FavoriteControllerTest {
     }
 
     @Test
-    public void givenGifUrlToAddThenShouldReturnAddedFavorite() throws Exception {
-        when(favoriteService.addFavorite(selection.getUserId(), gif1)).thenThrow(GifAlreadyExistException.class);
-        mockMvc.perform(put("/api/v1/addFavorite/1/gif1")
+    public void givenGifUrlToAddThenShouldNotReturnAddedFavorite() throws Exception {
+        when(favoriteService.addFavorite(selection.getUserId(), "111")).thenThrow(GifAlreadyExistException.class);
+        mockMvc.perform(post("/api/v1/addFavorite/1/111")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(selection)))
+                .content(asJsonString("Gif already exists among the favorites!")))
                 .andExpect(status().isConflict())
                 .andDo(MockMvcResultHandlers.print());
     }
@@ -120,7 +117,7 @@ public class FavoriteControllerTest {
                                              };
 //       Selection selection1 = new Selection(selection.getUserId(), favoriteList1);
        when(favoriteService.removeFavorite(selection.getUserId(), gif2)).thenReturn(favoriteList1);
-       mockMvc.perform(put("/api/v1/removeFavorite/1/gif1")
+       mockMvc.perform(post("/api/v1/removeFavorite/1/gif2")
                .contentType(MediaType.APPLICATION_JSON)
                .content(asJsonString(favoriteList1)))
                .andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
@@ -130,7 +127,7 @@ public class FavoriteControllerTest {
     @Test
     void givenGifUrlToRemoveThenShouldNotReturnRemovedBlog() throws  Exception {
         when(favoriteService.removeFavorite(selection.getUserId(), gif2)).thenThrow(GifNotFoundException.class);
-        mockMvc.perform(put("/api/v1/removeFavorite/1/gif1")
+        mockMvc.perform(post("/api/v1/removeFavorite/1/gif2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(favoriteList)))
                 .andExpect(MockMvcResultMatchers.status().isNotFound()).andDo(MockMvcResultHandlers.print());

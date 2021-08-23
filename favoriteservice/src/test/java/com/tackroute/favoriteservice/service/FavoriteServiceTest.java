@@ -1,14 +1,24 @@
 package com.tackroute.favoriteservice.service;
 
 import com.tackroute.favoriteservice.domain.Selection;
+import com.tackroute.favoriteservice.exception.GifAlreadyExistException;
+import com.tackroute.favoriteservice.exception.GifNotFoundException;
+import com.tackroute.favoriteservice.exception.NoFavoriteGifFoundException;
 import com.tackroute.favoriteservice.repository.FavoriteRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+
 
 import java.util.HashSet;
 
@@ -26,6 +36,11 @@ public class FavoriteServiceTest {
         add(gif2);
 
     }};
+
+    private HashSet<String> favoriteList2 = new HashSet<String>() {{
+        add(gif1);
+    }};
+
 
     @Mock
     private FavoriteRepository favoriteRepository;
@@ -46,47 +61,20 @@ public class FavoriteServiceTest {
         selection = null;
     }
 
-//    @Test
-//    void givenFavoriteGifToAddThenShouldReturnAddedGif() throws GifAlreadyExistException {
-//        favoriteRepository.findById(1).
-//        when(favoriteRepository.(any())).thenReturn(selection);
-//        assertEquals(blog, blogService.saveBlog(blog));
-//        verify(blogRepository, times(1)).save(any());
-//
-//
-//        Selection updatedSelection = favoriteService.addFavorite(1, gif1);
-//        assertNotNull(updatedSelection);
-//        assertEquals(updatedSelection.getFavoriteList(), selection.getFavoriteList());
-//        assertEquals(updatedSelection.getUserId(), selection.getUserId());
-//
-//    }
-//
-//    @Test
-//    void givenFavoriteGifToRemoveThenShouldReturnTheRemovedGif() throws GifNotFoundException {
-//        assertNotNull(favoriteService.addFavorite(1, gif1));
+    @Test
+    void givenFirstFavoriteGifToAddThenShouldReturnCreatedSelection() throws GifAlreadyExistException {
+        when(favoriteRepository.save(selection)).thenReturn(selection);
+        assertEquals(selection, favoriteRepository.save(selection));
+        verify(favoriteRepository, times(1)).save(selection);
+    }
+
+    @Test
+    void givenLastFavoriteGifToRemoveThenShouldReturnDeletedSelection() throws GifNotFoundException, NoFavoriteGifFoundException {
+        Selection s2 = favoriteRepository.save(new Selection(1, favoriteList2));
 //        HashSet<String> updatedSelection = favoriteService.removeFavorite(1, gif1);
-//        assertNotNull(updatedSelection);
-//    }
-//
-//    @Test
-//    void givenCallToGetAllFavoriteGifsThenListShouldReturnAllFavorites() throws NoFavoriteGifFoundException {
-//        HashSet<String> listFavs = new HashSet<String>(){ {add(gif1);}};
-//        assertNotNull(favoriteService.addFavorite(1, gif1));
-//        HashSet<String> retrievedGifs = favoriteService.getAllFavorites(1);
-//        assertNotNull(retrievedGifs);
-//        assertEquals(listFavs, retrievedGifs);
-//    }
-//
-//
-//    @Test
-//    void givenUserIdThenShouldReturnEmptyFavoriteList() throws NoFavoriteGifFoundException {
-//        Selection selection1 = favoriteService.addFavorite(1, gif1);
-//        Selection selection2= new Selection(selection1.getUserId(), new HashSet<String>());
-//        HashSet<String> emptyList= favoriteService.emptyFavoriteList(selection1.getUserId());
-//
-//        assertEquals(selection2, new Selection(1, emptyList));
-//    }
+        favoriteRepository.deleteByUserId(1);
+        assertEquals(favoriteRepository.findByUserId(1), null);
+        verify(favoriteRepository, times(1)).deleteByUserId(1);
+    }
 
-
-
-}
+    }
