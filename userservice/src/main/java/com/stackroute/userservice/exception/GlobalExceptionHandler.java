@@ -16,4 +16,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> userNotFoundException(UserNotFoundException userNotFoundException){
         return new ResponseEntity<String>("User Not Found", HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<String> invalidPasswordException(InvalidPasswordException invalidPasswordException) {
+        return new ResponseEntity<String>("Invalid password", HttpStatus.UNAUTHORIZED);
+    }
 }

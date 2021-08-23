@@ -12,4 +12,6 @@ export const messages = {
 
     REGISTER_FAIL: "Failed to register! There was a server error.",
     REGISTER_SUCCESS: "Sucessfully registered! Redirecting to home in 5...",
+
+    LOGIN_GREET: "Welcome! Redirecting to your dashboard in 5..."
 }

@@ -3,6 +3,7 @@ package com.stackroute.userservice.controller;
 import com.stackroute.userservice.entity.JwtRequest;
 import com.stackroute.userservice.entity.JwtResponse;
 import com.stackroute.userservice.entity.User;
+import com.stackroute.userservice.exception.InvalidPasswordException;
 import com.stackroute.userservice.exception.UserAlreadyExistException;
 import com.stackroute.userservice.exception.UserNotFoundException;
 import com.stackroute.userservice.service.UserService;
@@ -87,8 +88,8 @@ public class UserController {
 
         boolean isValidPw = passwordEncoder.matches(jwtRequest.getPassword(), findUser.getPassword());
 
-        if(findUser == null || !isValidPw){
-            throw new UserNotFoundException("User Not Found");
+        if(!isValidPw) {
+            throw new InvalidPasswordException("Invalid Password");
         }
 
         final String token = jwtUtil.generateToken(findUser.getUsername());

@@ -17,6 +17,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './search/search.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { RecommendedComponent } from './recommended/recommended.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { RecommendedComponent } from './recommended/recommended.component';
     FooterComponent,
     SearchComponent,
     FavoritesComponent,
-    RecommendedComponent
+    RecommendedComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

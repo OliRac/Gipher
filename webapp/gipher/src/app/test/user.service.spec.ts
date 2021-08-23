@@ -43,7 +43,7 @@ describe('UserService', () => {
     httpMock.verify();
   });
 
-  it("login() should return a user", () => {
+  it("login() should return a user and a jwt token", () => {
     let user: User = {
       username: "someuser",
       password: "somepassword"
