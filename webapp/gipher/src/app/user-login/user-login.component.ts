@@ -36,8 +36,7 @@ export class UserLoginComponent implements OnInit {
       }
 
       this.userService.login(user).subscribe(data => {
-        //Need to get in touch to figure out what is returned with login
-        //how jwt token will be managed (local storage, cookie...)
+        //data contains the JWT followed by the user object
 
         let loggedIn: User = {
           username: data.user.username,
@@ -52,7 +51,7 @@ export class UserLoginComponent implements OnInit {
         this.errorMsg = messages.LOGIN_GREET;
 
         setTimeout(() => {
-          this.router.navigate(["/"])
+          this.router.navigate(["/dashboard"])
         }, 5000);
       }, error => {
         this.errorMsg = error.error;
