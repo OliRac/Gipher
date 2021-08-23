@@ -17,7 +17,8 @@ import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './search/search.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { RecommendedComponent } from './recommended/recommended.component';
-
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,8 @@ import { RecommendedComponent } from './recommended/recommended.component';
     RecommendedComponent
   ],
   imports: [
+    MatCardModule,
+    MatFormFieldModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
