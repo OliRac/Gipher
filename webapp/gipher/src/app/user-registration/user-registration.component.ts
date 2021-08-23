@@ -50,8 +50,7 @@ export class UserRegistrationComponent implements OnInit {
 
       this.userService.registerUser(user).subscribe(data => {
         this.errorMsg = messages.REGISTER_SUCCESS;
-        //more logic later with JWT / auth
-        //wait 5 sec and redirect to login
+
         setTimeout(() => {
           this.router.navigate(["/"])
         }, 5000);

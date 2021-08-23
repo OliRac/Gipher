@@ -9,8 +9,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class UserService {
-  registerURL: string = environment.USER_SERVICE_URL + "/register"
-  loginURL: string = environment.USER_SERVICE_URL + "/login"
+  registerURL: string = environment.USER_SERVICE_URL + "/auth/register";
+  loginURL: string = environment.USER_SERVICE_URL + "/auth/login";
 
   constructor(private http: HttpClient) { }
 
@@ -33,18 +33,23 @@ export class UserService {
   }
 
   login(user: User): Observable<any> {
-    let formData: FormData = new FormData();
+    /*let formData: FormData = new FormData();
 
     formData.append("username", user.username);
-    formData.append("password", user.password);
+    formData.append("password", user.password);*/
 
     let headers = new HttpHeaders();
+    //headers.append("Content-Type","application/json;");
+    //headers.delete("Content-Type", "text/plain");
+    //headers.append("Accept", "application/json");
+
+    headers.append('Content-Type','application/json');
     headers.append("Accept", "application/json");
 
     let options = {
       headers: headers,
     }
 
-    return this.http.post(this.loginURL, formData, options);
+    return this.http.post(this.loginURL, user, options);
   }
 }

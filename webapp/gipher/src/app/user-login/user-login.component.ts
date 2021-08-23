@@ -30,12 +30,13 @@ export class UserLoginComponent implements OnInit {
     if(this.form.valid) {
       let user: User = {
         username: this.username.value,
-        password: this.username.value
+        password: this.password.value
       }
 
       this.userService.login(user).subscribe(data => {
         //Need to get in touch to figure out what is returned with login
         //how jwt token will be managed (local storage, cookie...)
+        console.log(data);
         this.errorMsg = data;
       }, error => {
         this.errorMsg = error.error;
