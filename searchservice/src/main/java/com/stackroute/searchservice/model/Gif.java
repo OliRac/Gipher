@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Arrays;
-import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 //to indicate that any properties not bound in this type should be ignored
@@ -21,19 +20,14 @@ public class Gif {
     private String url;
     private Object[] results;
 
-
     public Gif() {
 
     }
-  public String getUrl() {
-    return url;
-  }
 
   @Override
   public String toString() {
     return "Gif{" +
-            "url='" + url + '\'' +
-            ", results=" + Arrays.toString(results) +
+            "results=" + Arrays.toString(results) +
             '}';
   }
 }

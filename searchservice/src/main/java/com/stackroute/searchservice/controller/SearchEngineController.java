@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
@@ -22,8 +23,8 @@ public class SearchEngineController {
 //    private final String LIMIT = "&limit=8";
 //    @Value("${api.key}")
 //    private String apiKey;
-//    @Autowired
-//    private RestTemplate restTemplate;
+    @Autowired
+   private RestTemplate restTemplate;
     @Autowired
     private SearchEngineService searchService;
     @Autowired
@@ -42,20 +43,19 @@ public class SearchEngineController {
 //  test    http://localhost:8082/search?searchTerm=book
     public ResponseEntity<SearchEngine> getGifByName( @PathVariable(value="searchTerm") String searchTerm , @PathVariable(value="userId") int userId)throws UserNotFoundException{
       ResponseEntity<SearchEngine> result = new ResponseEntity<SearchEngine> (searchService.saveSearch(userId, searchTerm), HttpStatus.OK);
-      log.info("Result from our api for searchEngine is:  \n " + result.toString());
+     // log.info("Result from our api for searchEngine is:  \n " + result.toString());
+
        return result;
-
-
-
-
-
-
-       // log.info("User id "searchService.getSearchInfoByUserId(userId).getSearchTerm());
-//        ResponseEntity<String> response = restTemplate.getForEntity(searchURL , String.class);
-//        HttpStatus statusCode = response.getStatusCode();
-//        return response;
     }
 
+    @GetMapping("/gifs/{searchTerm}")
+    public Object  getGif(@PathVariable(value="searchTerm") String searchTerm ){
+         Object obj = searchService.getGifs(searchTerm);
+
+        ResponseEntity<Object> result = new ResponseEntity<> (searchService.getGifs(searchTerm), HttpStatus.OK);
+
+        return obj;
+    }
 
 
 }

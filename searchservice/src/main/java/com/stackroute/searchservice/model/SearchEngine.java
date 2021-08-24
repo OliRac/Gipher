@@ -16,6 +16,7 @@ public class SearchEngine {
     private int userId;
     private String searchTerm;
     private Set<String> searchTermSet = new HashSet<String>();
+    //todo return last searchTerm
 
 
     public SearchEngine() {
