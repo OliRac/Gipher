@@ -5,9 +5,9 @@
 export const environment = {
   production: false,
   USER_SERVICE_URL: "http://localhost:9090",
+  SEARCH_SERVICE_URL: "http://localhost:9090/search-service",
 
   /*THE FOLLOWING ARE PLACEHOLDERS*/
-  SEARCH_SERVICE_URL: "http://localhost:9091",
   FAVORITE_SERVICE_URL: "http://localhost:9092",
   RECOMM_SERVICE_URL: "http://localhost:9093"
 };

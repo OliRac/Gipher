@@ -17,6 +17,8 @@ import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './search/search.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { RecommendedComponent } from './recommended/recommended.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCardModule} from '@angular/material/card';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LandingComponent } from './landing/landing.component';
 import { LogoutComponent } from './logout/logout.component';
@@ -37,6 +39,8 @@ import { LogoutComponent } from './logout/logout.component';
     LogoutComponent
   ],
   imports: [
+    MatCardModule,
+    MatFormFieldModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
