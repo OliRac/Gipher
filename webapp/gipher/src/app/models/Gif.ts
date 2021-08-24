@@ -1,5 +1,5 @@
 export class Gif {
-    userId: number;
+    userId?: number;
     favorite?: boolean = false;
     gifURL: string;
 }

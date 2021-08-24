@@ -22,6 +22,9 @@ import {MatCardModule} from '@angular/material/card';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LandingComponent } from './landing/landing.component';
 import { LogoutComponent } from './logout/logout.component';
+import { GifGridComponent } from './gif-grid/gif-grid.component';
+import { TrendingComponent } from './trending/trending.component';
+import { MatGridListModule } from '@angular/material/grid-list'; 
 
 
 @NgModule({
@@ -36,7 +39,9 @@ import { LogoutComponent } from './logout/logout.component';
     RecommendedComponent,
     DashboardComponent,
     LandingComponent,
-    LogoutComponent
+    LogoutComponent,
+    GifGridComponent,
+    TrendingComponent
   ],
   imports: [
     MatCardModule,
@@ -48,7 +53,8 @@ import { LogoutComponent } from './logout/logout.component';
     BrowserAnimationsModule,
     MatSliderModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
