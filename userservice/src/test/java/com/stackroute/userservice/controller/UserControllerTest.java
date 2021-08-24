@@ -59,7 +59,7 @@ public class UserControllerTest {
 
         when(userService.registerUser(any())).thenReturn(user);
         mockMvc.perform(
-                multipart("/register")
+                multipart("/auth/register")
                         .file(file1)
                         .file(file2)
                         .accept(MediaType.APPLICATION_JSON))
@@ -73,7 +73,7 @@ public class UserControllerTest {
 
         when(userService.registerUser((User) any())).thenThrow(UserAlreadyExistException.class);
         mockMvc.perform(
-                multipart("/register")
+                multipart("/auth/register")
                         .file(file1)
                         .file(file2)
                         .accept(MediaType.APPLICATION_JSON))

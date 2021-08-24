@@ -43,6 +43,12 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
     }
 
+    public String getFirstProperty() {
+        return jwtSecret;
+    }
 
+    public long getSecondProperty() {
+        return tokenValidity;
+    }
 
 }
