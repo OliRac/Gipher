@@ -11,19 +11,23 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 class SearchEngineControllerTest {
@@ -34,36 +38,44 @@ class SearchEngineControllerTest {
     private SearchEngineController searchController;
 
     private SearchEngine search;
-    private Set<String> searchTerms = new HashSet();
+    private Set<String> searchSet;
+    private List<SearchEngine> searchEngineList;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(searchController).build();
+        search = new SearchEngine();
+        searchSet = new HashSet<>();
+        searchEngineList = new ArrayList<>();
+        search.setUserId(1);
+        searchSet.add("book");
 
-        search = new SearchEngine(1 , searchTerms);
-        searchTerms.add("book");
-        searchTerms.add("happy");
+        searchEngineList.add(search);
+
     }
     @AfterEach
     public void tearDown() {
         search = null;
     }
-    public static String parsToString(final Object obj) {
+
+    @Test
+    public void givenBlogToSaveThenShouldReturnSavedBlog() throws Exception {
+        when(searchService.saveSearch(any())).thenReturn(search);
+        mockMvc.perform(post("/api/v1/search")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(search)))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+        verify(searchService).saveSearch(any());
+    }
+
+
+    private static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Test   //1
-    public void givenSearchTermThenShouldReturnLimitedNumberOfGif() throws Exception {
-      //  when(searchService.getAllSearch(search.getId())).thenReturn(search);
-        when(searchService.saveSearch(search.getUserId(), "book")).thenReturn(search);
-        mockMvc.perform(get("/search?searchTerm={searchTerm}&userId={userId}"))
-                .andExpect(MockMvcResultMatchers.status()
-                        .isOk())
-                .andDo(MockMvcResultHandlers.print());
     }
 }

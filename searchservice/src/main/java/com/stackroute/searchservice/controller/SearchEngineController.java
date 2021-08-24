@@ -53,6 +53,14 @@ public class SearchEngineController {
       ResponseEntity<Object> result = new ResponseEntity<> (searchService.getGifs(searchTerm), HttpStatus.OK);
       return result;
     }
-
+    @PostMapping("/search")
+    public ResponseEntity<SearchEngine> saveSearch(SearchEngine search) {
+      SearchEngine savedSearch = this.searchService.saveSearch(search);
+      return new ResponseEntity<SearchEngine> (savedSearch , HttpStatus.OK);
+    }
+    @GetMapping("/searches")
+    public ResponseEntity<List<SearchEngine>> getAllSearches() {
+        return new ResponseEntity<List<SearchEngine>>((List<SearchEngine>) this.searchService.getAllSearch(), HttpStatus.OK);
+    }
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashSet;
 
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -84,6 +85,24 @@ public class SearchEngineServiceImpl implements SearchEngineService{
 
 
         return responseEntity.getBody();
+    }
+
+    @Override
+    public SearchEngine findByUserId(int userId) {
+        SearchEngine search = null;
+        search = searchRepository.findByUserId(userId);
+        return search;
+
+    }
+
+    @Override
+    public SearchEngine saveSearch(SearchEngine search) {
+        return searchRepository.save(search);
+    }
+
+    @Override
+    public List<SearchEngine> getAllSearch() {
+        return searchRepository.findAll();
     }
 
 }
