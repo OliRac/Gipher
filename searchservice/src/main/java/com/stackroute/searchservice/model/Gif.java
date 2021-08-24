@@ -1,5 +1,8 @@
 package com.stackroute.searchservice.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -8,29 +11,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 //to indicate that any properties not bound in this type should be ignored
 //@Document(collection="gifSearch")
 @Data
+//@JsonDeserialize(as = Gif.class)
+@JsonRootName(value = "gif")
 public class Gif {
-    private String type;
-    private String id;
-    private String title;
-    private String embed_url;
+  //  @JsonProperty("results[0].media[0].gif.url")
+    private String url;
 
     public Gif() {
 
     }
+  public String getUrl() {
+    return url;
+  }
 
-    public Gif(String gifID, String title, String url) {
-        this.id = gifID;
-        this.title = title;
-        this.embed_url = url;
-    }
-
-    @Override
+  @Override
     public String toString() {
         return "Gif{" +
-                "type='" + type + '\'' +
-                ", id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", embed_url='" + embed_url + '\'' +
+                "url='" + url + '\'' +
                 '}';
     }
 }

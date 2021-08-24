@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SearchEngineService {
-    SearchEngine addSearchInfo(int userId, String searchTerm) ;
-    List<SearchEngine> getAllSearch();
-    SearchEngine updateSearchInfo(SearchEngine searchEngine);
-
+    SearchEngine saveSearch(int userId, String searchTerm) ;
+//    List<SearchEngine> getAllSearch();
+//    SearchEngine updateSearchInfo(SearchEngine searchEngine);
+    SearchEngine findSearchByUserId(int userId);
+    void getGifs();
 }
