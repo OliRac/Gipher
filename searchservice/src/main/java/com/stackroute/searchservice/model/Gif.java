@@ -7,6 +7,9 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Arrays;
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 //to indicate that any properties not bound in this type should be ignored
 //@Document(collection="gifSearch")
@@ -16,6 +19,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Gif {
   //  @JsonProperty("results[0].media[0].gif.url")
     private String url;
+    private Object[] results;
+
 
     public Gif() {
 
@@ -25,10 +30,11 @@ public class Gif {
   }
 
   @Override
-    public String toString() {
-        return "Gif{" +
-                "url='" + url + '\'' +
-                '}';
-    }
+  public String toString() {
+    return "Gif{" +
+            "url='" + url + '\'' +
+            ", results=" + Arrays.toString(results) +
+            '}';
+  }
 }
 

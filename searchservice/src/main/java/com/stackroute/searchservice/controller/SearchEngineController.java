@@ -42,9 +42,7 @@ public class SearchEngineController {
 //  test    http://localhost:8082/search?searchTerm=book
     public ResponseEntity<SearchEngine> getGifByName( @PathVariable(value="searchTerm") String searchTerm , @PathVariable(value="userId") int userId)throws UserNotFoundException{
       ResponseEntity<SearchEngine> result = new ResponseEntity<SearchEngine> (searchService.saveSearch(userId, searchTerm), HttpStatus.OK);
-      log.info("Result is:  ");
-      log.info(result.toString());
-      searchService.getGifs();
+      log.info("Result from our api for searchEngine is:  \n " + result.toString());
        return result;
 
 

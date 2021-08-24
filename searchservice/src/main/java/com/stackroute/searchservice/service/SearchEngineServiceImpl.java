@@ -6,6 +6,7 @@ import com.stackroute.searchservice.model.Gif;
 import com.stackroute.searchservice.model.SearchEngine;
 import com.stackroute.searchservice.repository.SearchRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.h2.util.json.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -46,10 +47,7 @@ public class SearchEngineServiceImpl implements SearchEngineService{
      */
     @Override
     public SearchEngine saveSearch(int userId, String searchTerm) throws UserNotFoundException {
-       // System.out.print("In save method: " + searchTerm);
 
-
-//        log.info("Calling addSearchInfo method");
         String searchURL = URL + searchTerm + "&key=" + apiKey + LIMIT;
         log.info("searchstring url:   " + searchURL);
         log.info("User id : " + userId);
@@ -73,19 +71,15 @@ public class SearchEngineServiceImpl implements SearchEngineService{
             searchInfo = new SearchEngine(userId , searchSet);
             searchInfo.setSearchTerm(searchTerm);
         }
-
+        getGifs(searchTerm);
 
         return searchRepository.save(searchInfo);
 
     }
 
     @Override
-    public SearchEngine findSearchByUserId(int userId) {
-        return null;
-    }
-    @Override
-    public void getGifs(){
-        String searchURL = URL + "book" + "&key=" + apiKey + LIMIT;
+    public void getGifs(String searchTerm){
+        String searchURL = URL + searchTerm + "&key=" + apiKey + LIMIT;
 //        ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity(searchURL, Object[].class);
 //        Object[] objects = responseEntity.getBody();
 //            ObjectMapper mapper = new ObjectMapper();
@@ -97,7 +91,6 @@ public class SearchEngineServiceImpl implements SearchEngineService{
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
-
         ResponseEntity<Gif> responseEntity = restTemplate.exchange(searchURL ,
                 HttpMethod.GET ,
                 requestEntity,
@@ -106,6 +99,8 @@ public class SearchEngineServiceImpl implements SearchEngineService{
         log.info("HTTPStatus is:  " + statusCode);
         Gif gif = responseEntity.getBody();
         log.info("Response body-   "+ gif);
+
+
     }
 
 }
