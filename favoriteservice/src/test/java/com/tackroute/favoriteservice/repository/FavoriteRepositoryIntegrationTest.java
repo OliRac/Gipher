@@ -65,8 +65,7 @@ public class FavoriteRepositoryIntegrationTest {
         String gif3 = "https://giphy.com/gifs/mlb-y0FfnDHoT6BKfKzzMZ";
 
         selection = new Selection(1, favoriteList1);
-        favoriteRepository.save(selection);
-        Selection selection1 = favoriteRepository.findByUserId(selection.getUserId());
+        Selection selection1 = favoriteRepository.save(selection);
         selection1.getFavoriteList().add(gif3);
         selection1.addFavoriteItem(gif3);
         Selection updatedSelection = favoriteRepository.save(selection1);
