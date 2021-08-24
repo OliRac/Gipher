@@ -2,6 +2,7 @@ package com.tackroute.favoriteservice.controller;
 
 import com.tackroute.favoriteservice.exception.GifAlreadyExistException;
 import com.tackroute.favoriteservice.exception.GifNotFoundException;
+import com.tackroute.favoriteservice.exception.GlobalExceptionHandler;
 import com.tackroute.favoriteservice.exception.NoFavoriteGifFoundException;
 import com.tackroute.favoriteservice.domain.Selection;
 import com.tackroute.favoriteservice.service.FavoriteService;
@@ -9,10 +10,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
@@ -21,12 +28,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 //@Transactional
+//@Transactional
 //@DataMongoTest
 //@ExtendWith(SpringExtension.class)
+//@ExtendWith(MockitoExtension.class)
 public class FavoriteControllerIntegrationTest {
 
     @Autowired
     private FavoriteService favoriteService;
+//
+//    @InjectMocks
+//    private FavoriteController favoriteController;
 
     private Selection selection;
 
@@ -38,6 +50,9 @@ public class FavoriteControllerIntegrationTest {
 
     @BeforeEach
     void setUp() {
+//        MockitoAnnotations.initMocks(this);
+//        mockMvc = MockMvcBuilders.standaloneSetup(favoriteController).setControllerAdvice(new GlobalExceptionHandler()).build();
+
         favoriteList = new HashSet<String>() {{ add(gif1);}};
         selection = new Selection(1, favoriteList );
     }
@@ -71,15 +86,16 @@ public class FavoriteControllerIntegrationTest {
     }
 
     @Test
-    void givenFavoriteGifToRemoveThenThrowNoGifFoundException() throws RuntimeException {
-        assertThrows(RuntimeException.class,  () -> favoriteService.removeFavorite(1, gif1));
+    void givenFavoriteGifToRemoveThenThrowNoGifFoundException() throws GifNotFoundException {
+//        favoriteService.addFavorite(1, gif1);
+        assertThrows(GifNotFoundException.class,  () -> favoriteService.removeFavorite(1, gif2));
 //        assertThrows()
     }
-//    @Test
-//    void givenFavoriteGifToRemoveThenThrowNoGifExistException() throws NoFavoriteGifFoundException {
-//        assertThrows(NoFavoriteGifFoundException.class,  () -> favoriteService.removeFavorite(1, gif1));
-//
-//    }
+    @Test
+    void givenFavoriteGifToRemoveThenThrowNoGifExistException() throws NoFavoriteGifFoundException {
+        assertThrows(NoFavoriteGifFoundException.class,  () -> favoriteService.removeFavorite(2, gif1));
+
+    }
 
     @Test
     void givenCallToGetAllFavoriteGifsThenListShouldReturnAllFavorites() throws NoFavoriteGifFoundException {
@@ -93,7 +109,7 @@ public class FavoriteControllerIntegrationTest {
 
     @Test
     void givenCallToGetAllFavoritesThenThrowException() throws NoFavoriteGifFoundException {
-        assertThrows(NoFavoriteGifFoundException.class, () -> favoriteService.getAllFavorites(1));
+        assertThrows(NoFavoriteGifFoundException.class, () -> favoriteService.getAllFavorites(2));
     }
 
     @Test
@@ -107,7 +123,7 @@ public class FavoriteControllerIntegrationTest {
 
     @Test
     void givenUserIdToEmptyFavoritesThenThrowException() throws NoFavoriteGifFoundException {
-        assertThrows(NoFavoriteGifFoundException.class, () -> favoriteService.emptyFavoriteList(1));
+        assertThrows(NoFavoriteGifFoundException.class, () -> favoriteService.emptyFavoriteList(2));
     }
 
 //    @Test
