@@ -39,12 +39,9 @@ public class SearchEngineController {
      * @return ResponseEntity type string
      */
   @GetMapping("/searchTerm/{searchTerm}/userId/{userId}")
-   // @GetMapping("/search?searchTerm={searchTerm}&userId={userId}")
-//  test    http://localhost:8082/search?searchTerm=book
-    public ResponseEntity<SearchEngine> getGifByName( @PathVariable(value="searchTerm") String searchTerm , @PathVariable(value="userId") int userId)throws UserNotFoundException{
+    //  test    http://localhost:8082/search?searchTerm=book
+    public ResponseEntity<SearchEngine> getGifByName( @PathVariable(value="searchTerm") String searchTerm , @PathVariable(value="userId") int userId){
       ResponseEntity<SearchEngine> result = new ResponseEntity<SearchEngine> (searchService.saveSearch(userId, searchTerm), HttpStatus.OK);
-     // log.info("Result from our api for searchEngine is:  \n " + result.toString());
-
        return result;
     }
 
@@ -54,7 +51,7 @@ public class SearchEngineController {
       return result;
     }
     @PostMapping("/search")
-    public ResponseEntity<SearchEngine> saveSearch(SearchEngine search) {
+    public ResponseEntity<SearchEngine> saveSearch(@RequestBody SearchEngine search) {
       SearchEngine savedSearch = this.searchService.saveSearch(search);
       return new ResponseEntity<SearchEngine> (savedSearch , HttpStatus.OK);
     }
@@ -62,5 +59,8 @@ public class SearchEngineController {
     public ResponseEntity<List<SearchEngine>> getAllSearches() {
         return new ResponseEntity<List<SearchEngine>>((List<SearchEngine>) this.searchService.getAllSearch(), HttpStatus.OK);
     }
-
+    @GetMapping("/search/{userId}")
+    public ResponseEntity<SearchEngine> getSearchByUserId(@PathVariable("userId") int userId) {
+        return new ResponseEntity<SearchEngine>(this.searchService.findByUserId(userId), HttpStatus.FOUND);
+    }
 }

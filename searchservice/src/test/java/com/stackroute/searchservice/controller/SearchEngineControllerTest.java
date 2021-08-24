@@ -60,7 +60,7 @@ class SearchEngineControllerTest {
     }
 
     @Test
-    public void givenBlogToSaveThenShouldReturnSavedBlog() throws Exception {
+    public void givenSearchEngineToSaveThenShouldReturnSavedSearch() throws Exception {
         when(searchService.saveSearch(any())).thenReturn(search);
         mockMvc.perform(post("/api/v1/search")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -70,7 +70,26 @@ class SearchEngineControllerTest {
         verify(searchService).saveSearch(any());
     }
 
+    @Test
+    public void givenGetAllSearchesThenShouldReturnListOfAllSearchEngine() throws Exception {
+        when(searchService.getAllSearch()).thenReturn(searchEngineList);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/searches")
+                .contentType(MediaType.APPLICATION_JSON).content(asJsonString(search)))
+                .andDo(MockMvcResultHandlers.print());
+        verify(searchService).getAllSearch();
+        verify(searchService, times(1)).getAllSearch();
 
+    }
+
+    @Test
+    void givenSearchUserIdThenShouldReturnRespectiveSearch() throws Exception {
+        when(searchService.findByUserId(search.getUserId())).thenReturn(search);
+        mockMvc.perform(get("/api/v1/search/1"))
+                .andExpect(MockMvcResultMatchers.status()
+                        .isFound())
+                .andDo(MockMvcResultHandlers.print());
+
+    }
     private static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
