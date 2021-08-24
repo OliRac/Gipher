@@ -49,12 +49,9 @@ public class SearchEngineController {
     }
 
     @GetMapping("/gifs/{searchTerm}")
-    public Object  getGif(@PathVariable(value="searchTerm") String searchTerm ){
-         Object obj = searchService.getGifs(searchTerm);
-
-        ResponseEntity<Object> result = new ResponseEntity<> (searchService.getGifs(searchTerm), HttpStatus.OK);
-
-        return obj;
+    public ResponseEntity<?>  getGif(@PathVariable(value="searchTerm") String searchTerm ){
+      ResponseEntity<Object> result = new ResponseEntity<> (searchService.getGifs(searchTerm), HttpStatus.OK);
+      return result;
     }
 
 

@@ -81,9 +81,9 @@ public class SearchEngineServiceImpl implements SearchEngineService{
         log.info("HTTPStatus is:  " + statusCode);
         //Gif gif = responseEntity.getBody();
         log.info("Response body-   "+ responseEntity.getBody());
-       // getGifs(searchTerm);
 
-        return requestEntity;
+
+        return responseEntity.getBody();
     }
 
 }
