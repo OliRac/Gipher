@@ -1,6 +1,7 @@
 package com.stackroute.searchservice.service;
 
 import com.stackroute.searchservice.model.SearchEngine;
+import com.stackroute.searchservice.model.SearchEngineDTO;
 import com.stackroute.searchservice.repository.SearchRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,20 +31,15 @@ class SearchEngineServiceTest {
     private SearchEngine search , search1;
     private Set<String> searchSet;
     private List<SearchEngine> searchEngineList;
-    private Optional optional;
-
+    private SearchEngineDTO dto;
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        Set<String> searchSet1 = new HashSet<>();
-        searchSet1.add("a");
-        searchSet1.add("b");
-        search = new SearchEngine(1, searchSet1);
-        Set<String> searchSet2 = new HashSet<>();
-        searchSet2.add("c");
-        searchSet2.add("b");
-        search1 = new SearchEngine(2, searchSet2);
-        optional = Optional.of(search);
+        dto = new SearchEngineDTO();
+        search = new SearchEngine();
+        dto.setUserId(1);
+        dto.setSearchTerm("a");
+        dto.setSearchTerm("b");
     }
 
     @AfterEach
@@ -52,9 +48,9 @@ class SearchEngineServiceTest {
     }
 
     @Test
-    public void givenSearchEngineToSaveThenShouldReturnSavedSearch() {
+    public void givenSearchEngineDTOToSaveThenShouldReturnSavedSearch() {
         when(searchRepository.save(any())).thenReturn(search);
-        //assertEquals(search, searchService.saveSearch(search));
+        assertEquals(search, searchService.saveSearch(dto));
         verify(searchRepository, times(1)).save(any());
     }
 

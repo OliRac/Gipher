@@ -14,10 +14,11 @@ export class SearchService {
 
   constructor(private http: HttpClient) { }
 
-  searchGifs(searchTerm: string): Observable<any>{
-    this.searchURL = environment.SEARCH_SERVICE_URL + `/searchTerm/${searchTerm}/userId/${this.storedUser.id}`
-    
+  storeUserSearchTermWithUserId(searchTerm: string, id: number ): Observable<any>{
+    this.searchURL = environment.SEARCH_SERVICE_URL + `/searchTerm/${searchTerm}/userId/${id}`
+
     return this.http.get(this.searchURL);
   }
-
+searchGif(SearchTerm: string) {
+}
 }

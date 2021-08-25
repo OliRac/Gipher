@@ -1,15 +1,13 @@
 package com.stackroute.searchservice.controller;
 
-import com.stackroute.searchservice.exception.UserAlreadyExistsException;
 import com.stackroute.searchservice.model.SearchEngine;
+import com.stackroute.searchservice.model.SearchEngineDTO;
 import com.stackroute.searchservice.service.SearchEngineService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,32 +19,34 @@ import static org.junit.jupiter.api.Assertions.*;
 class SearchEngineControllerIntegrationTest {
     @Autowired
     private SearchEngineService searchService;
+    private SearchEngineDTO searchEngineDTO;
     private SearchEngine searchEngine;
-    private List<SearchEngine> searchEngineList;
+    private List<SearchEngineDTO> searchEngineList;
     private Set<String> searchSet;
 
 
     @BeforeEach
     public void setUp() {
-        searchEngine = new SearchEngine();
+        searchEngineDTO = new SearchEngineDTO();
         searchSet = new HashSet<>();
         searchEngineList = new ArrayList<>();
-        searchEngine.setUserId(1);
-        searchSet.add("book");
+        searchEngineDTO.setUserId(1);
+        searchEngineDTO.setSearchTerm("book");
 
-        searchEngineList.add(searchEngine);
+        searchEngine = new SearchEngine();
+
 
     }
     @AfterEach
     public void tearDown() {
-        searchEngine = null;
+        searchEngineDTO = null;
     }
 
     @Test
-    void givenSearchEngineToSaveThenShouldReturnTheSavedSearch() throws Exception {
-        //SearchEngine savedSearchEngine = searchService.saveSearch(searchEngine);
-//        assertNotNull(savedSearchEngine);
-//        assertEquals(searchEngine.getId(), savedSearchEngine.getId());
+    void givenSearchEngineDTOToSaveThenShouldReturnTheSavedSearchEngine() throws Exception {
+        SearchEngine savedSearchEngine = searchService.saveSearch(searchEngineDTO);
+        assertNotNull(savedSearchEngine);
+        assertEquals(searchEngineDTO.getUserId(), savedSearchEngine.getUserId());
     }
 
     @Test
