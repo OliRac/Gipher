@@ -1,0 +1,21 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label>Username</label>
+    <input formControlName="username" type="text"  placeholder="username" ng-required>
+
+    <label>Password</label>
+    <input formControlName="password" type="password"  placeholder="password" ng-required>
+
+    <button mat-raised-button type="submit">Submit</button>
+</form>
+
+<div *ngIf="errorMsg">
+    <p>{{errorMsg}}</p>
+</div>
+
+<div *ngIf="username.errors?.required" >
+    <p id="usernameRequired">Username is missing!</p>
+</div>
+
+<div *ngIf="password.errors?.required">
+    <p id="passwordRequired">Password is missing!</p>
+</div>

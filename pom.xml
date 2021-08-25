@@ -22,6 +22,7 @@
 	</properties>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -61,6 +62,8 @@
 
 
 	<modules>
+        <module>gateway</module>
+        <module>eureka-server</module>
 		<module>userservice</module>
 		<module>searchservice</module>
 		<module>favoriteservice</module>

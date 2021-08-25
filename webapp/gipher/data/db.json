@@ -1,0 +1,9 @@
+{
+  "users": {
+    "0": {
+      "username": "user",
+      "password": "password",
+      "image": "image.png"
+    }
+  }
+}
