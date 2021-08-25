@@ -9,14 +9,13 @@ import org.springframework.web.client.RestTemplate;
 
 
 @SpringBootApplication
-@Slf4j
 public class SearchserviceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SearchserviceApplication.class, args);
 	}
 
 	@Bean
-	public SearchEngine getSearchEngin(){
+	public SearchEngine getSearchEngine(){
 		return new SearchEngine();
 	}
 	}

@@ -5,11 +5,9 @@ import com.stackroute.userservice.entity.JwtResponse;
 import com.stackroute.userservice.entity.User;
 import com.stackroute.userservice.exception.InvalidPasswordException;
 import com.stackroute.userservice.exception.UserAlreadyExistException;
-import com.stackroute.userservice.exception.UserNotFoundException;
 import com.stackroute.userservice.service.UserService;
 import com.stackroute.userservice.utility.JwtUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-//@CrossOrigin
+@Slf4j
 @RestController
 public class UserController {
 
@@ -36,8 +34,6 @@ public class UserController {
 
     ResponseEntity<?> responseEntity;
     public static String uploadDirectory = System.getProperty("user.dir") + "/webapp/assets/images";
-    private static Logger logger = LoggerFactory.getLogger(UserController.class);
-
 
     @Autowired
     public UserController(UserService userService){
@@ -66,11 +62,11 @@ public class UserController {
 
             responseEntity = new ResponseEntity<>(savedUser, HttpStatus.OK);
 
-            logger.info("User created successfully!");
+            log.info("POST /auth/register - User created successfully!");
         }
         catch (UserAlreadyExistException e) {
             responseEntity = new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
-            logger.info("User already exists!!");
+            log.info("POST /auth/register - User already exists!!");
         }
         catch(IOException e){
             e.printStackTrace();
@@ -89,11 +85,13 @@ public class UserController {
         boolean isValidPw = passwordEncoder.matches(jwtRequest.getPassword(), findUser.getPassword());
 
         if(!isValidPw) {
-            throw new InvalidPasswordException("Invalid Password");
+            log.info("POST /auth/login - Password is invalid");
+            throw new InvalidPasswordException("POST /auth/login - Invalid Password");
         }
 
         final String token = jwtUtil.generateToken(findUser.getUsername());
 
+        log.info("POST /auth/login - Token generated for valid user!");
         return ResponseEntity.ok(new JwtResponse(token, findUser));
     }
 

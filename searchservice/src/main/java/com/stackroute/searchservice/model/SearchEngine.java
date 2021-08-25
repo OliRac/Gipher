@@ -5,12 +5,13 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 @Document(collection="searchHistory")
-public class SearchEngine {
+public class SearchEngine implements Serializable {
     @Id
     private String id;
     private int userId;

@@ -2,6 +2,7 @@ package com.stackroute.searchservice.service;
 
 import com.stackroute.searchservice.exception.UserNotFoundException;
 import com.stackroute.searchservice.model.SearchEngine;
+import com.stackroute.searchservice.model.SearchEngineDTO;
 import com.stackroute.searchservice.repository.SearchRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,28 +42,29 @@ public class SearchEngineServiceImpl implements SearchEngineService{
      * @return searchEngine object
      */
     @Override
-    public SearchEngine saveSearch(int userId, String searchTerm) throws UserNotFoundException {
+    public SearchEngine saveSearch(SearchEngineDTO searchEngineDTO) throws UserNotFoundException {
 
-        String searchURL = URL + searchTerm + "&key=" + apiKey + LIMIT;
+        String searchURL = URL + searchEngineDTO.getSearchTerm() + "&key=" + apiKey + LIMIT;
         log.info("searchstring url:   " + searchURL);
-        log.info("User id : " + userId);
+        log.info("User id : " + searchEngineDTO.getUserId());
 
-        SearchEngine searchInfo = searchRepository.findByUserId(userId);
+        SearchEngine searchInfo = searchRepository.findByUserId(searchEngineDTO.getUserId());
         if(searchInfo != null) {
-            searchInfo.setSearchTerm(searchTerm);
-            log.info("User exists:  " + userId + "adding new searchTerm");
-            searchInfo.getSearchTermSet().add(searchTerm);
+            searchInfo.setSearchTerm(searchEngineDTO.getSearchTerm());
+            log.info("User exists:  " + searchEngineDTO.getUserId() + "adding new searchTerm");
+            searchInfo.getSearchTermSet().add(searchEngineDTO.getSearchTerm());
         }else{
 
             //Object gif = restTemplate.getForObject(searchURL , Gif.class);
 
            // log.info("Response from restTemplate:   " + gif.toString());
             Set<String> searchSet = new HashSet<String>();
-            searchSet.add(searchTerm);
-            searchInfo = new SearchEngine(userId , searchSet);
-            searchInfo.setSearchTerm(searchTerm);
+            searchSet.add(searchEngineDTO.getSearchTerm());
+
+            searchInfo = new SearchEngine(searchEngineDTO.getUserId() , searchSet);
+            searchInfo.setSearchTerm(searchEngineDTO.getSearchTerm());
+
         }
-        getGifs(searchTerm);
 
         return searchRepository.save(searchInfo);
 
@@ -93,11 +95,6 @@ public class SearchEngineServiceImpl implements SearchEngineService{
         search = searchRepository.findByUserId(userId);
         return search;
 
-    }
-
-    @Override
-    public SearchEngine saveSearch(SearchEngine search) {
-        return searchRepository.save(search);
     }
 
     @Override
