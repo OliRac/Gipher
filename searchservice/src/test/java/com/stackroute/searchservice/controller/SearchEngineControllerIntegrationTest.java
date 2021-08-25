@@ -28,7 +28,6 @@ class SearchEngineControllerIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
         searchEngine = new SearchEngine();
         searchSet = new HashSet<>();
         searchEngineList = new ArrayList<>();
@@ -44,14 +43,14 @@ class SearchEngineControllerIntegrationTest {
     }
 
     @Test
-    void givenBlogToSaveThenShouldReturnTheSavedBlog() throws Exception {
+    void givenSearchEngineToSaveThenShouldReturnTheSavedSearch() throws Exception {
         SearchEngine savedSearchEngine = searchService.saveSearch(searchEngine);
         assertNotNull(savedSearchEngine);
         assertEquals(searchEngine.getId(), savedSearchEngine.getId());
     }
 
     @Test
-    public void givenGetAllBlogsThenShouldReturnListOfAllBlogsAndBlogListShouldNotBeNull() throws Exception {
+    public void givenGetAllSearchEngineThenShouldReturnListOfAllSearchEngineListShouldNotBeNull() throws Exception {
         List<SearchEngine> savedSearchEngine = searchService.getAllSearch();
         assertNotNull(searchEngineList);
     }
