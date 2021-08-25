@@ -17,9 +17,10 @@ public class GatewayConfig {
     public RouteLocator myRoutes(RouteLocatorBuilder builder) {
         return builder.routes().route(  r -> r.path("/auth/**")
                                         .filters(f -> f.filter(filter)).uri("http://userservice:9999"))
-                                .route( r -> r.path("/favorite-service/**")
+                                .route( r -> r.path("/api/v1/favorite-service/**")
                                         .filters(f -> f.filter(filter)).uri("http://favoriteservice:8080"))
+                                .route( r -> r.path("/api/v1/search-service/**")
+                                        .filters(f -> f.filter(filter)).uri("http://searchservice:8082"))
                                 .build();
     }
-
 }

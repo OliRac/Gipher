@@ -1,0 +1,14 @@
+#Bucket S3 Configuration for file storage
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAXUEIWJ7S3TQEPHEM
+      secret-key: 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
+    region:
+      static: ca-central-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: gipher-userservice-storage

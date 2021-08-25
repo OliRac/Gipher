@@ -12,20 +12,21 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-@CrossOrigin
 @Slf4j
 @RestController
-@RequestMapping(value = "/api/v1")
+@RequestMapping(value = "/api/v1/search-service")
 public class SearchEngineController {
+
 
     @Autowired
     private RestTemplate restTemplate;
-
     @Autowired
+
     private SearchEngineService searchService;
 
     @Autowired
     private SearchEngine searchEngine;
+
 
     @GetMapping("/gifs/{searchTerm}")
     public ResponseEntity<?>  getGif(@PathVariable(value="searchTerm") String searchTerm ){

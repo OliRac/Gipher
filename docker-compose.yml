@@ -1,21 +1,21 @@
 version: "3"
 
 services:
-  favoriteservicedb:
+  #RABBITMQ SERVICE
+  rabbitmqservice:
+    image: rabbitmq:latest
+    container_name: rabbitmqservice
+    ports:
+      - 5672:5672
+  #MONGODB SERVICE
+  mongodbservice:
     image: mongo:latest
-    container_name: favoriteservicedb
+    container_name: mongodbservice
     volumes:
-      - favoriteservicedata:/data/db
+      - mongodbdata:/data/db
     ports:
       - 27017:27017
-  springboot-eureka-server:
-    image: springboot-eureka-server:1.0
-    container_name: eurekaserver
-    ports:
-      - 8761:8761
-    environment:
-      eureka.instance.hostname: springboot-eureka-server
-      eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
+  #MYSQL SERVICE
   userservicedb:
     image: mysql:8.0
     container_name: userservicedb
@@ -27,7 +27,16 @@ services:
       - 3307:3306
     volumes:
       - userservice-mysql-data:/var/lib/mysql
-
+  #EUREKA-SERVER SERVICE
+  springboot-eureka-server:
+    image: springboot-eureka-server:1.0
+    container_name: eurekaserver
+    ports:
+      - 8761:8761
+    environment:
+      eureka.instance.hostname: springboot-eureka-server
+      eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
+  #EUREKA-CLIENT USER SERVICE
   springboot-userservice:
     image: springboot-userservice:1.0
     container_name: userservice
@@ -39,7 +48,7 @@ services:
       eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
     depends_on:
       - userservicedb
-
+  # EUREKA-CLIENT GATEWAY SERVICE
   springboot-spring-cloud-gateway:
     image: springboot-spring-cloud-gateway:1.0
     container_name: gateway
@@ -47,25 +56,40 @@ services:
       - springboot-eureka-server
       - springboot-userservice
       - springboot-favoriteservice
+      - springboot-searchservice
     expose:
       - 9090
     ports:
       - 9090:9090
     environment:
       eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
-
+  #EUREKA-CLIENT FAVORITE SERVICE
   springboot-favoriteservice:
     image: springboot-favoriteservice:1.0
     container_name: favoriteservice
     depends_on:
       - springboot-eureka-server
-      - favoriteservicedb
+      - mongodbservice
     ports:
       - 8080:8080
     expose:
       - 8080
     environment:
       eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
+  #EUREKA-CLIENT SEARCH SERVICE
+  springboot-searchservice:
+    image: springboot-searchservice:1.0
+    container_name: searchservice
+    depends_on:
+      - springboot-eureka-server
+      - mongodbservice
+      - rabbitmqservice
+    ports:
+      - 8082:8082
+    expose:
+      - 8082
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
 volumes:
-  favoriteservicedata:
+  mongodbdata:
   userservice-mysql-data:

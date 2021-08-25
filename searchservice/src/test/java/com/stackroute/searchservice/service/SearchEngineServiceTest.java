@@ -37,7 +37,7 @@ class SearchEngineServiceTest {
         MockitoAnnotations.initMocks(this);
         dto = new SearchEngineDTO();
         search = new SearchEngine();
-        dto.setUserId(1);
+        dto.setUserId(-1);
         dto.setSearchTerm("a");
         dto.setSearchTerm("b");
     }
