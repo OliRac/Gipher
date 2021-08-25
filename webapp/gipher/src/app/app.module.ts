@@ -22,7 +22,6 @@ import {MatCardModule} from '@angular/material/card';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LandingComponent } from './landing/landing.component';
 import { LogoutComponent } from './logout/logout.component';
-import {SearchService} from './search/search.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +49,7 @@ import {SearchService} from './search/search.service';
     MatButtonModule,
     RouterModule
   ],
-  providers: [SearchService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
