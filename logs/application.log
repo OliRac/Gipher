@@ -1,0 +1,53 @@
+2021-08-25 09:47:23.110  INFO 6424 --- [main] c.s.s.SearchserviceApplication           : Starting SearchserviceApplication using Java 11.0.11 on CA-LHMMG9C3 with PID 6424 (C:\Learning\Team10\gipher\searchservice\target\classes started by suzan.sharifulnasaby in C:\Learning\Team10\gipher)
+2021-08-25 09:47:23.115  INFO 6424 --- [main] c.s.s.SearchserviceApplication           : No active profile set, falling back to default profiles: default
+2021-08-25 09:47:24.946  INFO 6424 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-08-25 09:47:25.267  INFO 6424 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 312 ms. Found 1 MongoDB repository interfaces.
+2021-08-25 09:47:26.653  INFO 6424 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2021-08-25 09:47:26.675  INFO 6424 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-25 09:47:26.675  INFO 6424 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-08-25 09:47:26.959  INFO 6424 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-25 09:47:26.959  INFO 6424 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3733 ms
+2021-08-25 09:47:27.273  INFO 6424 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-08-25 09:47:27.364  INFO 6424 --- [cluster-rtt-ClusterId{value='612649ef18ce2e1a396af991', description='null'}-localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:2}] to localhost:27017
+2021-08-25 09:47:27.364  INFO 6424 --- [cluster-ClusterId{value='612649ef18ce2e1a396af991', description='null'}-localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1}] to localhost:27017
+2021-08-25 09:47:27.368  INFO 6424 --- [cluster-ClusterId{value='612649ef18ce2e1a396af991', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=29148200}
+2021-08-25 09:47:28.047  INFO 6424 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-25 09:47:28.517  INFO 6424 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2021-08-25 09:47:28.529  INFO 6424 --- [main] c.s.s.SearchserviceApplication           : Started SearchserviceApplication in 6.371 seconds (JVM running for 7.403)
+2021-08-25 11:08:39.643  INFO 10228 --- [main] c.s.s.SearchserviceApplication           : Starting SearchserviceApplication using Java 11.0.11 on CA-LHMMG9C3 with PID 10228 (C:\Learning\Team10\gipher\searchservice\target\classes started by suzan.sharifulnasaby in C:\Learning\Team10\gipher)
+2021-08-25 11:08:39.646  INFO 10228 --- [main] c.s.s.SearchserviceApplication           : No active profile set, falling back to default profiles: default
+2021-08-25 11:08:40.760  INFO 10228 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-08-25 11:08:40.933  INFO 10228 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 166 ms. Found 1 MongoDB repository interfaces.
+2021-08-25 11:08:41.696  INFO 10228 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2021-08-25 11:08:41.705  INFO 10228 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-25 11:08:41.705  INFO 10228 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-08-25 11:08:41.839  INFO 10228 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-25 11:08:41.840  INFO 10228 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2105 ms
+2021-08-25 11:08:42.000  INFO 10228 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-08-25 11:08:42.057  INFO 10228 --- [cluster-rtt-ClusterId{value='61265cf9d2590c5745fbdf48', description='null'}-localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:4}] to localhost:27017
+2021-08-25 11:08:42.057  INFO 10228 --- [cluster-ClusterId{value='61265cf9d2590c5745fbdf48', description='null'}-localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:3}] to localhost:27017
+2021-08-25 11:08:42.058  INFO 10228 --- [cluster-ClusterId{value='61265cf9d2590c5745fbdf48', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=17839500}
+2021-08-25 11:08:42.391  INFO 10228 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-25 11:08:42.615  INFO 10228 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2021-08-25 11:08:42.622  INFO 10228 --- [main] c.s.s.SearchserviceApplication           : Started SearchserviceApplication in 3.54 seconds (JVM running for 4.132)
+2021-08-25 13:17:14.121  INFO 17936 --- [main] c.s.s.SearchserviceApplication           : Starting SearchserviceApplication using Java 11.0.11 on CA-LHMMG9C3 with PID 17936 (C:\Learning\Team10\gipher\searchservice\target\classes started by suzan.sharifulnasaby in C:\Learning\Team10\gipher)
+2021-08-25 13:17:14.136  INFO 17936 --- [main] c.s.s.SearchserviceApplication           : No active profile set, falling back to default profiles: default
+2021-08-25 13:17:15.113  INFO 17936 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-08-25 13:17:15.292  INFO 17936 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 174 ms. Found 1 MongoDB repository interfaces.
+2021-08-25 13:17:16.155  INFO 17936 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2021-08-25 13:17:16.165  INFO 17936 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-25 13:17:16.165  INFO 17936 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-08-25 13:17:16.308  INFO 17936 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-25 13:17:16.308  INFO 17936 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2098 ms
+2021-08-25 13:17:16.470  INFO 17936 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-08-25 13:17:16.535  INFO 17936 --- [cluster-ClusterId{value='61267b1cbed16b0449dbf1db', description='null'}-localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:5}] to localhost:27017
+2021-08-25 13:17:16.536  INFO 17936 --- [cluster-rtt-ClusterId{value='61267b1cbed16b0449dbf1db', description='null'}-localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:6}] to localhost:27017
+2021-08-25 13:17:16.537  INFO 17936 --- [cluster-ClusterId{value='61267b1cbed16b0449dbf1db', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=21440500}
+2021-08-25 13:17:16.943  INFO 17936 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-25 13:17:17.192  INFO 17936 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2021-08-25 13:17:17.200  INFO 17936 --- [main] c.s.s.SearchserviceApplication           : Started SearchserviceApplication in 3.608 seconds (JVM running for 4.248)
+2021-08-25 13:23:04.932  INFO 17936 --- [http-nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-25 13:23:04.932  INFO 17936 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-08-25 13:23:04.933  INFO 17936 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2021-08-25 13:23:05.039  WARN 17936 --- [http-nio-8082-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unexpected character ('k' (code 107)): was expecting a colon to separate field name and value; nested exception is com.fasterxml.jackson.core.JsonParseException: Unexpected character ('k' (code 107)): was expecting a colon to separate field name and value
+ at [Source: (PushbackInputStream); line: 4, column: 16]]
