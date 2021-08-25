@@ -1,6 +1,5 @@
 package com.stackroute.searchservice.controller;
 
-import com.stackroute.searchservice.exception.UserNotFoundException;
 import com.stackroute.searchservice.model.SearchEngine;
 import com.stackroute.searchservice.service.SearchEngineService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @CrossOrigin
@@ -18,11 +16,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/v1")
 public class SearchEngineController {
-//    private final String URL = "https://g.tenor.com/v1/search?q=";
-//    //private final String query = "q=";
-//    private final String LIMIT = "&limit=8";
-//    @Value("${api.key}")
-//    private String apiKey;
     @Autowired
    private RestTemplate restTemplate;
     @Autowired
