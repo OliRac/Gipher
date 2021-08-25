@@ -16,9 +16,9 @@ public class GatewayConfig {
     @Bean
     public RouteLocator myRoutes(RouteLocatorBuilder builder) {
         return builder.routes().route(  r -> r.path("/auth/**")
-                                        .filters(f -> f.filter(filter)).uri("http://localhost:9999"))
+                                        .filters(f -> f.filter(filter)).uri("http://userservice:9999"))
                                 .route( r -> r.path("/favorite-service/**")
-                                        .filters(f -> f.filter(filter)).uri("http://localhost:9093"))
+                                        .filters(f -> f.filter(filter)).uri("http://favoriteservice:8080"))
                                 .build();
     }
 

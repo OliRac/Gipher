@@ -1,3 +1,3 @@
 FROM adoptopenjdk/openjdk11:alpine-jre
-ADD target/userservice-1.0.0.jar app.jar
+ADD target/gateway-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
