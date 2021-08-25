@@ -51,3 +51,27 @@
 2021-08-25 13:23:04.933  INFO 17936 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
 2021-08-25 13:23:05.039  WARN 17936 --- [http-nio-8082-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unexpected character ('k' (code 107)): was expecting a colon to separate field name and value; nested exception is com.fasterxml.jackson.core.JsonParseException: Unexpected character ('k' (code 107)): was expecting a colon to separate field name and value
  at [Source: (PushbackInputStream); line: 4, column: 16]]
+2021-08-25 13:45:51.587  INFO 7060 --- [main] c.s.s.SearchserviceApplication           : Starting SearchserviceApplication using Java 11.0.11 on CA-LHMMG9C3 with PID 7060 (C:\Learning\Team10\gipher\searchservice\target\classes started by suzan.sharifulnasaby in C:\Learning\Team10\gipher)
+2021-08-25 13:45:51.598  INFO 7060 --- [main] c.s.s.SearchserviceApplication           : No active profile set, falling back to default profiles: default
+2021-08-25 13:45:52.528  INFO 7060 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-08-25 13:45:52.697  INFO 7060 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 164 ms. Found 1 MongoDB repository interfaces.
+2021-08-25 13:45:53.537  INFO 7060 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2021-08-25 13:45:53.547  INFO 7060 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-25 13:45:53.548  INFO 7060 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-08-25 13:45:53.686  INFO 7060 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-25 13:45:53.686  INFO 7060 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1996 ms
+2021-08-25 13:45:53.859  INFO 7060 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-08-25 13:45:53.915  INFO 7060 --- [cluster-ClusterId{value='612681d151753c7b284d7a79', description='null'}-localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:8}] to localhost:27017
+2021-08-25 13:45:53.915  INFO 7060 --- [cluster-rtt-ClusterId{value='612681d151753c7b284d7a79', description='null'}-localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:7}] to localhost:27017
+2021-08-25 13:45:53.917  INFO 7060 --- [cluster-ClusterId{value='612681d151753c7b284d7a79', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=18884400}
+2021-08-25 13:45:54.282  INFO 7060 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-25 13:45:54.539  INFO 7060 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2021-08-25 13:45:54.546  INFO 7060 --- [main] c.s.s.SearchserviceApplication           : Started SearchserviceApplication in 3.547 seconds (JVM running for 4.202)
+2021-08-25 13:46:08.231  INFO 7060 --- [http-nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-25 13:46:08.232  INFO 7060 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-08-25 13:46:08.233  INFO 7060 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2021-08-25 13:46:08.344  WARN 7060 --- [http-nio-8082-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unexpected character ('k' (code 107)): was expecting a colon to separate field name and value; nested exception is com.fasterxml.jackson.core.JsonParseException: Unexpected character ('k' (code 107)): was expecting a colon to separate field name and value
+ at [Source: (PushbackInputStream); line: 3, column: 16]]
+2021-08-25 13:47:31.533  INFO 7060 --- [http-nio-8082-exec-2] c.s.s.service.SearchEngineServiceImpl    : searchstring url:   https://g.tenor.com/v1/search?q=key&key=4Y44R27LR14Q&limit=3
+2021-08-25 13:47:31.536  INFO 7060 --- [http-nio-8082-exec-2] c.s.s.service.SearchEngineServiceImpl    : User id : 2
+2021-08-25 13:47:31.615  INFO 7060 --- [http-nio-8082-exec-2] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:9}] to localhost:27017

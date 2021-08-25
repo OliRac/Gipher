@@ -10,6 +10,5 @@ public interface SearchEngineService {
     SearchEngine saveSearch(SearchEngineDTO searchEngineDTOh) ;
     Object getGifs(String searchTerm);
     SearchEngine findByUserId(int userId);
-
     List<SearchEngine> getAllSearch();
 }
