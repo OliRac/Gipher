@@ -10,8 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+// import lombok.extern.slf4j.Slf4j;
+
 import java.util.HashSet;
 
+// @Slf4j
 @Service
 public class FavoriteServiceImpl implements FavoriteService{
 
@@ -43,7 +46,7 @@ public class FavoriteServiceImpl implements FavoriteService{
                 userSelections = new Selection(userId, set);
 
         }
-
+        LOG.info("The Gif was successfully added to the favorite list of user" );
         return favoriteRepository.save(userSelections);
 
     }
@@ -66,6 +69,7 @@ public class FavoriteServiceImpl implements FavoriteService{
                 else {
                     updatedSelection = favoriteRepository.save(userSelections);
                 }
+                LOG.info("The Gif was successfully removed from the favorite list of user" );
                 return updatedSelection.getFavoriteList();
             }
             else{
@@ -87,7 +91,7 @@ public class FavoriteServiceImpl implements FavoriteService{
             }
             else{
                 favoriteRepository.deleteByUserId(userId);
-                LOG.info("favorite list successfully deleted");
+                LOG.info("favorite list successfully deleted for the user");
             }
             return new HashSet<String>();
         }
@@ -99,7 +103,7 @@ public class FavoriteServiceImpl implements FavoriteService{
             throw new NoFavoriteGifFoundException();
         } else {
             HashSet<String> h = favoriteRepository.findByUserId(userId).getFavoriteList();
-            LOG.info("done");
+            LOG.info("list of favorite gifs was successfully retreived");
             return h;
 
         }
