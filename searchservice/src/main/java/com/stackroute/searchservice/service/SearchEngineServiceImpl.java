@@ -5,6 +5,7 @@ import com.stackroute.searchservice.model.SearchEngine;
 import com.stackroute.searchservice.model.SearchEngineDTO;
 import com.stackroute.searchservice.repository.SearchRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -20,27 +21,41 @@ import java.util.Set;
 @Slf4j
 @Service
 public class SearchEngineServiceImpl implements SearchEngineService{
+
+    /*
+     * Add code to define RabbitTemplate
+     */
+    private RabbitTemplate rabbitTemplate;
+
     @Autowired
     SearchRepository searchRepository;
+
     @Autowired
     private RestTemplate restTemplate;
     private final String URL = "https://g.tenor.com/v1/search?q=";
     private final String LIMIT = "&limit=3";
+
     @Value("${api.key}")
     private String apiKey;
+
+    @Value("${spring.rabbitmq.exchange}")
+    private String exchange;
+
+    @Value("${spring.rabbitmq.routingkey}")
+    private String routingkey;
+
+    /*
+     * Add code to autowire RabbitTemplate object using contructor autowiring
+     */
+    @Autowired
+    public SearchEngineServiceImpl(RabbitTemplate rabbitTemplate){
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     public SearchEngineServiceImpl(SearchRepository searchRepository) {
         this.searchRepository = searchRepository;
     }
 
-    /***
-     * Saves the searchEngine object into db.
-     * It checks if the searchEngine with the give userId exists. If exists it will add the searchTerm into the existing set,
-     * else it creates a new set.
-     * @param userId
-     * @param searchTerm
-     * @return searchEngine object
-     */
     @Override
     public SearchEngine saveSearch(SearchEngineDTO searchEngineDTO) throws UserNotFoundException {
 
@@ -65,7 +80,11 @@ public class SearchEngineServiceImpl implements SearchEngineService{
             searchInfo.setSearchTerm(searchEngineDTO.getSearchTerm());
 
         }
-
+        /*
+         * Add code to publish the method to the exchange
+         * with specified routingKey using the RabbitTemplate object.
+         */
+        rabbitTemplate.convertAndSend(exchange, routingkey, searchInfo);
         return searchRepository.save(searchInfo);
 
     }
