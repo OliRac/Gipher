@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SearchEngineService {
-    SearchEngine saveSearch(SearchEngineDTO searchEngineDTOh) ;
+    SearchEngine saveSearch(SearchEngineDTO searchEngineDTO) ;
     Object getGifs(String searchTerm);
     SearchEngine findByUserId(int userId);
     List<SearchEngine> getAllSearch();

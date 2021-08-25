@@ -1,6 +1,8 @@
 package com.stackroute.searchservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,6 +13,10 @@ import java.util.Set;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 @Document(collection="searchHistory")
+/*
+ * Add annotation to indicate that object identity will be used during serialization.
+ */
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = SearchEngine.class)
 public class SearchEngine implements Serializable {
     @Id
     private String id;

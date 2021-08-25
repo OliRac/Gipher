@@ -17,13 +17,15 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/v1")
 public class SearchEngineController {
+
     @Autowired
-   private RestTemplate restTemplate;
+    private RestTemplate restTemplate;
+
     @Autowired
     private SearchEngineService searchService;
+
     @Autowired
     private SearchEngine searchEngine;
-
 
     @GetMapping("/gifs/{searchTerm}")
     public ResponseEntity<?>  getGif(@PathVariable(value="searchTerm") String searchTerm ){
