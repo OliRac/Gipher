@@ -6,30 +6,44 @@ import { LandingComponent } from './landing/landing.component';
 import { LogoutComponent } from './logout/logout.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {
-    path:"register", component: UserRegistrationComponent
+    path: 'search',
+    component: SearchComponent,
   },
   {
-    path:"login", component: UserLoginComponent
-  },  
-  {
-    path:"landing", component: LandingComponent
+    path: 'register',
+    component: UserRegistrationComponent,
   },
   {
-    path:"dashboard", component: DashboardComponent, canActivate: [LoginGuard]
+    path: 'login',
+    component: UserLoginComponent,
   },
   {
-    path: "logout", component: LogoutComponent, canActivate:[LoginGuard]
+    path: 'landing',
+    component: LandingComponent,
   },
   {
-    path: "", redirectTo: "dashboard", pathMatch: "full"
-  }
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent,
+    canActivate: [LoginGuard],
+  },
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
