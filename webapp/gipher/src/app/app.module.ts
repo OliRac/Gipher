@@ -25,6 +25,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { GifGridComponent } from './gif-grid/gif-grid.component';
 import { TrendingComponent } from './trending/trending.component';
 import { MatGridListModule } from '@angular/material/grid-list'; 
+import {MatIconModule} from '@angular/material/icon'; 
 
 
 @NgModule({
@@ -41,7 +42,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     LandingComponent,
     LogoutComponent,
     GifGridComponent,
-    TrendingComponent
+    TrendingComponent,
   ],
   imports: [
     MatCardModule,
@@ -54,7 +55,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatSliderModule,
     MatButtonModule,
     RouterModule,
-    MatGridListModule
+    MatGridListModule,
+    MatIconModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
