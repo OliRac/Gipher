@@ -38,22 +38,23 @@ export class SearchComponent implements OnInit {
 
   onSubmit(): void {
     if (this.form.valid) {
-      this.searchValue = this.searchTerm.value;
-
-      this.searchService
-        .storeUserSearchTermWithUserId(this.searchValue, this.userId)
-        .subscribe(
-          (data) => {
-            this.gifData.push(data);
-          },
-          (error) => {
-            this.errorMsg = error.error;
-          }
-        );
+       this.searchValue = this.searchTerm.value;
+       console.log(this.searchValue);
+//
+//       this.searchService
+//         .storeUserSearchTermWithUserId(this.searchValue, this.userId)
+//         .subscribe(
+//           (data) => {
+//             this.gifData.push(data);
+//           },
+//           (error) => {
+//             this.errorMsg = error.error;
+//           }
+//         );
       // testing!
       this.searchService.searchGif(this.searchValue).subscribe(
         (data) => {
-          console.log(this.gifData);
+          console.log(data);
         },
         (error) => {
           this.errorMsg = error.error;
