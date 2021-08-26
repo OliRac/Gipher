@@ -1,6 +1,6 @@
 package com.stackroute.recommendedservice.controller;
 
-import com.stackroute.recommendedservice.exception.UserDoesNotExistException;
+import com.stackroute.recommendedservice.exception.UserNotFoundException;
 import com.stackroute.recommendedservice.service.RecommendationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class RecommendationController {
     /*Gets a users recommended gifs. Details on the algorithm in the recommendation service.
     * Responds with an array of JSON objects as strings [{},{}...]*/
     @GetMapping("/recommendation/{userId}")
-    public ResponseEntity<?> getRecommendation(@PathVariable int userId) throws UserDoesNotExistException {
+    public ResponseEntity<?> getRecommendation(@PathVariable int userId) throws UserNotFoundException {
         logRequest("post", "/recommendation/" + userId);
         var response = new ResponseEntity<>(recommendationService.getRecommendation(userId), HttpStatus.OK);
         logResponseStatus(response.getStatusCode());

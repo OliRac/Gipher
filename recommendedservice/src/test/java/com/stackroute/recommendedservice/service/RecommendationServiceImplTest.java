@@ -1,7 +1,7 @@
 package com.stackroute.recommendedservice.service;
 
 import com.stackroute.recommendedservice.entity.UserTerms;
-import com.stackroute.recommendedservice.exception.UserDoesNotExistException;
+import com.stackroute.recommendedservice.exception.UserNotFoundException;
 import com.stackroute.recommendedservice.repository.UserTermsRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +13,6 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -79,7 +78,7 @@ class RecommendationServiceImplTest {
 
     @Test
     public void getRecommendationShouldThrowUserDoesNotExistException() {
-        assertThrows(UserDoesNotExistException.class, () -> {
+        assertThrows(UserNotFoundException.class, () -> {
             recommendationService.getRecommendation(0);
         });
     }

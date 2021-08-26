@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(UserDoesNotExistException.class)
-    public ResponseEntity<String> handleBlogNotFound(UserDoesNotExistException ex) {
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleBlogNotFound(UserNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 

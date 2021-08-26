@@ -1,7 +1,7 @@
 package com.stackroute.recommendedservice.service;
 
 import com.stackroute.recommendedservice.entity.UserTerms;
-import com.stackroute.recommendedservice.exception.UserDoesNotExistException;
+import com.stackroute.recommendedservice.exception.UserNotFoundException;
 import com.stackroute.recommendedservice.repository.UserTermsRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -74,11 +74,11 @@ public class RecommendationServiceImpl implements RecommendationService{
     * take a couple of suggestions and perform searches for gifs with them
     * return the search resutls*/
     @Override
-    public String getRecommendation(int userId) throws UserDoesNotExistException {
+    public String getRecommendation(int userId) throws UserNotFoundException {
         UserTerms userTerms = userTermsRepository.findUserTermsByUserId(userId);
 
         if(userTerms == null) {
-            throw new UserDoesNotExistException("There are no recommendations for the moment");
+            throw new UserNotFoundException("There are no recommendations for the moment");
         }
 
         var sortedTerms = getSortedTerms(userTerms.getTerms());
