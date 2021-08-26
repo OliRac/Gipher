@@ -22,7 +22,13 @@ import {MatCardModule} from '@angular/material/card';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LandingComponent } from './landing/landing.component';
 import { LogoutComponent } from './logout/logout.component';
+import { GifGridComponent } from './gif-grid/gif-grid.component';
+import { TrendingComponent } from './trending/trending.component';
+import { MatGridListModule } from '@angular/material/grid-list'; 
+import {MatIconModule} from '@angular/material/icon'; 
+
 import {SearchService} from './search/search.service';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +42,9 @@ import {SearchService} from './search/search.service';
     RecommendedComponent,
     DashboardComponent,
     LandingComponent,
-    LogoutComponent
+    LogoutComponent,
+    GifGridComponent,
+    TrendingComponent,
   ],
   imports: [
     MatCardModule,
@@ -48,7 +56,10 @@ import {SearchService} from './search/search.service';
     BrowserAnimationsModule,
     MatSliderModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
+    MatGridListModule,
+    MatIconModule
+
   ],
   providers: [SearchService],
   bootstrap: [AppComponent]
