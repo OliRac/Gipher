@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ComponentScan(basePackages={"com.stackroute.userservice"})
 @EnableJpaRepositories(basePackages="com.stackroute.userservice.repository")
 @EntityScan(basePackages="com.stackroute.userservice.entity")
-@EnableEurekaClient
+//@EnableEurekaClient
 public class UserServiceApplication {
 
 	public static void main(String[] args) {
