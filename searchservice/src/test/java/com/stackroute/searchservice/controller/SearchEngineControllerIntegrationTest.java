@@ -6,6 +6,7 @@ import com.stackroute.searchservice.service.SearchEngineService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,8 +18,13 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class SearchEngineControllerIntegrationTest {
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
     @Autowired
     private SearchEngineService searchService;
+
     private SearchEngineDTO searchEngineDTO;
     private SearchEngine searchEngine;
     private List<SearchEngineDTO> searchEngineList;
@@ -30,7 +36,7 @@ class SearchEngineControllerIntegrationTest {
         searchEngineDTO = new SearchEngineDTO();
         searchSet = new HashSet<>();
         searchEngineList = new ArrayList<>();
-        searchEngineDTO.setUserId(1);
+        searchEngineDTO.setUserId(-1);
         searchEngineDTO.setSearchTerm("book");
 
         searchEngine = new SearchEngine();

@@ -36,13 +36,13 @@ public class SearchEngineServiceImpl implements SearchEngineService{
     private final String URL = "https://g.tenor.com/v1/search?q=";
     private final String LIMIT = "&limit=3";
 
-    @Value("${api.key}")
+    @Value("${api.key:test}")
     private String apiKey;
 
-    @Value("${spring.rabbitmq.exchange}")
+    @Value("${spring.rabbitmq.exchange:test}")
     private String exchange;
 
-    @Value("${spring.rabbitmq.routingkey}")
+    @Value("${spring.rabbitmq.routingkey:test}")
     private String routingkey;
 
     /*
@@ -85,7 +85,10 @@ public class SearchEngineServiceImpl implements SearchEngineService{
          * Add code to publish the method to the exchange
          * with specified routingKey using the RabbitTemplate object.
          */
-        rabbitTemplate.convertAndSend(exchange, routingkey, searchInfo);
+        if(searchEngineDTO.getUserId() != -1){
+            rabbitTemplate.convertAndSend(exchange, routingkey, searchInfo);
+        }
+
         return searchRepository.save(searchInfo);
 
     }

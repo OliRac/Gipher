@@ -1,5 +1,8 @@
 package com.stackroute.userservice.controller;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.stackroute.userservice.entity.JwtRequest;
 import com.stackroute.userservice.entity.JwtResponse;
 import com.stackroute.userservice.entity.User;
@@ -9,20 +12,25 @@ import com.stackroute.userservice.service.UserService;
 import com.stackroute.userservice.utility.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Slf4j
 @RestController
 public class UserController {
+
+    @Value("${application.bucket.name}")
+    private String bucketName;
+
+    @Autowired
+    private AmazonS3 s3Client;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -33,7 +41,6 @@ public class UserController {
     private UserService userService;
 
     ResponseEntity<?> responseEntity;
-    public static String uploadDirectory = System.getProperty("user.dir") + "/webapp/assets/images";
 
     @Autowired
     public UserController(UserService userService){
@@ -49,16 +56,18 @@ public class UserController {
         try {
             User savedUser = userService.registerUser(user);
 
-            //id + gets the .jpg or .png image
-            String filename = savedUser.getUserId() + file.getOriginalFilename().substring(file.getOriginalFilename().length()-4);
+            String filename = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            File fileObj = userService.convertMultiPartFileToFile(file);
 
-            //Moving the file into the image directory
-            Path fileNameAndPath = Paths.get(uploadDirectory, filename);
-            if(file != null && savedUser != null && savedUser.getUserId() != -1){
-                Files.write(fileNameAndPath, file.getBytes());
-            }
+            //add the image to the S3 Storage
+            s3Client.putObject(new PutObjectRequest(bucketName, filename, fileObj));
+            //make anyone have access to URL
+            s3Client.setObjectAcl(bucketName, filename, CannedAccessControlList.PublicRead);
+            //remove this object in the userservice application
+            fileObj.delete();
+            s3Client.getUrl(bucketName, filename);
 
-            userService.updatedUserPhotoPath(savedUser, filename);
+            userService.updatedUserPhotoPath(savedUser, s3Client.getUrl(bucketName, filename).toString());
 
             responseEntity = new ResponseEntity<>(savedUser, HttpStatus.OK);
 
@@ -67,9 +76,6 @@ public class UserController {
         catch (UserAlreadyExistException e) {
             responseEntity = new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
             log.info("POST /auth/register - User already exists!!");
-        }
-        catch(IOException e){
-            e.printStackTrace();
         }
 
         return responseEntity;

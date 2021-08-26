@@ -18,13 +18,13 @@ public class SearchserviceApplication {
 	/*
 	 * to get property values
 	 */
-	@Value("${spring.rabbitmq.host}")
+	@Value("${spring.rabbitmq.host:test}")
 	String host;
 
-	@Value("${spring.rabbitmq.username}")
+	@Value("${spring.rabbitmq.username:test}")
 	String username;
 
-	@Value("${spring.rabbitmq.password}")
+	@Value("${spring.rabbitmq.password:test}")
 	String password;
 
 	public static void main(String[] args) {

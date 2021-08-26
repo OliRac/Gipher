@@ -17,9 +17,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 
-@CrossOrigin
 @RestController
-@RequestMapping(value = "/api/v1")
+@RequestMapping(value = "/api/v1/favorite-service")
 public class FavoriteController {
 
     private final Logger LOG = LoggerFactory.getLogger(getClass());
