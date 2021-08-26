@@ -65,6 +65,7 @@
 		<module>userservice</module>
 		<module>searchservice</module>
 		<module>favoriteservice</module>
+        <module>recommendedservice</module>
 	</modules>
 
 	<build>
