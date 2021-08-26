@@ -2,8 +2,10 @@ package com.stackroute.searchservice.service;
 
 import com.stackroute.searchservice.exception.UserNotFoundException;
 import com.stackroute.searchservice.model.SearchEngine;
+import com.stackroute.searchservice.model.SearchEngineDTO;
 import com.stackroute.searchservice.repository.SearchRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -19,50 +21,72 @@ import java.util.Set;
 @Slf4j
 @Service
 public class SearchEngineServiceImpl implements SearchEngineService{
+
+    /*
+     * Add code to define RabbitTemplate
+     */
+    private RabbitTemplate rabbitTemplate;
+
     @Autowired
     SearchRepository searchRepository;
+
     @Autowired
     private RestTemplate restTemplate;
     private final String URL = "https://g.tenor.com/v1/search?q=";
     private final String LIMIT = "&limit=3";
-    @Value("${api.key}")
+
+    @Value("${api.key:test}")
     private String apiKey;
+
+    @Value("${spring.rabbitmq.exchange:test}")
+    private String exchange;
+
+    @Value("${spring.rabbitmq.routingkey:test}")
+    private String routingkey;
+
+    /*
+     * Add code to autowire RabbitTemplate object using contructor autowiring
+     */
+    @Autowired
+    public SearchEngineServiceImpl(RabbitTemplate rabbitTemplate){
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     public SearchEngineServiceImpl(SearchRepository searchRepository) {
         this.searchRepository = searchRepository;
     }
 
-    /***
-     * Saves the searchEngine object into db.
-     * It checks if the searchEngine with the give userId exists. If exists it will add the searchTerm into the existing set,
-     * else it creates a new set.
-     * @param userId
-     * @param searchTerm
-     * @return searchEngine object
-     */
     @Override
-    public SearchEngine saveSearch(int userId, String searchTerm) throws UserNotFoundException {
+    public SearchEngine saveSearch(SearchEngineDTO searchEngineDTO) throws UserNotFoundException {
 
-        String searchURL = URL + searchTerm + "&key=" + apiKey + LIMIT;
+        String searchURL = URL + searchEngineDTO.getSearchTerm() + "&key=" + apiKey + LIMIT;
         log.info("searchstring url:   " + searchURL);
-        log.info("User id : " + userId);
+        log.info("User id : " + searchEngineDTO.getUserId());
 
-        SearchEngine searchInfo = searchRepository.findByUserId(userId);
+        SearchEngine searchInfo = searchRepository.findByUserId(searchEngineDTO.getUserId());
         if(searchInfo != null) {
-            searchInfo.setSearchTerm(searchTerm);
-            log.info("User exists:  " + userId + "adding new searchTerm");
-            searchInfo.getSearchTermSet().add(searchTerm);
+            searchInfo.setSearchTerm(searchEngineDTO.getSearchTerm());
+            log.info("User exists:  " + searchEngineDTO.getUserId() + "adding new searchTerm");
+            searchInfo.getSearchTermSet().add(searchEngineDTO.getSearchTerm());
         }else{
 
             //Object gif = restTemplate.getForObject(searchURL , Gif.class);
 
            // log.info("Response from restTemplate:   " + gif.toString());
             Set<String> searchSet = new HashSet<String>();
-            searchSet.add(searchTerm);
-            searchInfo = new SearchEngine(userId , searchSet);
-            searchInfo.setSearchTerm(searchTerm);
+            searchSet.add(searchEngineDTO.getSearchTerm());
+
+            searchInfo = new SearchEngine(searchEngineDTO.getUserId() , searchSet);
+            searchInfo.setSearchTerm(searchEngineDTO.getSearchTerm());
+
         }
-        getGifs(searchTerm);
+        /*
+         * Add code to publish the method to the exchange
+         * with specified routingKey using the RabbitTemplate object.
+         */
+        if(searchEngineDTO.getUserId() != -1){
+            rabbitTemplate.convertAndSend(exchange, routingkey, searchInfo);
+        }
 
         return searchRepository.save(searchInfo);
 
@@ -93,11 +117,6 @@ public class SearchEngineServiceImpl implements SearchEngineService{
         search = searchRepository.findByUserId(userId);
         return search;
 
-    }
-
-    @Override
-    public SearchEngine saveSearch(SearchEngine search) {
-        return searchRepository.save(search);
     }
 
     @Override

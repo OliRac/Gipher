@@ -1,20 +1,34 @@
 package com.stackroute.userservice.controller;
 
+import com.stackroute.userservice.UserServiceApplication;
 import com.stackroute.userservice.entity.User;
 import com.stackroute.userservice.exception.UserAlreadyExistException;
+import com.stackroute.userservice.repository.UserRepository;
 import com.stackroute.userservice.service.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
 
-@SpringBootTest
+import static org.junit.jupiter.api.Assertions.*;
+
+@AutoConfigureMockMvc
+@TestPropertySource(locations = "classpath:application.properties")
 public class UserControllerIntegrationTest {
+
+    @Autowired
+    private MockMvc mvc;
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private User user;
 
@@ -30,6 +44,7 @@ public class UserControllerIntegrationTest {
     @AfterEach
     public void tearDown(){
         user = null;
+        userRepository.deleteAll();
     }
 
     @Test

@@ -27,6 +27,8 @@ import { TrendingComponent } from './trending/trending.component';
 import { MatGridListModule } from '@angular/material/grid-list'; 
 import {MatIconModule} from '@angular/material/icon'; 
 
+import {SearchService} from './search/search.service';
+
 
 @NgModule({
   declarations: [
@@ -59,7 +61,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatIconModule
 
   ],
-  providers: [],
+  providers: [SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
