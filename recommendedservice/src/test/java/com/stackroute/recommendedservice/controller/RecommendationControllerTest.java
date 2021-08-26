@@ -37,7 +37,9 @@ class RecommendationControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(recommendationController).setControllerAdvice(new GlobalExceptionHandler()).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(recommendationController)
+                .setControllerAdvice(new GlobalExceptionHandler())
+                .build();
     }
 
     @AfterEach
@@ -83,8 +85,6 @@ class RecommendationControllerTest {
     @Test
     public void getRecommendationShouldReturnThrowUserNotFoundException() throws Exception {
         int userId = 0;
-        String recommendations = "things",
-                errorMsg = "user does not exist";
 
         when(recommendationService.getRecommendation(anyInt())).thenThrow(UserNotFoundException.class);
         mockMvc.perform(get("/api/v1/recommendation/" + userId)
