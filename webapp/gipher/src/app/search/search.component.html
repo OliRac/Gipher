@@ -13,7 +13,7 @@
     <button mat-raised-button type="submit">Submit</button>
   </form>
 
-  <div class="gifs">
+  <div class="gifs" *ngFor=" let gif of gifs">
     <mat-card class="example-card">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
@@ -22,8 +22,8 @@
       </mat-card-header>
       <img
         mat-card-image
-        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-        alt="Photo of a Shiba Inu"
+        [src]="gif.itemurl"
+        alt="gif.title"
       />
       <mat-card-content>
         <p>

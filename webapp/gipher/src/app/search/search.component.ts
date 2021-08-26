@@ -16,7 +16,8 @@ import { SearchService } from '../services/search.service';
 export class SearchComponent implements OnInit {
   searchValue: string;
   errorMsg: string;
-  gifData: Gif[];
+  parentData: any[] = [];
+  gifs: Gif[] = [];
   userId: number;
 
   form: FormGroup;
@@ -31,6 +32,9 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+  extractData(){
+
+  }
 
   get searchTerm() {
     return this.form.get('searchTerm');
@@ -54,7 +58,17 @@ export class SearchComponent implements OnInit {
       // testing!
       this.searchService.searchGif(this.searchValue).subscribe(
         (data) => {
-          console.log(data);
+          console.log('Data:   ' , data);
+          this.parentData = data.results;
+           console.log('ParentData :   ' , this.parentData);
+
+        //loop extracting data
+        for (let i = 0; i < this.parentData.length; i++) {
+
+          console.log ("Media: " , this.parentData[i].media[i].mediumgif.url);
+        }
+
+
         },
         (error) => {
           this.errorMsg = error.error;

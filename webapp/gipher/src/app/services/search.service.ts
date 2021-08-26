@@ -19,7 +19,7 @@ export class SearchService {
     id: number
   ): Observable<any> {
     this.searchURL =
-      environment.SEARCH_SERVICE_URL + `/searchTerm/${searchTerm}/userId/${id}`;
+      environment.SEARCH_SERVICE_URL + `/search`;
 
     return this.http.get(this.searchURL);
   }
