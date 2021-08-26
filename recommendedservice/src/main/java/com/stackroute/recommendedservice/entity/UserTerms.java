@@ -5,8 +5,9 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
+import java.util.Map;
 
-@Document(collection = "recommendation")
+@Document(collection = "userTerms")
 public class UserTerms {
     private static final int threshold = 2;
 
@@ -14,14 +15,14 @@ public class UserTerms {
     private String id;
     @Indexed(unique = true)
     private int userId;
-    private HashMap<String, Integer> terms;
+    private Map<String, Integer> terms;
 
 
     public UserTerms() {
 
     }
 
-    public UserTerms(HashMap<String, Integer> terms, int userId) {
+    public UserTerms(Map<String, Integer> terms, int userId) {
         this.terms = terms;
         this.userId = userId;
     }
@@ -36,11 +37,11 @@ public class UserTerms {
         terms.put(term, count);
     }
 
-    public HashMap<String, Integer> getTerms() {
+    public Map<String, Integer> getTerms() {
         return terms;
     }
 
-    public void setTerms(HashMap<String, Integer> terms) {
+    public void setTerms(Map<String, Integer> terms) {
         this.terms = terms;
     }
 
