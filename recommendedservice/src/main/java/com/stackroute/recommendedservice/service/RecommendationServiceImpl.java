@@ -71,7 +71,7 @@ public class RecommendationServiceImpl implements RecommendationService{
     /*Current recommendation algorithm
     * Order the terms hashmap by increasing order of occurences
     * get the last couple of terms (2) and query the tenor API for search suggestions
-    * take a coule of suggestions and perform searches for gifs with them
+    * take a couple of suggestions and perform searches for gifs with them
     * return the search resutls*/
     @Override
     public String getRecommendation(int userId) throws UserDoesNotExistException {
@@ -82,8 +82,8 @@ public class RecommendationServiceImpl implements RecommendationService{
         }
 
         var sortedTerms = getSortedTerms(userTerms.getTerms());
-        var termsToUse = getTermsToUse(sortedTerms);
-        var suggestedSearchTerms = getSuggestedSearchTerms(termsToUse);
+        var termsToUse = getTermsToUse(sortedTerms, MAX_TERM_SUGGESTIONS);
+        var suggestedSearchTerms = getSuggestedSearchTerms(termsToUse, MAX_SUGGESTIONS_PER_QUERY);
 
         var recommendations = new StringBuilder();
         HttpHeaders headers = new HttpHeaders();
@@ -116,7 +116,7 @@ public class RecommendationServiceImpl implements RecommendationService{
 
     /*Helper to sort a users term hashmap
     * Sorting with stream: get entryset, sort by comparing values, add to a linkedhashmap*/
-    private String[] getSortedTerms(HashMap<String, Integer> termsMap){
+    protected String[] getSortedTerms(Map<String, Integer> termsMap){
         return termsMap.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue())
@@ -127,17 +127,17 @@ public class RecommendationServiceImpl implements RecommendationService{
                 .toArray(new String[termsMap.size()]); //further converting to an array for easy access to last elements
     }
 
-    /*From an array of sorted terms (ascending), this returns the last few, up to MAX_RECOMMENDATION_TERMS*/
-    private LinkedList<String> getTermsToUse(String [] sortedTerms) {
+    /*From an array of sorted terms (ascending), this returns the last few, up to max*/
+    protected List<String> getTermsToUse(String [] sortedTerms, int max) {
         //if its smaller we can just put everything as a term to use
-        if(sortedTerms.length < MAX_TERM_SUGGESTIONS) {
-            return new LinkedList<String>(Arrays.asList(sortedTerms));
+        if(sortedTerms.length < max) {
+            return Arrays.asList(sortedTerms);
         }
 
         var termsToUse = new LinkedList<String>();
         int lastIndex = sortedTerms.length - 1;
 
-        for(int i = 0; i < MAX_TERM_SUGGESTIONS; i++) {
+        for(int i = 0; i < max; i++) {
             termsToUse.add(sortedTerms[lastIndex - i]);
         }
 
@@ -146,7 +146,7 @@ public class RecommendationServiceImpl implements RecommendationService{
 
     /*gets search suggestions from tenor out of the list of terms
     * takes up to MAX_SUGGESTIONS_PER_QUERY number of search suggestions per term*/
-    private LinkedList<String> getSuggestedSearchTerms(LinkedList<String> terms) {
+    protected List<String> getSuggestedSearchTerms(List<String> terms, int maxSuggestions) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -156,7 +156,7 @@ public class RecommendationServiceImpl implements RecommendationService{
             String body = queryTenor("search_suggestions?q=" + term, HttpMethod.GET, headers, NO_LIMIT);
             JSONArray arr = new JSONArray(new JSONObject(body).get("results").toString());
 
-            for(int i = 0; i < MAX_SUGGESTIONS_PER_QUERY; i++) {
+            for(int i = 0; i < maxSuggestions; i++) {
                 if(arr.length() <= i) {
                     break;
                 }
