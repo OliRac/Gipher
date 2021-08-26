@@ -24,10 +24,10 @@ import { LandingComponent } from './landing/landing.component';
 import { LogoutComponent } from './logout/logout.component';
 import { GifGridComponent } from './gif-grid/gif-grid.component';
 import { TrendingComponent } from './trending/trending.component';
-import { MatGridListModule } from '@angular/material/grid-list'; 
-import {MatIconModule} from '@angular/material/icon'; 
+import { MatGridListModule } from '@angular/material/grid-list';
+import {MatIconModule} from '@angular/material/icon';
 
-import {SearchService} from './search/search.service';
+import {SearchService} from './services/search.service';
 
 
 @NgModule({
