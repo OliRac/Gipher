@@ -10,10 +10,7 @@ connect:
   stage: database_setup_mysql
   image: mysql:latest
   script:
-    - echo "
-      CREATE SCHEMA IF NOT EXISTS gipher;
-      USE gipher;
-      CREATE TABLE IF NOT EXISTS `gipher`.`user` (
+    - echo "CREATE TABLE IF NOT EXISTS `gipher`.`user` (
       `user_id` INT NOT NULL AUTO_INCREMENT,
       `username` VARCHAR(45) NOT NULL,
       `password` VARCHAR(256) NOT NULL,
