@@ -2,6 +2,9 @@ image: maven:3-jdk-11
 before_script:
   - apt-get update -qq && apt-get install
 
+services:
+  - mysql:latest
+
 cache:
   key: "maven3"
   paths:
@@ -12,6 +15,21 @@ variables:
   SONAR_LOGIN: "admin"
   SONAR_PASSWORD: "admin"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  MYSQL_DATABASE: "gipher"
+  MYSQL_ROOT_PASSWORD: "admin"
+
+connect:
+  image: mysql
+  script:
+    - echo "CREATE SCHEMA IF NOT EXISTS gipher;
+      CREATE TABLE IF NOT EXISTS `gipher`.`user` (
+      `user_id` INT NOT NULL AUTO_INCREMENT,
+      `username` VARCHAR(45) NOT NULL,
+      `password` VARCHAR(256) NOT NULL,
+      `photo` VARCHAR(256) NULL,
+      PRIMARY KEY (`user_id`)
+      );" | mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql "$MYSQL_DATABASE"
+
 
 stages:
   - build
