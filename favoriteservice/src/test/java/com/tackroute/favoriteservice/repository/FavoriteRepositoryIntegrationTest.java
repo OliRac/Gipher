@@ -1,46 +1,20 @@
 package com.tackroute.favoriteservice.repository;
 
 
-import com.tackroute.favoriteservice.controller.FavoriteController;
 import com.tackroute.favoriteservice.domain.Selection;
-import com.tackroute.favoriteservice.exception.GlobalExceptionHandler;
-import com.tackroute.favoriteservice.service.FavoriteService;
-import com.tackroute.favoriteservice.service.FavoriteServiceImpl;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import java.util.*;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-//@ExtendWith(SpringExtension.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
 public class FavoriteRepositoryIntegrationTest {
 
     @Autowired
     private FavoriteRepository favoriteRepository;
 
-    private MockMvc mockMvc;
-
-    @Mock
-    private FavoriteService favoriteService2;
-
-    @InjectMocks
-    private FavoriteController favoriteController;
 
     private String gif1 = "https://giphy.com/stories/some-bb23-cute-moments-1b9c561f-c095";
     String gif2 = "https://giphy.com/stories/welcome-to-the-high-rollers-room-8d7b09cb-a920";
@@ -54,13 +28,6 @@ public class FavoriteRepositoryIntegrationTest {
         add(gif1);
     }};
     private Selection selection;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(favoriteController).setControllerAdvice(new GlobalExceptionHandler()).build();
-
-    }
 
     @Test
     public void givenGifToSaveAsFavoriteThenShouldReturnSavedGif() {
@@ -103,9 +70,6 @@ public class FavoriteRepositoryIntegrationTest {
         selection = new Selection(1, favoriteList1);
         favoriteRepository.save(selection);
         favoriteRepository.deleteByUserId(selection.getUserId());
-//        Selection selection1 = favoriteRepository.findByUserId(selection.getUserId());
-//        selection1.emptyFavoriteList();
-//        Selection emptySelection = favoriteRepository.save(selection1);
         assertEquals(favoriteRepository.findByUserId(selection.getUserId()), null);
 
     }
@@ -114,13 +78,8 @@ public class FavoriteRepositoryIntegrationTest {
     public void givenUserIdThenShouldReturnListOfAllFavorites(){
         selection = new Selection(1, favoriteList1);
         Selection sel= favoriteRepository.save(selection);
-//        favoriteRepository.findByUserId(selection.getUserId())
         HashSet<String> favorites = sel.getFavoriteList();
         assertEquals(favorites, favoriteList1 );
     }
 
-//    @Test
-//    public void givenGifUrlReturnIfGifIsFavoriteOrNot(){
-//        String gif = "https://giphy.com/stories/some-bb23-cute-moments-1b9c561f-c095";
-//    }
 }
