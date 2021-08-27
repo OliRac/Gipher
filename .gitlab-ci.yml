@@ -2,10 +2,6 @@ image: maven:3-jdk-11
 before_script:
   - apt-get update -qq && apt-get install
 
-services:
-  - mysql:latest
-  - mongo
-
 cache:
   key: "maven3"
   paths:
@@ -16,10 +12,6 @@ variables:
   SONAR_LOGIN: "admin"
   SONAR_PASSWORD: "admin"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
-  # Configure mysql environment variables (https://hub.docker.com/_/mysql/)
-  MYSQL_DATABASE: "gipher"
-  MYSQL_ROOT_PASSWORD: "admin"
-  DB_HOST: mongo
 
 stages:
   - build

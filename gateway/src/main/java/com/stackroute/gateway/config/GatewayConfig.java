@@ -15,20 +15,22 @@ public class GatewayConfig {
 
     @Bean
     public RouteLocator myRoutes(RouteLocatorBuilder builder) {
-//        return builder.routes().route(  r -> r.path("/auth/**")
-//                                        .filters(f -> f.filter(filter)).uri("http://userservice:9999"))
-//                                .route( r -> r.path("/api/v1/favorite-service/**")
-//                                        .filters(f -> f.filter(filter)).uri("http://favoriteservice:8080"))
-//                                .route( r -> r.path("/api/v1/search-service/**")
-//                                        .filters(f -> f.filter(filter)).uri("http://searchservice:8082"))
-//                                .build();
-        //testing
         return builder.routes().route(  r -> r.path("/auth/**")
-                .filters(f -> f.filter(filter)).uri("http://localhost:9999"))
-                .route( r -> r.path("/api/v1/favorite-service/**")
-                        .filters(f -> f.filter(filter)).uri("http://localhost:8080"))
-                .route( r -> r.path("/api/v1/search-service/**")
-                        .filters(f -> f.filter(filter)).uri("http://localhost:8082"))
-                .build();
+                                        .filters(f -> f.filter(filter)).uri("http://userservice:9999"))
+                                .route( r -> r.path("/api/v1/favorite-service/**")
+                                        .filters(f -> f.filter(filter)).uri("http://favoriteservice:8080"))
+                                .route( r -> r.path("/api/v1/search-service/**")
+                                        .filters(f -> f.filter(filter)).uri("http://searchservice:8082"))
+                                .route( r -> r.path("/api/v1/search-service/**")
+                                        .filters(f -> f.filter(filter)).uri("http://searchservice:8082"))
+                                .build();
+        //testing
+//        return builder.routes().route(  r -> r.path("/auth/**")
+//                .filters(f -> f.filter(filter)).uri("http://localhost:9999"))
+//                .route( r -> r.path("/api/v1/favorite-service/**")
+//                        .filters(f -> f.filter(filter)).uri("http://localhost:8080"))
+//                .route( r -> r.path("/api/v1/search-service/**")
+//                        .filters(f -> f.filter(filter)).uri("http://localhost:8082"))
+//                .build();
     }
 }
