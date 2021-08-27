@@ -13,16 +13,6 @@ export class SearchService {
   searchURL: string;
 
   constructor(private http: HttpClient) {}
-
-  storeUserSearchTermWithUserId(
-    searchTerm: string,
-    id: number
-  ): Observable<any> {
-    this.searchURL =
-      environment.SEARCH_SERVICE_URL + `/search`;
-
-    return this.http.get(this.searchURL);
-  }
   searchGif(searchTerm: string): Observable<any> {
     var header = {
     headers: new HttpHeaders().set('Authorization', `Bearer ${this.storedUser.token}`)}
