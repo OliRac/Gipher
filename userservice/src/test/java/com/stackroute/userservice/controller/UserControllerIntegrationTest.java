@@ -1,39 +1,50 @@
 package com.stackroute.userservice.controller;
 
-import com.stackroute.userservice.UserServiceApplication;
 import com.stackroute.userservice.entity.User;
+import com.stackroute.userservice.exception.GlobalExceptionHandler;
 import com.stackroute.userservice.exception.UserAlreadyExistException;
 import com.stackroute.userservice.repository.UserRepository;
 import com.stackroute.userservice.service.UserService;
+import com.stackroute.userservice.service.UserServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@AutoConfigureMockMvc
-@TestPropertySource(locations = "classpath:application.properties")
+@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class UserControllerIntegrationTest {
 
-    @Autowired
-    private MockMvc mvc;
+    private MockMvc mockMvc;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Mock
+    private UserService userService2;
+
+    @InjectMocks
+    private UserController userController;
 
     private User user;
 
     @BeforeEach
     public void setUp(){
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).setControllerAdvice(new GlobalExceptionHandler()).build();
         user = new User();
         user.setUserId(-1);
         user.setUsername("leo");
@@ -43,8 +54,8 @@ public class UserControllerIntegrationTest {
 
     @AfterEach
     public void tearDown(){
-        user = null;
         userRepository.deleteAll();
+        user = null;
     }
 
     @Test
@@ -56,6 +67,7 @@ public class UserControllerIntegrationTest {
     @Test
     void givenUserToSaveThenShouldReturnTheSavedUser() throws UserAlreadyExistException {
         User newUser = new User();
+        newUser.setUserId(-2);
         newUser.setUsername("hey");
         newUser.setPassword("hey123");
         assertNotNull(userService.registerUser(newUser));

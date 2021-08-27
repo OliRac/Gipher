@@ -38,6 +38,7 @@ describe('LoginGuard', () => {
   });
 
   it("should return false if user is not authenticated", () => {
+    sessionStorage.clear();
     expect(guard.canActivate(null, null)).toBeFalsy();
   });
 });
