@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Gif } from '../models/Gif';
 import { SearchService } from '../services/search.service';
 
@@ -11,7 +16,8 @@ import { SearchService } from '../services/search.service';
 export class SearchComponent implements OnInit {
   searchValue: string;
   errorMsg: string;
-  gifData: Gif[];
+  parentData: any[] = [];
+  gifs: Gif[] = [];
   userId: number;
 
   form: FormGroup;
@@ -26,6 +32,9 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+  extractData(){
+
+  }
 
   get searchTerm() {
     return this.form.get('searchTerm');
@@ -33,11 +42,33 @@ export class SearchComponent implements OnInit {
 
   onSubmit(): void {
     if (this.form.valid) {
-      this.searchValue = this.searchTerm.value;
-
-      this.searchService.storeUserSearchTermWithUserId(this.searchValue  , this.userId).subscribe(
+       this.searchValue = this.searchTerm.value;
+       console.log(this.searchValue);
+//
+//       this.searchService
+//         .storeUserSearchTermWithUserId(this.searchValue, this.userId)
+//         .subscribe(
+//           (data) => {
+//             this.gifData.push(data);
+//           },
+//           (error) => {
+//             this.errorMsg = error.error;
+//           }
+//         );
+      // testing!
+      this.searchService.searchGif(this.searchValue).subscribe(
         (data) => {
-          this.gifData.push(data);
+          console.log('Data:   ' , data);
+          this.parentData = data.results;
+           console.log('ParentData :   ' , this.parentData);
+
+        //loop extracting data
+        for (let i = 0; i < this.parentData.length; i++) {
+
+          console.log ("Media: " , this.parentData[i].media[i].mediumgif.url);
+        }
+
+
         },
         (error) => {
           this.errorMsg = error.error;

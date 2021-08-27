@@ -40,6 +40,7 @@ class SearchEngineControllerTest {
     private SearchEngine search;
     private Set<String> searchSet;
     private List<SearchEngine> searchEngineList;
+    private final String URL = "/api/v1/search-service/";
 
     @BeforeEach
     public void setUp() {
@@ -62,7 +63,7 @@ class SearchEngineControllerTest {
     @Test
     public void givenSearchEngineToSaveThenShouldReturnSavedSearch() throws Exception {
         when(searchService.saveSearch(any())).thenReturn(search);
-        mockMvc.perform(post("/api/v1/search")
+        mockMvc.perform(post(URL + "search")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(search)))
                 .andExpect(status().isOk())
@@ -73,7 +74,7 @@ class SearchEngineControllerTest {
     @Test
     public void givenGetAllSearchesThenShouldReturnListOfAllSearchEngine() throws Exception {
         when(searchService.getAllSearch()).thenReturn(searchEngineList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/searches")
+        mockMvc.perform(MockMvcRequestBuilders.get(URL + "searches")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(search)))
                 .andDo(MockMvcResultHandlers.print());
         verify(searchService).getAllSearch();
@@ -84,7 +85,7 @@ class SearchEngineControllerTest {
     @Test
     void givenSearchUserIdThenShouldReturnRespectiveSearch() throws Exception {
         when(searchService.findByUserId(search.getUserId())).thenReturn(search);
-        mockMvc.perform(get("/api/v1/search/1"))
+        mockMvc.perform(get(URL + "search/1"))
                 .andExpect(MockMvcResultMatchers.status()
                         .isFound())
                 .andDo(MockMvcResultHandlers.print());
