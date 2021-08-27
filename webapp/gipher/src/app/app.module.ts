@@ -26,7 +26,6 @@ import { GifGridComponent } from './gif-grid/gif-grid.component';
 import { TrendingComponent } from './trending/trending.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
-
 import {SearchService} from './services/search.service';
 
 
@@ -61,7 +60,7 @@ import {SearchService} from './services/search.service';
     MatIconModule
 
   ],
-  providers: [SearchService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

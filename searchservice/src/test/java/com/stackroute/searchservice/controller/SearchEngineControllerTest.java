@@ -42,6 +42,7 @@ class SearchEngineControllerTest {
     private SearchEngine search;
     private Set<String> searchSet;
     private List<SearchEngine> searchEngineList;
+    private final String URL = "/api/v1/search-service/";
 
     @BeforeEach
     public void setUp() {
@@ -65,7 +66,7 @@ class SearchEngineControllerTest {
     public void givenUserTermDTOGetGifShouldCallSaveSearch() throws Exception {
         UserTermDTO userTerm = new UserTermDTO(1, "book");
         when(searchService.saveSearch(any(UserTermDTO.class))).thenReturn(search);
-        mockMvc.perform(post("/api/v1/search-service/gifs/search")
+        mockMvc.perform(post(URL + "gifs/search")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(userTerm)))
                 .andExpect(status().isOk());
@@ -76,7 +77,7 @@ class SearchEngineControllerTest {
     @Test
     public void givenGetAllSearchesThenShouldReturnListOfAllSearchEngine() throws Exception {
         when(searchService.getAllSearch()).thenReturn(searchEngineList);
-        mockMvc.perform(get("/api/v1/search-service/searches")
+        mockMvc.perform(get(URL + "searches")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(""))
                 .andExpect(status().isOk());
@@ -87,7 +88,7 @@ class SearchEngineControllerTest {
     @Test
     void givenSearchUserIdThenShouldReturnRespectiveSearch() throws Exception {
         when(searchService.findByUserId(search.getUserId())).thenReturn(search);
-        mockMvc.perform(get("/api/v1/search-service/search/" + search.getUserId()))
+        mockMvc.perform(get(URL + "search/" + search.getUserId()))
                 .andExpect(status().isFound())
                 .andDo(MockMvcResultHandlers.print());
         verify(searchService, times(1)).findByUserId(anyInt());

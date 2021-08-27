@@ -25,8 +25,9 @@ public class SearchEngineServiceImpl implements SearchEngineService{
     /*
      * Add code to define RabbitTemplate
      */
-
+    @Autowired
     private RabbitTemplate rabbitTemplate;
+
     private SearchRepository searchRepository;
 
     @Autowired
