@@ -2881,3 +2881,4 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2021-08-27 11:32:13.121  INFO 5028 --- [http-nio-8082-exec-8] c.s.s.service.SearchEngineServiceImpl    : Sending a UserTermDTO to RecommendationService
 2021-08-27 11:32:13.124  INFO 25284 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] c.s.r.service.RecommendationServiceImpl  : Got a UserTermDTO from another service: SearchEngineDTO{userId=102, searchTerm='thing2'}
 2021-08-27 11:32:13.129  INFO 25284 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] c.s.r.service.RecommendationServiceImpl  : Added thing2 to user 102's collection
+2021-08-27 11:34:13.468  INFO 5028 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
