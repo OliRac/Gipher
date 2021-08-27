@@ -26,7 +26,7 @@ import java.io.IOException;
 @RestController
 public class UserController {
 
-    @Value("${application.bucket.name}")
+    @Value("${application.bucket.name:test}")
     private String bucketName;
 
     @Autowired
@@ -59,15 +59,17 @@ public class UserController {
             String filename = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             File fileObj = userService.convertMultiPartFileToFile(file);
 
-            //add the image to the S3 Storage
-            s3Client.putObject(new PutObjectRequest(bucketName, filename, fileObj));
-            //make anyone have access to URL
-            s3Client.setObjectAcl(bucketName, filename, CannedAccessControlList.PublicRead);
-            //remove this object in the userservice application
-            fileObj.delete();
-            s3Client.getUrl(bucketName, filename);
+            if(savedUser.getUserId() > 0){
+                //add the image to the S3 Storage
+                s3Client.putObject(new PutObjectRequest(bucketName, filename, fileObj));
+                //make anyone have access to URL
+                s3Client.setObjectAcl(bucketName, filename, CannedAccessControlList.PublicRead);
+                //remove this object in the userservice application
+                fileObj.delete();
+                s3Client.getUrl(bucketName, filename);
 
-            userService.updatedUserPhotoPath(savedUser, s3Client.getUrl(bucketName, filename).toString());
+                userService.updatedUserPhotoPath(savedUser, s3Client.getUrl(bucketName, filename).toString());
+            }
 
             responseEntity = new ResponseEntity<>(savedUser, HttpStatus.OK);
 
@@ -87,7 +89,9 @@ public class UserController {
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody JwtRequest jwtRequest) {
         User findUser = userService.findUserByUsername(jwtRequest.getUsername());
-
+        if(findUser == null){
+            return new ResponseEntity<JwtResponse>(new JwtResponse("notvalidtoken", findUser), HttpStatus.CONFLICT);
+        }
         boolean isValidPw = passwordEncoder.matches(jwtRequest.getPassword(), findUser.getPassword());
 
         if(!isValidPw) {

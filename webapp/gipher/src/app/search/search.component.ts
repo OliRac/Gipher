@@ -3,12 +3,26 @@ import { Component, OnInit , Input} from '@angular/core';
  import { Gif } from '../models/Gif';
 // import { SearchService } from '../services/search.service';
 
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { SearchService } from '../services/search.service';
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css'],
 })
 export class SearchComponent implements OnInit {
+
+  searchValue: string;
+  errorMsg: string;
+  parentData: any[] = [];
+  gifs: Gif[] = [];
+  userId: number;
 
   @Input() gifList: Gif[];
   @Input() infoText: string ;

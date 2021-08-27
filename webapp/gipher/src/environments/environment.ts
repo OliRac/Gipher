@@ -4,9 +4,11 @@
 
 export const environment = {
   production: false,
+  USER_SERVICE_URL: "http://localhost:9090",
+  SEARCH_SERVICE_URL: "http://localhost:9090/api/v1/search-service",
   USER_SERVICE_URL: "http://localhost:9090/user-service",
-  SEARCH_SERVICE_URL: "http://localhost:9090/search-service",
   FAVORITE_SERVICE_URL: "http://localhost:8080/favorite-service",
+
 
   /*THE FOLLOWING ARE PLACEHOLDERS*/
   RECOMM_SERVICE_URL: "http://localhost:9093"

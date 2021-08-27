@@ -25,7 +25,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
-import {SearchService} from './services/search.service';
 
 
 @NgModule({
@@ -59,7 +58,7 @@ import {SearchService} from './services/search.service';
 
 
   ],
-  providers: [SearchService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

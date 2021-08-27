@@ -1,7 +1,7 @@
 package com.stackroute.searchservice.service;
 
 import com.stackroute.searchservice.model.SearchEngine;
-import com.stackroute.searchservice.model.SearchEngineDTO;
+import com.stackroute.searchservice.model.UserTermDTO;
 import com.stackroute.searchservice.repository.SearchRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,9 +12,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,11 +29,11 @@ class SearchEngineServiceTest {
     private SearchEngine search , search1;
     private Set<String> searchSet;
     private List<SearchEngine> searchEngineList;
-    private SearchEngineDTO dto;
+    private UserTermDTO dto;
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        dto = new SearchEngineDTO();
+        dto = new UserTermDTO();
         search = new SearchEngine();
         dto.setUserId(-1);
         dto.setSearchTerm("a");

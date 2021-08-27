@@ -5,27 +5,33 @@ import { LoginGuard } from './guards/login.guard';
 import { LandingComponent } from './landing/landing.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {
-    path:"register", component: UserRegistrationComponent
+    path: 'search',
+    component: SearchComponent,
   },
   {
     path:"login", component: UserLoginComponent
+},
+  {
+    path: 'landing',
+    component: LandingComponent,
   },
   {
-    path:"landing", component: LandingComponent
-  },
-  {
-    path:"dashboard", component: DashboardComponent, canActivate: [LoginGuard]
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [LoginGuard],
   },
   {
     path: "", redirectTo: "dashboard", pathMatch: "full"
   }
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

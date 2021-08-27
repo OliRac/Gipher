@@ -2,6 +2,7 @@ package com.stackroute.searchservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stackroute.searchservice.model.SearchEngine;
+import com.stackroute.searchservice.model.UserTermDTO;
 import com.stackroute.searchservice.service.SearchEngineService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -40,6 +42,7 @@ class SearchEngineControllerTest {
     private SearchEngine search;
     private Set<String> searchSet;
     private List<SearchEngine> searchEngineList;
+    private final String URL = "/api/v1/search-service/";
 
     @BeforeEach
     public void setUp() {
@@ -60,36 +63,37 @@ class SearchEngineControllerTest {
     }
 
     @Test
-    public void givenSearchEngineToSaveThenShouldReturnSavedSearch() throws Exception {
-        when(searchService.saveSearch(any())).thenReturn(search);
-        mockMvc.perform(post("/api/v1/search")
+    public void givenUserTermDTOGetGifShouldCallSaveSearch() throws Exception {
+        UserTermDTO userTerm = new UserTermDTO(1, "book");
+        when(searchService.saveSearch(any(UserTermDTO.class))).thenReturn(search);
+        mockMvc.perform(post(URL + "gifs/search")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(search)))
-                .andExpect(status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-        verify(searchService).saveSearch(any());
+                .content(asJsonString(userTerm)))
+                .andExpect(status().isOk());
+
+        verify(searchService, times(1)).saveSearch(any(UserTermDTO.class));
     }
 
     @Test
     public void givenGetAllSearchesThenShouldReturnListOfAllSearchEngine() throws Exception {
         when(searchService.getAllSearch()).thenReturn(searchEngineList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/searches")
-                .contentType(MediaType.APPLICATION_JSON).content(asJsonString(search)))
-                .andDo(MockMvcResultHandlers.print());
-        verify(searchService).getAllSearch();
-        verify(searchService, times(1)).getAllSearch();
+        mockMvc.perform(get(URL + "searches")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(""))
+                .andExpect(status().isOk());
 
+        verify(searchService, times(1)).getAllSearch();
     }
 
     @Test
     void givenSearchUserIdThenShouldReturnRespectiveSearch() throws Exception {
         when(searchService.findByUserId(search.getUserId())).thenReturn(search);
-        mockMvc.perform(get("/api/v1/search/1"))
-                .andExpect(MockMvcResultMatchers.status()
-                        .isFound())
+        mockMvc.perform(get(URL + "search/" + search.getUserId()))
+                .andExpect(status().isFound())
                 .andDo(MockMvcResultHandlers.print());
-
+        verify(searchService, times(1)).findByUserId(anyInt());
     }
+
     private static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);

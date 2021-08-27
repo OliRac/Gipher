@@ -1,16 +1,24 @@
-package com.stackroute.searchservice.model;
+package com.stackroute.recommendedservice.entity;
 
-public class SearchEngineDTO {
+public class UserTermDTO {
     private int userId;
     private String searchTerm;
 
-    public SearchEngineDTO(){
+    public UserTermDTO(){
 
     }
 
-    public SearchEngineDTO(int userId, String searchTerm) {
+    public UserTermDTO(int userId, String searchTerm) {
         this.userId = userId;
         this.searchTerm = searchTerm;
+    }
+
+    @Override
+    public String toString() {
+        return "SearchEngineDTO{" +
+                "userId=" + userId +
+                ", searchTerm='" + searchTerm + '\'' +
+                '}';
     }
 
     public int getUserId() {
