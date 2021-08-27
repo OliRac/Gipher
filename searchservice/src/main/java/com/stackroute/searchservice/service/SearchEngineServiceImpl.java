@@ -2,7 +2,7 @@ package com.stackroute.searchservice.service;
 
 import com.stackroute.searchservice.exception.UserNotFoundException;
 import com.stackroute.searchservice.model.SearchEngine;
-import com.stackroute.searchservice.model.SearchEngineDTO;
+import com.stackroute.searchservice.model.UserTermDTO;
 import com.stackroute.searchservice.repository.SearchRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -25,15 +25,15 @@ public class SearchEngineServiceImpl implements SearchEngineService{
     /*
      * Add code to define RabbitTemplate
      */
-    private RabbitTemplate rabbitTemplate;
 
-    @Autowired
-    SearchRepository searchRepository;
+    private RabbitTemplate rabbitTemplate;
+    private SearchRepository searchRepository;
 
     @Autowired
     private RestTemplate restTemplate;
+
     private final String URL = "https://g.tenor.com/v1/search?q=";
-    private final String LIMIT = "&limit=3";
+    private final String LIMIT = "&limit=9";
 
     @Value("${api.key:test}")
     private String apiKey;
@@ -48,43 +48,41 @@ public class SearchEngineServiceImpl implements SearchEngineService{
      * Add code to autowire RabbitTemplate object using contructor autowiring
      */
     @Autowired
-    public SearchEngineServiceImpl(RabbitTemplate rabbitTemplate){
+    public SearchEngineServiceImpl(RabbitTemplate rabbitTemplate, SearchRepository searchRepository){
         this.rabbitTemplate = rabbitTemplate;
-    }
-
-    public SearchEngineServiceImpl(SearchRepository searchRepository) {
         this.searchRepository = searchRepository;
     }
 
     @Override
-    public SearchEngine saveSearch(SearchEngineDTO searchEngineDTO) throws UserNotFoundException {
+    public SearchEngine saveSearch(UserTermDTO userTermDTO) throws UserNotFoundException {
 
-        String searchURL = URL + searchEngineDTO.getSearchTerm() + "&key=" + apiKey + LIMIT;
+        String searchURL = URL + userTermDTO.getSearchTerm() + "&key=" + apiKey + LIMIT;
         log.info("searchstring url:   " + searchURL);
-        log.info("User id : " + searchEngineDTO.getUserId());
+        log.info("User id : " + userTermDTO.getUserId());
 
-        SearchEngine searchInfo = searchRepository.findByUserId(searchEngineDTO.getUserId());
+        SearchEngine searchInfo = searchRepository.findByUserId(userTermDTO.getUserId());
         if(searchInfo != null) {
-            searchInfo.setSearchTerm(searchEngineDTO.getSearchTerm());
-            log.info("User exists:  " + searchEngineDTO.getUserId() + "adding new searchTerm");
-            searchInfo.getSearchTermSet().add(searchEngineDTO.getSearchTerm());
+            searchInfo.setSearchTerm(userTermDTO.getSearchTerm());
+            log.info("User exists:  " + userTermDTO.getUserId() + "adding new searchTerm");
+            searchInfo.getSearchTermSet().add(userTermDTO.getSearchTerm());
         }else{
 
             //Object gif = restTemplate.getForObject(searchURL , Gif.class);
 
            // log.info("Response from restTemplate:   " + gif.toString());
             Set<String> searchSet = new HashSet<String>();
-            searchSet.add(searchEngineDTO.getSearchTerm());
+            searchSet.add(userTermDTO.getSearchTerm());
 
-            searchInfo = new SearchEngine(searchEngineDTO.getUserId() , searchSet);
-            searchInfo.setSearchTerm(searchEngineDTO.getSearchTerm());
+            searchInfo = new SearchEngine(userTermDTO.getUserId() , searchSet);
+            searchInfo.setSearchTerm(userTermDTO.getSearchTerm());
 
         }
         /*
          * Add code to publish the method to the exchange
          * with specified routingKey using the RabbitTemplate object.
          */
-        if(searchEngineDTO.getUserId() != -1){
+        if(userTermDTO.getUserId() != -1){
+            log.info("Sending a UserTermDTO to RecommendationService");
             rabbitTemplate.convertAndSend(exchange, routingkey, searchInfo);
         }
 
@@ -105,7 +103,7 @@ public class SearchEngineServiceImpl implements SearchEngineService{
         HttpStatus statusCode = responseEntity.getStatusCode();
         log.info("HTTPStatus is:  " + statusCode);
         //Gif gif = responseEntity.getBody();
-        log.info("Response body-   "+ responseEntity.getBody());
+        //log.info("Response body-   "+ responseEntity.getBody());
 
 
         return responseEntity.getBody();

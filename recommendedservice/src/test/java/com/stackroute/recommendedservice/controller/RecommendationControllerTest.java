@@ -47,32 +47,14 @@ class RecommendationControllerTest {
     }
 
     @Test
-    public void addTermShouldReturnAddedTerm() throws Exception{
-        int userId = 0;
-        String term = "term";
-
-        when(recommendationService.addTerm(anyInt(), anyString())).thenReturn(term);
-        mockMvc.perform(post("/api/v1/addTerm/" + userId + "/" + term)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(""))
-                .andExpect(status().isOk())
-                .andDo(mvcResult -> {
-                    String response = mvcResult.getResponse().getContentAsString();
-                    assertEquals(term, response);
-                });
-
-        verify(recommendationService, times(1)).addTerm(anyInt(), anyString());
-    }
-
-    @Test
     public void getRecommendationShouldReturnRecommendationForExistingUser() throws Exception{
         int userId = 0;
         String recommendations = "things";
 
         when(recommendationService.getRecommendation(anyInt())).thenReturn(recommendations);
-        mockMvc.perform(get("/api/v1/recommendation/" + userId)
+        mockMvc.perform(post("/api/v1/recommendation")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(""))
+                .content(String.valueOf(userId)))
                 .andExpect(status().isOk())
                 .andDo(mvcResult -> {
                     String response = mvcResult.getResponse().getContentAsString();
@@ -87,9 +69,9 @@ class RecommendationControllerTest {
         int userId = 0;
 
         when(recommendationService.getRecommendation(anyInt())).thenThrow(UserNotFoundException.class);
-        mockMvc.perform(get("/api/v1/recommendation/" + userId)
+        mockMvc.perform(post("/api/v1/recommendation")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(""))
+                .content(String.valueOf(userId)))
                 .andExpect(status().isNotFound());
 
         verify(recommendationService, times(1)).getRecommendation(anyInt());

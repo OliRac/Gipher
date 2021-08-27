@@ -1,10 +1,13 @@
 package com.stackroute.recommendedservice.service;
 
+import com.stackroute.recommendedservice.entity.UserTermDTO;
 import com.stackroute.recommendedservice.entity.UserTerms;
 import com.stackroute.recommendedservice.exception.UserNotFoundException;
 import com.stackroute.recommendedservice.repository.UserTermsRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -18,6 +21,7 @@ import java.util.*;
 
 import static java.util.stream.Collectors.toMap;
 
+@Slf4j
 @Service
 public class RecommendationServiceImpl implements RecommendationService{
     private UserTermsRepository userTermsRepository;
@@ -99,6 +103,14 @@ public class RecommendationServiceImpl implements RecommendationService{
         recommendations.replace(recommendations.length()-1, recommendations.length(), "]");
 
         return recommendations.toString();
+    }
+
+    @Override
+    @RabbitListener(queues = "${spring.rabbitmq.queue}")
+    public void receiveUserTermDTO(UserTermDTO info) {
+        log.info("Got a UserTermDTO from another service: " + info.toString());
+        String term = addTerm(info.getUserId(), info.getSearchTerm().toLowerCase());
+        log.info("Added " + term + " to user " + info.getUserId() + "'s collection");
     }
 
     /*Helper to send queries to tenor*/

@@ -20,20 +20,12 @@ public class RecommendationController {
         this.recommendationService = recommendationService;
     }
 
-    /*Responds with the term added to the user's dictionary of terms*/
-    @PostMapping("/addTerm/{userId}/{term}")
-    public ResponseEntity<?> addTerm(@PathVariable int userId, @PathVariable String term) {
-        logRequest("post", "/addTerm/" + userId + "/" + term);
-        var response = new ResponseEntity<String>(recommendationService.addTerm(userId, term), HttpStatus.OK);
-        logResponseStatus(response.getStatusCode());
-        return response;
-    }
-
     /*Gets a users recommended gifs. Details on the algorithm in the recommendation service.
-    * Responds with an array of JSON objects as strings [{},{}...]*/
-    @GetMapping("/recommendation/{userId}")
-    public ResponseEntity<?> getRecommendation(@PathVariable int userId) throws UserNotFoundException {
-        logRequest("post", "/recommendation/" + userId);
+    * Responds with an array of JSON objects as strings [{},{}...]
+    * Putting userId in the request body to not expose it*/
+    @PostMapping("/recommendation")
+    public ResponseEntity<?> getRecommendation(@RequestBody int userId) throws UserNotFoundException {
+        logRequest("post", "/recommendation");
         var response = new ResponseEntity<>(recommendationService.getRecommendation(userId), HttpStatus.OK);
         logResponseStatus(response.getStatusCode());
         return response;

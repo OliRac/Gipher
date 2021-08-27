@@ -1,5 +1,6 @@
 package com.stackroute.recommendedservice.service;
 
+import com.stackroute.recommendedservice.entity.UserTermDTO;
 import com.stackroute.recommendedservice.entity.UserTerms;
 import com.stackroute.recommendedservice.exception.UserNotFoundException;
 import com.stackroute.recommendedservice.repository.UserTermsRepository;
@@ -175,6 +176,14 @@ class RecommendationServiceImplTest {
         //if there are ever not enough suggestions, method will just add all to result
         var expected = List.of("one", "one");
         assertEquals(expected, result);
+    }
+
+    @Test
+    public void receiveUserTermDTOShouldCallAddTerm() {
+        RecommendationServiceImpl spyService = Mockito.spy(recommendationService);
+        doReturn("").when(spyService).addTerm(anyInt(), anyString());
+        spyService.receiveUserTermDTO(new UserTermDTO(0, ""));
+        verify(spyService, times(1)).addTerm(anyInt(), anyString());
     }
 
     /*Helper to mock a call to restTemplate.exchange()*/

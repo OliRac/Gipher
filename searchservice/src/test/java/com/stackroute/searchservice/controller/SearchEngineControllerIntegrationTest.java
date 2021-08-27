@@ -1,7 +1,7 @@
 package com.stackroute.searchservice.controller;
 
 import com.stackroute.searchservice.model.SearchEngine;
-import com.stackroute.searchservice.model.SearchEngineDTO;
+import com.stackroute.searchservice.model.UserTermDTO;
 import com.stackroute.searchservice.service.SearchEngineService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,19 +25,19 @@ class SearchEngineControllerIntegrationTest {
     @Autowired
     private SearchEngineService searchService;
 
-    private SearchEngineDTO searchEngineDTO;
+    private UserTermDTO userTermDTO;
     private SearchEngine searchEngine;
-    private List<SearchEngineDTO> searchEngineList;
+    private List<UserTermDTO> searchEngineList;
     private Set<String> searchSet;
 
 
     @BeforeEach
     public void setUp() {
-        searchEngineDTO = new SearchEngineDTO();
+        userTermDTO = new UserTermDTO();
         searchSet = new HashSet<>();
         searchEngineList = new ArrayList<>();
-        searchEngineDTO.setUserId(-1);
-        searchEngineDTO.setSearchTerm("book");
+        userTermDTO.setUserId(-1);
+        userTermDTO.setSearchTerm("book");
 
         searchEngine = new SearchEngine();
 
@@ -45,14 +45,14 @@ class SearchEngineControllerIntegrationTest {
     }
     @AfterEach
     public void tearDown() {
-        searchEngineDTO = null;
+        userTermDTO = null;
     }
 
     @Test
     void givenSearchEngineDTOToSaveThenShouldReturnTheSavedSearchEngine() throws Exception {
-        SearchEngine savedSearchEngine = searchService.saveSearch(searchEngineDTO);
+        SearchEngine savedSearchEngine = searchService.saveSearch(userTermDTO);
         assertNotNull(savedSearchEngine);
-        assertEquals(searchEngineDTO.getUserId(), savedSearchEngine.getUserId());
+        assertEquals(userTermDTO.getUserId(), savedSearchEngine.getUserId());
     }
 
     @Test

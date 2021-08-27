@@ -1,7 +1,7 @@
 package com.stackroute.searchservice.controller;
 
 import com.stackroute.searchservice.model.SearchEngine;
-import com.stackroute.searchservice.model.SearchEngineDTO;
+import com.stackroute.searchservice.model.UserTermDTO;
 import com.stackroute.searchservice.service.SearchEngineService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +28,11 @@ public class SearchEngineController {
     private SearchEngine searchEngine;
 
 
-    @GetMapping("/gifs/{searchTerm}")
-    public ResponseEntity<?>  getGif(@PathVariable(value="searchTerm") String searchTerm ){
-      ResponseEntity<Object> result = new ResponseEntity<> (searchService.getGifs(searchTerm), HttpStatus.OK);
+    @PostMapping("/gifs/search")
+    public ResponseEntity<?>  getGif(@RequestBody UserTermDTO userTerm){
+      ResponseEntity<Object> result = new ResponseEntity<> (searchService.getGifs(userTerm.getSearchTerm()), HttpStatus.OK);
+      this.searchService.saveSearch(userTerm);
       return result;
-    }
-
-    @PostMapping("/search")
-    public ResponseEntity<SearchEngine> saveSearch(@RequestBody SearchEngineDTO searchEngineDTO) {
-      SearchEngine savedSearch = this.searchService.saveSearch(searchEngineDTO);
-      return new ResponseEntity<SearchEngine> (savedSearch , HttpStatus.OK);
     }
 
     @GetMapping("/searches")
