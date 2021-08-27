@@ -1,6 +1,5 @@
 <div class="search-container">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-<!--    <mat-form-field appearance="fill">-->
       <label>Search</label>
       <input
         formControlName="searchTerm"
@@ -8,18 +7,13 @@
         placeholder="Search"
         value=""
       />
-<!--    </mat-form-field>-->
-
     <button type="submit">Submit</button>
   </form>
-<p>Hello</p>
 
-<div style="background-color:black;">
-  <p>Result</p>
-
-  <div class="gifs" *ngFor=" let gif of gifs">
-
+  <div class="gifs">
+  <div class="gif" *ngFor=" let gif of gifs">
     <img src="{{gif}}">
   </div>
+  </div>
 </div>
-</div>
+

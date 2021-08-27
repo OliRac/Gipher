@@ -9,6 +9,7 @@ import { User } from '../models/User';
   providedIn: 'root',
 })
 export class SearchService {
+
   storedUser: User = JSON.parse(sessionStorage.getItem('user'));
   searchURL: string;
 

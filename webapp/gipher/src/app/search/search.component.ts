@@ -18,7 +18,7 @@ export class SearchComponent implements OnInit {
   searchValue: string;
   errorMsg: string;
   resultList: any[] = [];
-  gifs: string[] = ["https://media.tenor.com/images/90775ff4b9f889c005442826e09daace/tenor.gif"];
+  gifs: string[] = [];
   userId: number;
   refreshGif$ = new BehaviorSubject<boolean>(true);
   form: FormGroup;
