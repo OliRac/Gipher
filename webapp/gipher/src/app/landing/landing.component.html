@@ -1,7 +1,14 @@
-<p>landing works!</p>
 
-<button mat-raised-button color="primary" routerLink="/register">Register</button>
+<div class="px-2 py-1 my-2 text-center">
+  <img class="d-block mx-auto mb-2 img" src="https://c.tenor.com/IHcOprR4BHwAAAAM/corgi-jump.gif" alt="" width="72" height="57">
+  <h1 class="display-5 fw-bold">Welcome to Our Gipher App</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4">Have A look into a large range of gifs and enjoy your time here ! Register and Login to save some favorites gifs and get some gifs that we will customized for you</p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <button type="button" class="btn btn-primary btn-lg px-2 gap-2" routerLink="/register">Register</button>
+      <button type="button" class="btn btn-outline-secondary btn-lg px-2" routerLink="/login">Login</button>
+    </div>
+  </div>
+</div>
 
-<button mat-raised-button color="secondary" routerLink="/login">Login</button>
-
-<app-trending></app-trending>
+<app-gif-grid  [gifs]="trendingGifs" ></app-gif-grid>
