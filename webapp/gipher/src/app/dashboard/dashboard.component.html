@@ -1,5 +1,51 @@
-<p>dashboard works!</p>
 
-<app-search></app-search>
-<app-recommended></app-recommended>
-<app-logout></app-logout>
+<nav class="navbar navbar-light bg-light bar1 " >
+  <div class="container-fluid">
+    <p class="navbar-brand" >Welcome {{username}}</p>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">{{username}}</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">View Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">List of Favorites</a>
+          </li>
+          <li>
+            <button type="button" class="btn btn-outline-danger" (click)="onClickLogOut()">Log Out</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<nav class="navbar navbar-light bg-light">
+<!--    <p class="navbar-brand">Browse more gifs</p>-->
+    <form class="container-fluid"  [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success " type="submit">Search</button>
+      </div>
+    </form>
+
+</nav>
+
+<!--ngIf="{{display}}=='search'"-->
+
+
+<app-search  *ngIf="gridDisplay('search')" [gifList]="gifData"  [infoText]="message"></app-search>
+<app-gif-grid *ngIf="gridDisplay('recommended')" [gifs]="gifData" [infoText]="message"></app-gif-grid>
+<!--<app-recommended *ngIf="gridDisplay('recommended')"  ></app-recommended>-->
+
+<!--<app-logout></app-logout>-->

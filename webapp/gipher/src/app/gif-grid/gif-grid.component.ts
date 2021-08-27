@@ -10,8 +10,8 @@ import {FavoriteService} from '../services/favorite.service';
 })
 export class GifGridComponent implements OnInit {
 
-  @Input()
-  gifs: Gif[];
+  @Input() gifs: Gif[];
+  @Input() infoText : string;
   gifASFavorite : boolean
   Favorites : string[]
 
@@ -23,8 +23,8 @@ export class GifGridComponent implements OnInit {
   markAsFavorite( gifUrl : string){
     this.favoriteService.checkifFavorite(gifUrl).subscribe(
       (data)=>{ this.gifASFavorite = data},
-      (error : any)=>{ this.gifASFavorite= false}      
-    )   
+      (error : any)=>{ this.gifASFavorite= false}
+    )
   }
 
   getAllFavorites(){

@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+    isAuth: boolean =  true ;
+//    isAuth = sessionStorage.getItem("user") != null;
+    username ="username"
+
   constructor() { }
 
   ngOnInit(): void {
