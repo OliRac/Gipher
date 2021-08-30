@@ -6,5 +6,26 @@
   /* background-image: url("https://thumbs.dreamstime.com/b/portrait-funny-dog-behind-wheel-car-jack-russell-terrier-sunglasses-151057370.jpg"); */
 
   background-size: cover;
+  color: #312244;
 }
 
+.navbar-dark {
+  background-color: #312244;
+}
+.navbar-brand {
+  color: #fca311;
+  font-family: "Tahoma UI", Verdana, sans-serif;
+}
+
+.offcanvas-body {
+  background-color: #312244;
+  color: #fca311;
+}
+.offcanvas-header {
+  background-color: #fca311;
+  color: #312244;
+}
+
+.nav-link {
+  color: #fca311;
+}
