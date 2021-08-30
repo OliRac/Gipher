@@ -9,7 +9,6 @@ import {FavoriteService} from '../services/favorite.service';
   styleUrls: ['./gif-grid.component.css']
 })
 export class GifGridComponent implements OnInit {
-
   @Input() gifs: Gif[];
   @Input() infoText : string;
   gifASFavorite : boolean
