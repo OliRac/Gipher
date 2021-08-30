@@ -4,6 +4,7 @@ import com.stackroute.recommendedservice.exception.UserNotFoundException;
 import com.stackroute.recommendedservice.service.RecommendationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ public class RecommendationController {
     /*Gets a users recommended gifs. Details on the algorithm in the recommendation service.
     * Responds with an array of JSON objects as strings [{},{}...]
     * Putting userId in the request body to not expose it*/
+    @Cacheable(value="recommendationCache", key="#userId")
     @PostMapping("/recommendation")
     public ResponseEntity<?> getRecommendation(@RequestBody int userId) throws UserNotFoundException {
         logRequest("post", "/recommendation");
@@ -32,6 +34,7 @@ public class RecommendationController {
     }
 
     /*Gets trending gifs from the Tenor API. */
+    @Cacheable("trending")
     @GetMapping("/trending")
     public ResponseEntity<?> getTrending() {
         logRequest("get", "/trending");
