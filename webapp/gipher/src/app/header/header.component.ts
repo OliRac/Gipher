@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../models/User';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -7,13 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-    isAuth: boolean =  true ;
-//    isAuth = sessionStorage.getItem("user") != null;
-    username ="username"
+  isAuth: boolean =  true ;
+  image: string;
 
-  constructor() { }
+  constructor(private userService:UserService) { }
 
   ngOnInit(): void {
-  }
+    let user = this.userService.getUserSession();
 
+    if(user) {
+      this.image = user.imageUrl
+    }
+  }
 }

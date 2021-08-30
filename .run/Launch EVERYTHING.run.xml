@@ -1,5 +1,11 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Launch EVERYTHING" type="CompoundRunConfigurationType">
+    <toRun name="User" type="Application" />
+    <toRun name="Eureka" type="Application" />
+    <toRun name="Search" type="Application" />
+    <toRun name="Gateway" type="Application" />
+    <toRun name="Favorite" type="Application" />
+    <toRun name="Recommended" type="Application" />
     <method v="2" />
   </configuration>
 </component>

@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { SearchService } from '../services/search.service';
 import { TrendingService } from '../services/trending.service';
 import { Router } from '@angular/router';
+import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
   //this migth be changed to this.recommendation.getGifs()
-  this.gifData=this.trendingService.getGifs()
+  this.gifData = parseTenorResponseForGifs(this.trendingService.getGifs());
   this.message ="Here are some recommended gifs for you"
   }
 
@@ -75,19 +76,19 @@ export class DashboardComponent implements OnInit {
     }
    }
 
-  onSubmit(): void {
-    if (this.form.valid) {
-      this.searchValue = this.searchTerm.value;
+  // onSubmit(): void {
+  //   if (this.form.valid) {
+  //     this.searchValue = this.searchTerm.value;
 
-      this.searchService.storeUserSearchTermWithUserId(this.searchValue  , this.userId).subscribe(
-        (data) => {
-          this.gifData.push(data);
-        },
-        (error) => {
-          this.errorMsg = error.error;
-        }
-      );
-    }
-  }
+  //     this.searchService.storeUserSearchTermWithUserId(this.searchValue  , this.userId).subscribe(
+  //       (data) => {
+  //         this.gifData.push(data);
+  //       },
+  //       (error) => {
+  //         this.errorMsg = error.error;
+  //       }
+  //     );
+  //   }
+  // }
 
 }

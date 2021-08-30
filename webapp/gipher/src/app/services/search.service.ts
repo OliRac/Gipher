@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/User';
+import { UserTerm } from '../models/UserTerm';
 
 
 @Injectable({
@@ -14,19 +15,22 @@ export class SearchService {
 
   constructor(private http: HttpClient) {}
 
-  storeUserSearchTermWithUserId(
-    searchTerm: string,
-    id: number
-  ): Observable<any> {
-    this.searchURL =
-      environment.SEARCH_SERVICE_URL + `/search`;
+  
+  storeUserSearchTermWithUserId(user: UserTerm): Observable<any> {
 
-    return this.http.get(this.searchURL);
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${this.storedUser.token}`)
+    }
+    this.searchURL = environment.SEARCH_SERVICE_URL + `/gifs/search`;
+
+    return this.http.post(this.searchURL, user, header);
   }
+
   searchGif(searchTerm: string): Observable<any> {
     var header = {
     headers: new HttpHeaders().set('Authorization', `Bearer ${this.storedUser.token}`)}
     this.searchURL = environment.SEARCH_SERVICE_URL + `/gifs/${searchTerm}`;
     return this.http.get(this.searchURL, header);
   }
+
 }
