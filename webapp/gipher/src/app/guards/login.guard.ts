@@ -15,24 +15,22 @@ export class LoginGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
 //
-       let mockUser = {
+/*       let mockUser = {
         userId: 1,
         username: "someuser",
         password: "difficultPassword",
         image: new File([""], "my_profile_pic.png")
       };
          sessionStorage.setItem("user", JSON.stringify(mockUser)) ;
-             return true
+             return true*/
 
-//
-//     let isAuth: boolean = sessionStorage.getItem("user") != null;
-//
-//     if(isAuth) {
-//       return true;
-//     } else {
-//       this.router.navigate(["/landing"])
-//     }
 
+    let isAuth: boolean = sessionStorage.getItem("user") != null;
+
+    if(isAuth) {
+      return true;
+    } else {
+      this.router.navigate(["/landing"])
+    }
   }
-
 }
