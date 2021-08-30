@@ -47,7 +47,7 @@ export class UserLoginComponent implements OnInit {
         }
         
         sessionStorage.setItem("user", JSON.stringify(loggedIn));
-
+        
         this.errorMsg = messages.LOGIN_GREET;
 
         setTimeout(() => {

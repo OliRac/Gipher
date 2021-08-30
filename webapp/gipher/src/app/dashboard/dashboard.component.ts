@@ -75,19 +75,19 @@ export class DashboardComponent implements OnInit {
     }
    }
 
-  onSubmit(): void {
-    if (this.form.valid) {
-      this.searchValue = this.searchTerm.value;
+  // onSubmit(): void {
+  //   if (this.form.valid) {
+  //     this.searchValue = this.searchTerm.value;
 
-      this.searchService.storeUserSearchTermWithUserId(this.searchValue  , this.userId).subscribe(
-        (data) => {
-          this.gifData.push(data);
-        },
-        (error) => {
-          this.errorMsg = error.error;
-        }
-      );
-    }
-  }
+  //     this.searchService.storeUserSearchTermWithUserId(this.searchValue  , this.userId).subscribe(
+  //       (data) => {
+  //         this.gifData.push(data);
+  //       },
+  //       (error) => {
+  //         this.errorMsg = error.error;
+  //       }
+  //     );
+  //   }
+  // }
 
 }

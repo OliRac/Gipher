@@ -30,22 +30,12 @@
   </div>
 </nav>
 
-<nav class="navbar navbar-light bg-light">
-<!--    <p class="navbar-brand">Browse more gifs</p>-->
-    <form class="container-fluid"  [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="input-group">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success " type="submit">Search</button>
-      </div>
-    </form>
-
-</nav>
+<app-search></app-search>
 
 <!--ngIf="{{display}}=='search'"-->
 
-
-<app-search  *ngIf="gridDisplay('search')" [gifList]="gifData"  [infoText]="message"></app-search>
-<app-gif-grid *ngIf="gridDisplay('recommended')" [gifs]="gifData" [infoText]="message"></app-gif-grid>
+<!-- 
+<app-gif-grid *ngIf="gridDisplay('recommended')" [gifs]="gifData" [infoText]="message"></app-gif-grid> -->
 <!--<app-recommended *ngIf="gridDisplay('recommended')"  ></app-recommended>-->
 
 <!--<app-logout></app-logout>-->
