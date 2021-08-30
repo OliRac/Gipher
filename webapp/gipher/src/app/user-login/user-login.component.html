@@ -12,7 +12,11 @@
     <input type="password" class="form-control" id="exampleInputPassword1"
            formControlName="password" type="password"  placeholder="password" ng-required>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+
+  <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+    <button  type="submit" class="btn btn-primary">Login</button>
+    <button type="button" class="btn btn-outline-secondary btn-lg px-2" routerLink="/landing">Cancel</button>
+  </div>
 </form>
 
 <div *ngIf="errorMsg">

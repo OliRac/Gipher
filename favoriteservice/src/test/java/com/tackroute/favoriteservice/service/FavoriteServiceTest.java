@@ -71,7 +71,6 @@ public class FavoriteServiceTest {
     @Test
     void givenLastFavoriteGifToRemoveThenShouldReturnDeletedSelection() throws GifNotFoundException, NoFavoriteGifFoundException {
         Selection s2 = favoriteRepository.save(new Selection(1, favoriteList2));
-//        HashSet<String> updatedSelection = favoriteService.removeFavorite(1, gif1);
         favoriteRepository.deleteByUserId(1);
         assertEquals(favoriteRepository.findByUserId(1), null);
         verify(favoriteRepository, times(1)).deleteByUserId(1);

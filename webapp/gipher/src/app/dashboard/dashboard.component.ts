@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
 
   gifData: Gif[];
-  display : string="search";
+  display : string="recommended";
   searchValue: string;
   errorMsg: string;
   userId: number;

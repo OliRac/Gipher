@@ -30,7 +30,10 @@
   <input class="btn btn-outline-secondary" type="file"  id="button-addon2" accept="image/png, image/jpeg" (change)="onFileChange($event)">
 </div>
 
-<button class="btn btn-primary" type="submit">Submit</button>
+  <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+    <button class="btn btn-primary" type="submit">Register</button>
+    <button type="button" class="btn btn-outline-secondary btn-lg px-2" routerLink="/landing">Cancel</button>
+  </div>
 
 </form>
 

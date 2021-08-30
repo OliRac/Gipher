@@ -15,6 +15,12 @@ const routes: Routes = [
   {
     path:"login", component: UserLoginComponent
 },
+{
+    path: 'register',
+    component: UserRegistrationComponent,
+  },
+
+
   {
     path: 'landing',
     component: LandingComponent,

@@ -14,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -38,7 +37,6 @@ public class FavoriteControllerTest {
     @Mock
     private FavoriteService favoriteService;
     Selection selection;
-//    List<Blog> blogList;
 
     String gif1 = "gif1";
     String gif2 = "gif2";
@@ -65,24 +63,6 @@ public class FavoriteControllerTest {
     public void tearDown() {
         selection = null;
     }
-
-//    @Test
-//    public void givenGifToSaveAsFavoriteThenShouldCreateUserSelectionAndAddGif() throws Exception {
-//        String gif3 = "https://giphy.com/gifs/mlb-y0FfnDHoT6BKfKzzMZ";
-//        HashSet<String> favoriteList1 = new HashSet<String>();
-//        HashSet<String> favoriteList2 = new HashSet<String>(){
-//            {add(gif3);}
-//        };
-//        Selection selection1 = new Selection(selection.getUserId(), favoriteList2);
-//
-//        when(favoriteService.addFavorite(selection.getUserId(),gif3)).thenReturn(selection1);
-//        mockMvc.perform(post("/api/v1/addFavorite/1/gif3")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(asJsonString(selection1)))
-//                .andExpect(status().isOk())
-//                .andDo(MockMvcResultHandlers.print());
-//        verify(favoriteService).addFavorite(selection.getUserId(),gif3);
-//    }
 
     @Test
     public void givenGifToSaveAsFavoriteThenShouldReturnSavedGif() throws Exception {
@@ -115,7 +95,6 @@ public class FavoriteControllerTest {
        HashSet<String> favoriteList1 = new HashSet<String>(){
                                                 { add(gif1);}
                                              };
-//       Selection selection1 = new Selection(selection.getUserId(), favoriteList1);
        when(favoriteService.removeFavorite(selection.getUserId(), gif2)).thenReturn(favoriteList1);
        mockMvc.perform(post("/api/v1/favorite-service/removeFavorite/1/gif2")
                .contentType(MediaType.APPLICATION_JSON)
