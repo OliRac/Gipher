@@ -2,6 +2,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { timer } from 'rxjs';
 import { messages } from '../messages/registration.messages';
 import { User } from '../models/User';
 import { UserService } from '../services/user.service';

@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { User } from '../models/User';
 import { UserTerm } from '../models/UserTerm';
 import { SearchService } from '../services/search.service';
+import { UserService } from '../services/user.service';
 import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
 
 @Component({
@@ -22,6 +23,7 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private searchService: SearchService,
+    private userService: UserService,
     private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
@@ -40,7 +42,7 @@ export class SearchComponent implements OnInit {
       this.searchValue = this.searchTerm.value;
       const userTerm: UserTerm = {
         searchTerm: this.searchValue,
-        userId: JSON.parse(sessionStorage.getItem("user")).id
+        userId: this.userService.getUserSession().id
       }
   
       this.resultList = parseTenorResponseForGifs(this.searchService.storeUserSearchTermWithUserId(userTerm));
