@@ -5,7 +5,9 @@
 <!--    <span>Gipher App</span>-->
     <span class="example-spacer"></span>
     <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
-        <img md-fab-image src="userInfo.photoUrl">
+      <div *ngIf="image">
+        <img md-fab-image src={{image}}>
+      </div>  
     </button>
   </mat-toolbar>
 </p>

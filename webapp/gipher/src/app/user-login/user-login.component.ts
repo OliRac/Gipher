@@ -41,13 +41,13 @@ export class UserLoginComponent implements OnInit {
         let loggedIn: User = {
           username: data.user.username,
           password: data.user.password,
-          image: data.user.photo,
+          imageUrl: data.user.photo,
           id: data.user.userId,
           token: data.jwtToken
         }
         
-        sessionStorage.setItem("user", JSON.stringify(loggedIn));
-        
+        this.userService.setUserSession(loggedIn);
+
         this.errorMsg = messages.LOGIN_GREET;
 
         setTimeout(() => {

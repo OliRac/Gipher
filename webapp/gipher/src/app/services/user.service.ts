@@ -44,4 +44,12 @@ export class UserService {
 
     return this.http.post(this.loginURL, user, options);
   }
+
+  getUserSession(): User {
+    return JSON.parse(sessionStorage.getItem("user"));
+  }
+
+  setUserSession(user:User) {
+    sessionStorage.setItem("user", JSON.stringify(user));
+  }
 }

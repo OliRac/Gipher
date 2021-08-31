@@ -2,11 +2,12 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { timer } from 'rxjs';
 import { messages } from '../messages/registration.messages';
 import { User } from '../models/User';
 import { UserService } from '../services/user.service';
 
-const MAX_FILE_SIZE = 10485760  //10 MB;
+const MAX_FILE_SIZE = 10485760/10  //1 MB;
 const PASSWORD_MIN_SIZE = 8
 const PASSWORD_MAX_SIZE = 25
 const USERNAME_MIN_SIZE = 3
