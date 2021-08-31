@@ -25,12 +25,13 @@ services:
     container_name: userservicedb
     environment:
       MYSQL_DATABASE: gipher
-      MYSQL_PASSWORD: admin
-      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
     ports:
       - 3307:3306
     volumes:
       - userservice-mysql-data:/var/lib/mysql
+      - ./sql/gipher.sql:/docker-entrypoint-initdb.d/gipher.sql
   #EUREKA-SERVER SERVICE
   springboot-eureka-server:
     image: springboot-eureka-server:1.0
