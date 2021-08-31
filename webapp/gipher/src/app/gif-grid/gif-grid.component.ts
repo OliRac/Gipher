@@ -1,7 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Gif } from '../models/Gif';
-import { MatGridList } from '@angular/material/grid-list';
 import {FavoriteService} from '../services/favorite.service';
+import { MatDialog } from '@angular/material/dialog';
+import { GifModalComponent } from '../gif-modal/gif-modal.component';
+
+export interface GifDialogData {
+  gif: Gif;
+}
 
 @Component({
   selector: 'app-gif-grid',
@@ -14,9 +19,18 @@ export class GifGridComponent implements OnInit {
   gifASFavorite : boolean
   Favorites : string[]
 
-  constructor(private  favoriteService : FavoriteService)  { }
+  constructor(private  favoriteService : FavoriteService, public dialog: MatDialog)  { }
 
   ngOnInit(): void {
+  }
+
+  openDialog(gif: Gif) {
+    const dialogRef = this.dialog.open(GifModalComponent, {
+      data: {gif: gif},
+      height: '450px',
+      width: '450px',
+      panelClass: 'gif-modal'
+    });
   }
 
   markAsFavorite( gifUrl : string){

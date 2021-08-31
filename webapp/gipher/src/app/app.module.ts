@@ -24,7 +24,8 @@ import { GifGridComponent } from './gif-grid/gif-grid.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
-
+import {MatDialogModule} from '@angular/material/dialog';
+import { GifModalComponent } from './gif-modal/gif-modal.component';
 
 
 @NgModule({
@@ -39,8 +40,10 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     DashboardComponent,
     LandingComponent,
     GifGridComponent,
+    GifModalComponent,
   ],
   imports: [
+    MatDialogModule,
     MatCardModule,
     MatFormFieldModule,
     BrowserModule,

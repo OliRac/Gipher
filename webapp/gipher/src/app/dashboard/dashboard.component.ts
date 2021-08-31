@@ -10,6 +10,7 @@ import { SearchService } from '../services/search.service';
 import { Router } from '@angular/router';
 import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
 import { RecommendationService } from '../services/recommendation.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,12 +25,14 @@ export class DashboardComponent implements OnInit {
   userId: number;
   message: string;
 
-  username: string = 'Julie';
+  username: string;
+  imageUrl: string;
 
   form: FormGroup;
 
   constructor(
     private searchService: SearchService,
+    private userService: UserService,
     private formBuilder: FormBuilder,
     private recommendationService: RecommendationService,
     private router: Router
@@ -43,6 +46,8 @@ export class DashboardComponent implements OnInit {
     this.recommendationService.getTrending().subscribe((data) => {
       this.gifData = parseTenorResponseForGifs(data);
     });
+    this.username = this.userService.getUserSession().username;
+    this.imageUrl = this.userService.getUserSession().imageUrl;
 
     this.message = 'Here are some recommended gifs for you';
   }
@@ -75,8 +80,23 @@ export class DashboardComponent implements OnInit {
 
   onClickLogOut(): void {
     if (sessionStorage.getItem('user') != null) {
-      sessionStorage.removeItem('user');
+      sessionStorage.clear();
       this.router.navigate(['/landing']);
     }
   }
+
+  // onSubmit(): void {
+  //   if (this.form.valid) {
+  //     this.searchValue = this.searchTerm.value;
+
+  //     this.searchService.storeUserSearchTermWithUserId(this.searchValue  , this.userId).subscribe(
+  //       (data) => {
+  //         this.gifData.push(data);
+  //       },
+  //       (error) => {
+  //         this.errorMsg = error.error;
+  //       }
+  //     );
+  //   }
+  // }
 }
