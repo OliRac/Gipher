@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Gif } from '../models/Gif';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SearchService } from '../services/search.service';
-import { TrendingService } from '../services/trending.service';
 import { Router } from '@angular/router';
 import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
-import { UserService } from '../services/user.service';
+import { RecommendationService } from '../services/recommendation.service';
 
 
 @Component({
@@ -30,7 +29,7 @@ export class DashboardComponent implements OnInit {
     private searchService: SearchService,
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private trendingService:TrendingService,
+    private recommendationService:RecommendationService,
     private  router : Router
   ) {
     this.form = this.formBuilder.group({
@@ -39,10 +38,11 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this migth be changed to this.recommendation.getGifs()
-    this.gifData = parseTenorResponseForGifs(this.trendingService.getGifs());
+    this.recommendationService.getTrending().subscribe(data => {
+      this.gifData = parseTenorResponseForGifs(data);
+    })
+
     this.message ="Here are some recommended gifs for you"
-    this.username = this.userService.getUserSession().username;
   }
 
   get searchTerm() {
@@ -64,11 +64,13 @@ export class DashboardComponent implements OnInit {
   }
 
   gridDisplay( content : string) : boolean {
-      this.changeMessage(content)
-     if(this.display==content){
-        return true;}
-     else{
-        return false;}
+    this.changeMessage(content)
+    if(this.display==content){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
 
