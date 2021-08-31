@@ -2,7 +2,37 @@
   flex: 1 1 auto;
 }
 
-.bar1{
- background-image: url("https://thumbs.dreamstime.com/b/portrait-funny-dog-behind-wheel-car-jack-russell-terrier-sunglasses-151057370.jpg");
-background-size:cover ;
+.bar1 {
+  /* background-image: url("https://thumbs.dreamstime.com/b/portrait-funny-dog-behind-wheel-car-jack-russell-terrier-sunglasses-151057370.jpg"); */
+
+  background-size: cover;
+  color: #312244;
+}
+
+.navbar-light {
+  background-color: #fca311;
+  color: #fca311;
+}
+.navbar-brand {
+  font-family: "Tahoma", Verdana, sans-serif;
+  color: #312244;
+  font-size: medium;
+}
+
+.offcanvas-body {
+  background-color: #272640;
+  color: #fca311;
+}
+.offcanvas-header {
+  background-color: #fca311;
+  color: #312244;
+}
+
+.navbar-brand{
+  width: 60px;
+  height: 40px;
+}
+.img-logo{
+   width: 60px;
+  height: 30px;
 }

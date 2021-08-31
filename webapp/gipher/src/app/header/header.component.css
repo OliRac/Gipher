@@ -1,13 +1,17 @@
- .example-spacer {
-   flex: 1 1 auto;
- }
+/* .example-spacer {
+  flex: 1 1 auto;
+}
 
- .logo {
-   height: 3rem;
-   width: 3rem;
- }
+.logo {
+  height: 3rem;
+  width: 3rem;
+} */
 
-  .logo-image {
-    height: 100%;
-    width: 100%;
-  }
+/* .logo-image {
+  height: 100%;
+  width: 100%;
+} */
+
+.span {
+  margin: auto;
+}

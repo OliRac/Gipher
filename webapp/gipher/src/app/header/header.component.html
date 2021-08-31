@@ -1,13 +1,35 @@
-<p>
-  <mat-toolbar color="primary">
-    <button mat-flat-button color="primary" routerLink="/landing">Gipher App</button>
+<mat-toolbar style="background-color: #312244; height: 300px">
+  <button
+    mat-flat-button
+    style="background-color: #312244"
+    routerLink="/landing"
+  >
+    <!-- <div class="logo-container">
+      <img
+        md-fab-image
+        src="assets/img/logo.gif"
+        width="300px"
+        height="300px"
+      />
+    </div> -->
 
-<!--    <span>Gipher App</span>-->
-    <span class="example-spacer"></span>
-    <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
-      <div *ngIf="image">
-        <img md-fab-image src={{image}}>
-      </div>  
-    </button>
-  </mat-toolbar>
-</p>
+    <mat-toolbar-row>
+      <span class="span">
+        <img
+          md-fab-image
+          src="assets/img/logo.gif"
+          width="300px"
+          height="300px"
+        />
+      </span>
+    </mat-toolbar-row>
+  </button>
+
+  <!--    <span>Gipher App</span>-->
+  <span class="example-spacer"></span>
+  <button
+    mat-icon-button
+    color="primary"
+    aria-label="Example icon button with a home icon"
+  ></button>
+</mat-toolbar>

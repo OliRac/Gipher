@@ -1,35 +1,64 @@
 <!--<h3 class="center">Login page</h3>-->
+<app-header></app-header>
+<div class="container">
+  <form class="px-5" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Username</label>
+      <input
+        type="email"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        input
+        formControlName="username"
+        type="text"
+        placeholder="username"
+        ng-required
+      />
+      <div id="emailHelp" class="form-text">
+        We'll never share your personal credentials with anyone else.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="exampleInputPassword1"
+        formControlName="password"
+        type="password"
+        placeholder="password"
+        type="password"
+        ng-required
+      />
+    </div>
 
-<form class=" px-5 " [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Username</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-           input formControlName="username" type="text"  placeholder="username" ng-required>
-    <div id="emailHelp" class="form-text">We'll never share your personal credentials with anyone else.</div>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1"
-           formControlName="password" type="password"  placeholder="password" type="password" ng-required>
-  </div>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <button type="submit" class="btn btn-warning">Login</button>
+      <button type="button" class="btn btn-warning" routerLink="/landing">
+        Cancel
+      </button>
+    </div>
+  </form>
 
-  <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-    <button  type="submit" class="btn btn-primary">Login</button>
-    <button type="button" class="btn btn-outline-secondary btn-lg px-2" routerLink="/landing">Cancel</button>
+  <div *ngIf="errorMsg">
+    <p>{{ errorMsg }}</p>
   </div>
-</form>
-
-<div *ngIf="errorMsg">
-    <p>{{errorMsg}}</p>
-</div>
-<div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert">
-  <div *ngIf="username.errors?.required" >
+  <div
+    *ngIf="username.invalid && (username.dirty || username.touched)"
+    class="alert"
+  >
+    <div *ngIf="username.errors?.required">
       <p id="usernameRequired">Username is missing!</p>
+    </div>
   </div>
-</div>
 
-<div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert">
-<div *ngIf="password.errors?.required">
-    <p id="passwordRequired">Password is missing!</p>
-</div>
+  <div
+    *ngIf="password.invalid && (password.dirty || password.touched)"
+    class="alert"
+  >
+    <div *ngIf="password.errors?.required">
+      <p id="passwordRequired">Password is missing!</p>
+    </div>
+  </div>
 </div>

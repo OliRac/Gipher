@@ -12,69 +12,114 @@
 <!--    <button mat-raised-button type="submit">Submit</button>-->
 <!--</form>-->
 
-
-<form  class="px-5" [formGroup]="form" (ngSubmit)="onSubmit()">
+<app-header></app-header>
+<div class="container">
+  <form class="px-5" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="input-group mb-3">
       <span class="input-group-text" id="basic-addon1">Username</span>
-      <input type="text" formControlName="username" class="form-control"  aria-label="Username" aria-describedby="basic-addon1" ng-required>
+      <input
+        type="text"
+        formControlName="username"
+        class="form-control"
+        aria-label="Username"
+        aria-describedby="basic-addon1"
+        ng-required
+      />
     </div>
 
-  <div class="input-group mb-3">
-    <span class="input-group-text" >Password</span>
-    <input type="text" formControlName="password" class="form-control"  aria-label="Password" type="password" ng-required>
-  </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Password</span>
+      <input
+        type="text"
+        formControlName="password"
+        class="form-control"
+        aria-label="Password"
+        type="password"
+        ng-required
+      />
+    </div>
 
+    <div class="input-group mb-3">
+      <span class="input-group-text">Image File</span>
+      <input
+        class="btn btn-outline-secondary"
+        type="file"
+        id="button-addon2"
+        accept="image/png, image/jpeg"
+        (change)="onFileChange($event)"
+      />
+    </div>
 
-<div class="input-group mb-3">
-  <span class="input-group-text" >Image File</span>
-  <input class="btn btn-outline-secondary" type="file"  id="button-addon2" accept="image/png, image/jpeg" (change)="onFileChange($event)">
-</div>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <button class="btn btn-warning" type="submit">Register</button>
+      <button type="button" class="btn btn-warning" routerLink="/landing">
+        Cancel
+      </button>
+    </div>
+  </form>
 
-  <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-    <button class="btn btn-primary" type="submit">Register</button>
-    <button type="button" class="btn btn-outline-secondary btn-lg px-2" routerLink="/landing">Cancel</button>
-  </div>
-
-</form>
-
-<div class="px-5">
+  <div class="px-5">
     <div *ngIf="errorMsg">
-      <p>{{errorMsg}}</p>
+      <p>{{ errorMsg }}</p>
     </div>
 
-    <div *ngIf="username.invalid && (username.dirty || username.touched)" >
-      <div *ngIf="username.errors?.required" >
+    <div *ngIf="username.invalid && (username.dirty || username.touched)">
+      <div *ngIf="username.errors?.required">
         <p id="usernameRequired">Username is missing!</p>
       </div>
     </div>
 
-    <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert">
+    <div
+      *ngIf="username.invalid && (username.dirty || username.touched)"
+      class="alert"
+    >
       <div *ngIf="username.errors?.minlength">
-        <p id="usernameMinLength">Username must be at least 3 characters long.</p>
+        <p id="usernameMinLength">
+          Username must be at least 3 characters long.
+        </p>
       </div>
     </div>
 
-    <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert">
+    <div
+      *ngIf="username.invalid && (username.dirty || username.touched)"
+      class="alert"
+    >
       <div *ngIf="username.errors?.maxlength">
-        <p id="usernameMaxLength">Username must be less or equal than 25 characters long.</p>
+        <p id="usernameMaxLength">
+          Username must be less or equal than 25 characters long.
+        </p>
       </div>
     </div>
 
-    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert">
+    <div
+      *ngIf="password.invalid && (password.dirty || password.touched)"
+      class="alert"
+    >
       <div *ngIf="password.errors?.required">
         <p id="passwordRequired">Password is missing!</p>
       </div>
     </div>
 
-    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert">
+    <div
+      *ngIf="password.invalid && (password.dirty || password.touched)"
+      class="alert"
+    >
       <div *ngIf="password.errors?.minlength">
-        <p id="passwordMinLength">Password must be at least 8 characters long.</p>
+        <p id="passwordMinLength">
+          Password must be at least 8 characters long.
+        </p>
       </div>
     </div>
 
-    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert">
+    <div
+      *ngIf="password.invalid && (password.dirty || password.touched)"
+      class="alert"
+    >
       <div *ngIf="password.errors?.maxlength">
-        <p id="passwordMaxLength">Password must be less or equal than 25 characters long.</p>
+        <p id="passwordMaxLength">
+          Password must be less or equal than 25 characters long.
+        </p>
       </div>
     </div>
+  </div>
 </div>

@@ -1,14 +1,22 @@
 <div class="search-container">
-  <nav class="navbar navbar-light bg-light">
+  <nav class="navbar navbar-light">
     <!--    <p class="navbar-brand">Browse more gifs</p>-->
-    <form class="container-fluid"  [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form class="container-fluid" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="input-group">
-        <input class="form-control me-2" formControlName="searchTerm" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success " type="submit">Search</button>
+        <input
+          class="form-control me-2"
+          formControlName="searchTerm"
+          type="search"
+          placeholder="search gifs"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline" type="submit">Search</button>
       </div>
     </form>
   </nav>
 
-  <app-gif-grid [gifs]="resultList" infoText="This is the result for your search"></app-gif-grid>
-    
+  <app-gif-grid
+    [gifs]="resultList"
+    infoText="This is the result for your search"
+  ></app-gif-grid>
 </div>

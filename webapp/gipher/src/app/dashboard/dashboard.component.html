@@ -1,19 +1,43 @@
-
-<nav class="navbar navbar-light bg-light bar1 " >
+<nav class="navbar navbar-light bar1">
   <div class="container-fluid">
-    <p class="navbar-brand" >Welcome To Dashboard ({{username}})</p>
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+    <p class="navbar-brand">
+      <a class="navbar-brand" href="#">
+        <img  class="img-logo" src="assets/img/logo-sm.gif" alt="logo" />
+      </a>
+      Welcome To Gipher {{ username }}
+    </p>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div
+      class="offcanvas offcanvas-end"
+      tabindex="-1"
+      id="offcanvasNavbar"
+      aria-labelledby="offcanvasNavbarLabel"
+    >
       <div class="offcanvas-header">
-        <h2 class="offcanvas-title" id="offcanvasNavbarLabel">{{username}}</h2>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <h2 class="offcanvas-title" id="offcanvasNavbarLabel">
+          {{ username }}
+        </h2>
+        <button
+          type="button"
+          class="btn-close text-reset"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+            <a class="nav-link active" aria-current="page" href="#"
+              >Dashboard</a
+            >
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">View Profile</a>
@@ -22,7 +46,13 @@
             <a class="nav-link" href="#">List of Favorites</a>
           </li>
           <li>
-            <button type="button" class="btn btn-outline-danger" (click)="onClickLogOut()">Log Out</button>
+            <button
+              type="button"
+              class="btn btn-outline-warning"
+              (click)="onClickLogOut()"
+            >
+              Log Out
+            </button>
           </li>
         </ul>
       </div>
