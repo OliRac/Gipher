@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Gif } from '../models/Gif';
-import { TrendingService } from '../services/trending.service';
+import { RecommendationService } from '../services/recommendation.service';
 import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
 
 
@@ -13,9 +13,11 @@ export class LandingComponent implements OnInit {
 
   trendingGifs:Gif[];
 
-  constructor(private trendingService:TrendingService) { }
+  constructor(private recommendationService:RecommendationService) { }
 
   ngOnInit(): void {
-    this.trendingGifs = parseTenorResponseForGifs(this.trendingService.getGifs());
+    this.recommendationService.getTrending().subscribe(data => {
+      this.trendingGifs = parseTenorResponseForGifs(data);
+    })
   }
 }

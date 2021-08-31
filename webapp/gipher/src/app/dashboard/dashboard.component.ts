@@ -7,9 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { SearchService } from '../services/search.service';
-import { TrendingService } from '../services/trending.service';
 import { Router } from '@angular/router';
 import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
+import { RecommendationService } from '../services/recommendation.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,14 +25,13 @@ export class DashboardComponent implements OnInit {
   message: string;
 
   username: string = 'Julie';
-  imageUrl: string;
 
   form: FormGroup;
 
   constructor(
     private searchService: SearchService,
     private formBuilder: FormBuilder,
-    private trendingService: TrendingService,
+    private recommendationService: RecommendationService,
     private router: Router
   ) {
     this.form = this.formBuilder.group({
@@ -41,8 +40,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this migth be changed to this.recommendation.getGifs()
-    this.gifData = parseTenorResponseForGifs(this.trendingService.getGifs());
+    this.recommendationService.getTrending().subscribe((data) => {
+      this.gifData = parseTenorResponseForGifs(data);
+    });
+
     this.message = 'Here are some recommended gifs for you';
   }
 
@@ -78,19 +79,4 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/landing']);
     }
   }
-
-  // onSubmit(): void {
-  //   if (this.form.valid) {
-  //     this.searchValue = this.searchTerm.value;
-
-  //     this.searchService.storeUserSearchTermWithUserId(this.searchValue  , this.userId).subscribe(
-  //       (data) => {
-  //         this.gifData.push(data);
-  //       },
-  //       (error) => {
-  //         this.errorMsg = error.error;
-  //       }
-  //     );
-  //   }
-  // }
 }
