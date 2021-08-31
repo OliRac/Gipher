@@ -12,6 +12,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -108,6 +110,7 @@ public class RecommendationServiceImpl implements RecommendationService, RabbitL
     }
 
     @Override
+    @CacheEvict(value="recommendationCache", key="#info.getUserId()")
     @RabbitListener(queues = "${spring.rabbitmq.queue}")
     public void receiveUserTermDTO(UserTermDTO info) {
         log.info("Got a UserTermDTO from another service: " + info.toString());
