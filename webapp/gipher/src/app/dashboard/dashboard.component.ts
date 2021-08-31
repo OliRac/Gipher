@@ -5,6 +5,7 @@ import { SearchService } from '../services/search.service';
 import { TrendingService } from '../services/trending.service';
 import { Router } from '@angular/router';
 import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
+import { UserService } from '../services/user.service';
 
 
 @Component({
@@ -20,13 +21,14 @@ export class DashboardComponent implements OnInit {
   errorMsg: string;
   userId: number;
   message : string ;
-
-  username :string ='Julie';
+  
+  username:string;
 
   form: FormGroup;
 
   constructor(
     private searchService: SearchService,
+    private userService: UserService,
     private formBuilder: FormBuilder,
     private trendingService:TrendingService,
     private  router : Router
@@ -37,9 +39,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  //this migth be changed to this.recommendation.getGifs()
-  this.gifData = parseTenorResponseForGifs(this.trendingService.getGifs());
-  this.message ="Here are some recommended gifs for you"
+    //this migth be changed to this.recommendation.getGifs()
+    this.gifData = parseTenorResponseForGifs(this.trendingService.getGifs());
+    this.message ="Here are some recommended gifs for you"
+    this.username = this.userService.getUserSession().username;
   }
 
   get searchTerm() {
