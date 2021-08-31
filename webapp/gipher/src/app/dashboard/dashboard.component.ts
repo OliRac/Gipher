@@ -74,10 +74,10 @@ export class DashboardComponent implements OnInit {
 
   onClickLogOut(): void {
     if(sessionStorage.getItem("user") != null) {
-      sessionStorage.removeItem("user");
+      sessionStorage.clear();
       this.router.navigate(["/landing"]);
     }
-   }
+  }
 
   // onSubmit(): void {
   //   if (this.form.valid) {
