@@ -29,7 +29,6 @@ export class GifGridComponent implements OnInit {
       data: {gif: gif},
       height: '450px',
       width: '450px',
-      panelClass: 'gif-modal'
     });
   }
 
