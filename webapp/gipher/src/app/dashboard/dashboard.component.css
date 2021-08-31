@@ -9,13 +9,13 @@
   color: #312244;
 }
 
-.navbar-dark {
-  background-color: #312244;
+.navbar-light {
+  background-color: #fca311;
   color: #fca311;
 }
 .navbar-brand {
   font-family: "Tahoma", Verdana, sans-serif;
-  color: #fca311;
+  color: #312244;
   font-size: medium;
 }
 
@@ -28,6 +28,11 @@
   color: #312244;
 }
 
-.nav-link {
-  color: #fca311;
+.navbar-brand{
+  width: 60px;
+  height: 40px;
+}
+.img-logo{
+   width: 60px;
+  height: 30px;
 }

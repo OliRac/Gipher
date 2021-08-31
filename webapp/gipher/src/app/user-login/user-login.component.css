@@ -1,1 +1,10 @@
 
+.form-label{
+  font-size: large;
+}
+.form-control{
+  background-color: white;
+}
+.form-text{
+  color:beige;
+}
