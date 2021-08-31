@@ -5,6 +5,7 @@ import { SearchService } from '../services/search.service';
 import { Router } from '@angular/router';
 import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
 import { RecommendationService } from '../services/recommendation.service';
+import { UserService } from '../services/user.service';
 
 
 @Component({
