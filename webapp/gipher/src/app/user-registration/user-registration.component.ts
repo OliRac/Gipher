@@ -23,6 +23,7 @@ export class UserRegistrationComponent implements OnInit {
   form: FormGroup;
   errorMsg: string;
   imageData: File;
+  timer: number = 3;
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
     this.form = this.formBuilder.group({
@@ -50,11 +51,18 @@ export class UserRegistrationComponent implements OnInit {
       }
 
       this.userService.registerUser(user).subscribe(data => {
-        this.errorMsg = messages.REGISTER_SUCCESS;
+        this.errorMsg = messages.REGISTER_SUCCESS + this.timer;
 
-        setTimeout(() => {
-          this.router.navigate(["/"])
-        }, 5000);
+        setInterval(() => {
+          this.timer--;
+
+          if(this.timer == 0) {
+            this.router.navigate(["/"])
+          }
+
+          this.errorMsg = messages.REGISTER_SUCCESS + this.timer;
+        }, 1000)
+
       }, (error: HttpErrorResponse) => {
         this.errorMsg = error.error;
       })

@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { timer } from 'rxjs';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { messages } from '../messages/registration.messages';
 import { User } from '../models/User';
@@ -16,6 +17,7 @@ export class UserLoginComponent implements OnInit {
 
   form: FormGroup;
   errorMsg: string;
+  timer: number = 3;
 
   constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router) {
     this.form = this.formBuilder.group({
@@ -48,11 +50,18 @@ export class UserLoginComponent implements OnInit {
         
         this.userService.setUserSession(loggedIn);
 
-        this.errorMsg = messages.LOGIN_GREET;
+        this.errorMsg = messages.LOGIN_GREET + this.timer;
 
-        setTimeout(() => {
-          this.router.navigate(["/dashboard"])
-        }, 5000);
+        setInterval(() => {
+          this.timer--;
+
+          if(this.timer == 0) {
+            this.router.navigate(["/dashboard"])
+          }
+
+          this.errorMsg = messages.LOGIN_GREET + this.timer;
+        }, 1000)
+
       }, error => {
         this.errorMsg = error.error;
       })
