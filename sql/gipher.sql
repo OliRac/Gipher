@@ -8,5 +8,6 @@ CREATE TABLE IF NOT EXISTS `gipher`.`user` (
   PRIMARY KEY (`user_id`)
 );
 
-CREATE USER IF NOT EXISTS "gipher"@"localhost" IDENTIFIED BY "password";
-GRANT ALL PRIVILEGES ON gipher.* TO "gipher"@"localhost";
+CREATE USER IF NOT EXISTS "gipher"@"172.%.%.%" IDENTIFIED BY "password";
+GRANT ALL PRIVILEGES ON gipher.* TO "gipher"@"172.%.%.%";
+FLUSH PRIVILEGES;
