@@ -1,7 +1,7 @@
 export class Gif {
     id: string;
     itemurl:string;
-    media: any[];
+    media?: any[] | any;
     userId?: number;
     favorite?: boolean = false;
 }

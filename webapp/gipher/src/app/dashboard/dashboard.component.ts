@@ -20,13 +20,14 @@ export class DashboardComponent implements OnInit {
   errorMsg: string;
   userId: number;
   message : string ;
-
-  username :string ='Julie';
+  
+  username:string;
 
   form: FormGroup;
 
   constructor(
     private searchService: SearchService,
+    private userService: UserService,
     private formBuilder: FormBuilder,
     private recommendationService:RecommendationService,
     private  router : Router
@@ -37,11 +38,11 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  this.recommendationService.getTrending().subscribe(data => {
-    this.gifData = parseTenorResponseForGifs(data);
-  })
+    this.recommendationService.getTrending().subscribe(data => {
+      this.gifData = parseTenorResponseForGifs(data);
+    })
 
-  this.message ="Here are some recommended gifs for you"
+    this.message ="Here are some recommended gifs for you"
   }
 
   get searchTerm() {
@@ -63,20 +64,22 @@ export class DashboardComponent implements OnInit {
   }
 
   gridDisplay( content : string) : boolean {
-      this.changeMessage(content)
-     if(this.display==content){
-        return true;}
-     else{
-        return false;}
+    this.changeMessage(content)
+    if(this.display==content){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
 
   onClickLogOut(): void {
     if(sessionStorage.getItem("user") != null) {
-      sessionStorage.removeItem("user");
+      sessionStorage.clear();
       this.router.navigate(["/landing"]);
     }
-   }
+  }
 
   // onSubmit(): void {
   //   if (this.form.valid) {
