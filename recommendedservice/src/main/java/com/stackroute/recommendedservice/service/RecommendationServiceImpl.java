@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
+import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -23,7 +25,7 @@ import static java.util.stream.Collectors.toMap;
 
 @Slf4j
 @Service
-public class RecommendationServiceImpl implements RecommendationService{
+public class RecommendationServiceImpl implements RecommendationService, RabbitListenerConfigurer {
     private UserTermsRepository userTermsRepository;
 
     private static final int MAX_TRENDING_GIFS = 10;
@@ -177,5 +179,10 @@ public class RecommendationServiceImpl implements RecommendationService{
         }
 
         return searchTerms;
+    }
+
+    @Override
+    public void configureRabbitListeners(RabbitListenerEndpointRegistrar rabbitListenerEndpointRegistrar) {
+
     }
 }

@@ -1,12 +1,16 @@
 version: "3"
 
 services:
-  #RABBITMQ SERVICE
+  #RABBITMQ SERVICE FOR SERVICE SERVICE AND RECOMMENDED SERVICE
   rabbitmqservice:
-    image: rabbitmq:latest
+    image: rabbitmq:3.9-management
     container_name: rabbitmqservice
     ports:
-      - 5672:5672
+      - 5673:5672
+      - 15673:15672
+    expose:
+      - 5673
+      - 15673
   #MONGODB SERVICE
   mongodbservice:
     image: mongo:latest
@@ -57,6 +61,7 @@ services:
       - springboot-userservice
       - springboot-favoriteservice
       - springboot-searchservice
+      - springboot-recommendedservice
     expose:
       - 9090
     ports:
@@ -88,6 +93,20 @@ services:
       - 8082:8082
     expose:
       - 8082
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
+  #EUREKA-CLIENT RECOMMENDED SERVICE
+  springboot-recommendedservice:
+    image: springboot-recommendedservice:1.0
+    container_name: recommendedservice
+    depends_on:
+      - springboot-eureka-server
+      - mongodbservice
+      - rabbitmqservice
+    ports:
+      - 9095:9095
+    expose:
+      - 9095
     environment:
       eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
 volumes:
