@@ -1,28 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { Gif } from '../models/Gif';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { SearchService } from '../services/search.service';
 import { Router } from '@angular/router';
 import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
 import { RecommendationService } from '../services/recommendation.service';
 import { UserService } from '../services/user.service';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-
   gifData: Gif[];
-  display : string="recommended";
+  display: string = 'recommended';
   searchValue: string;
   errorMsg: string;
   userId: number;
-  message : string ;
-  
-  username:string;
+  message: string;
+
+  username: string;
+  imageUrl: string;
 
   form: FormGroup;
 
@@ -30,8 +34,8 @@ export class DashboardComponent implements OnInit {
     private searchService: SearchService,
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private recommendationService:RecommendationService,
-    private  router : Router
+    private recommendationService: RecommendationService,
+    private router: Router
   ) {
     this.form = this.formBuilder.group({
       searchTerm: new FormControl('', [Validators.required]),
@@ -39,46 +43,45 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.recommendationService.getTrending().subscribe(data => {
+    this.recommendationService.getTrending().subscribe((data) => {
       this.gifData = parseTenorResponseForGifs(data);
-    })
+    });
+    this.username = this.userService.getUserSession().username;
+    this.imageUrl = this.userService.getUserSession().imageUrl;
 
-    this.message ="Here are some recommended gifs for you"
+    this.message = 'Here are some recommended gifs for you';
   }
 
   get searchTerm() {
     return this.form.get('searchTerm');
   }
 
-  changeMessage(content : string){
-    if(content=="search"){
-      this.message="Here is the result of your search"
+  changeMessage(content: string) {
+    if (content == 'search') {
+      this.message = 'Here is the result of your search';
     }
 
-    if(content=="recommended"){
-        this.message="Here are some recommended gifs for you"
-      }
-    if(content=="favorites"){
-            this.message="Here are all your favorites gifs"
-          }
-
+    if (content == 'recommended') {
+      this.message = 'Here are some recommended gifs for you';
+    }
+    if (content == 'favorites') {
+      this.message = 'Here are all your favorites gifs';
+    }
   }
 
-  gridDisplay( content : string) : boolean {
-    this.changeMessage(content)
-    if(this.display==content){
+  gridDisplay(content: string): boolean {
+    this.changeMessage(content);
+    if (this.display == content) {
       return true;
-    }
-    else{
+    } else {
       return false;
     }
   }
 
-
   onClickLogOut(): void {
-    if(sessionStorage.getItem("user") != null) {
+    if (sessionStorage.getItem('user') != null) {
       sessionStorage.clear();
-      this.router.navigate(["/landing"]);
+      this.router.navigate(['/landing']);
     }
   }
 
@@ -96,5 +99,4 @@ export class DashboardComponent implements OnInit {
   //     );
   //   }
   // }
-
 }
