@@ -44,8 +44,11 @@ export class SearchComponent implements OnInit {
         searchTerm: this.searchValue,
         userId: this.userService.getUserSession().id
       }
-  
-      this.resultList = parseTenorResponseForGifs(this.searchService.storeUserSearchTermWithUserId(userTerm));
+
+      this.searchService.storeUserSearchTermWithUserId(userTerm).subscribe(data => {
+        this.resultList = parseTenorResponseForGifs(data);
+      })
+
       this.refreshGif$.next(true);
       
     }
