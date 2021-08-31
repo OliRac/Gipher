@@ -12,6 +12,7 @@ import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
 })
 export class RecommendedComponent implements OnInit {
   recommendations: Gif[];
+  title: string;
 
   constructor(private recommendationService:RecommendationService, private userService: UserService) { }
 
@@ -24,8 +25,15 @@ export class RecommendedComponent implements OnInit {
       data.forEach(elem => {
         this.recommendations = this.recommendations.concat(parseTenorResponseForGifs(elem));
       });
+      this.title = "Recommendations";
     }, error => {
+      this.title = "No recommendations available yet, showing trending";
+
+      response = this.recommendationService.getTrending();
       
+      response.subscribe(data => {
+        this.recommendations = parseTenorResponseForGifs(data);
+      })
     })
   }
 }
