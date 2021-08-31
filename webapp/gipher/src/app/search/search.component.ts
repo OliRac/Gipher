@@ -53,4 +53,9 @@ export class SearchComponent implements OnInit {
       
     }
   }
+
+  clearSearch(): void {
+    this.searchTerm.setValue("");
+    this.resultList = [];
+  }
 }

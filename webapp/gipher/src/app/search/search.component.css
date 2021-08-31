@@ -14,3 +14,7 @@ background-size: cover;
 .btn-outline{
     background-color: #8e9aaf;
 }
+
+#submit {
+  margin-right: 15px;
+}
