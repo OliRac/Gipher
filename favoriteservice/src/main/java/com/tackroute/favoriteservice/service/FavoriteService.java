@@ -28,7 +28,7 @@ public interface FavoriteService {
     /**
      * Abstract Method to delete get all the gifs in the favorite list
      */
-    HashSet<String> getAllFavorites(int userId) throws NoFavoriteGifFoundException;
+    String getAllFavorites(int userId) throws NoFavoriteGifFoundException;
 
     /**
      * Abstract Method to check if a gif belongs to the favorites list

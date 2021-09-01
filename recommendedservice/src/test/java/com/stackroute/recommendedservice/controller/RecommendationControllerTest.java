@@ -52,9 +52,8 @@ class RecommendationControllerTest {
         String recommendations = "things";
 
         when(recommendationService.getRecommendation(anyInt())).thenReturn(recommendations);
-        mockMvc.perform(post("/api/v1/recommendation-service/recommendation")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(String.valueOf(userId)))
+        mockMvc.perform(get("/api/v1/recommendation-service/recommendation/" + userId)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(mvcResult -> {
                     String response = mvcResult.getResponse().getContentAsString();
@@ -69,7 +68,7 @@ class RecommendationControllerTest {
         int userId = 0;
 
         when(recommendationService.getRecommendation(anyInt())).thenThrow(UserNotFoundException.class);
-        mockMvc.perform(post("/api/v1/recommendation-service/recommendation")
+        mockMvc.perform(get("/api/v1/recommendation-service/recommendation/" + userId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.valueOf(userId)))
                 .andExpect(status().isNotFound());

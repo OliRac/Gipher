@@ -29,7 +29,7 @@ public class FavoriteControllerIntegrationTest {
     String gif2 = "https://giphy.com/stories/welcome-to-the-high-rollers-room-8d7b09cb-a920";
 
 
-    private HashSet<String> favoriteList;
+    private String favoriteList;
 
     @BeforeEach
     void setUp() {
@@ -37,8 +37,10 @@ public class FavoriteControllerIntegrationTest {
         dto1 = new UserGifDto(1, gif1);
         dto2 = new UserGifDto(1, gif2);
         dto3 = new UserGifDto(2, gif1);
-        favoriteList = new HashSet<String>() {{ add(gif1);}};
-        selection = new Selection(1, favoriteList );
+        favoriteList = gif1;
+        var set = new HashSet<String>();
+        set.add(gif1);
+        selection = new Selection(1, set);
     }
 
     @AfterEach
@@ -83,7 +85,7 @@ public class FavoriteControllerIntegrationTest {
     void givenCallToGetAllFavoriteGifsThenListShouldReturnAllFavorites() throws NoFavoriteGifFoundException {
         HashSet<String> listFavs = new HashSet<String>(){ { add(gif2);}};
         assertNotNull(favoriteService.addFavorite(dto2));
-        HashSet<String> retrievedGifs = favoriteService.getAllFavorites(1);
+        String retrievedGifs = favoriteService.getAllFavorites(1);
         assertNotNull(retrievedGifs);
         assertEquals(listFavs, retrievedGifs);
     }

@@ -81,6 +81,7 @@
   </nav>
 
   <app-search (validSearchEmitter)="validSearchDone($event)"></app-search>
+  <app-favorites></app-favorites>
   <app-recommended [refreshEvent]="clickedEvent"></app-recommended>
 </div>
 <!--ngIf="{{display}}=='search'"-->

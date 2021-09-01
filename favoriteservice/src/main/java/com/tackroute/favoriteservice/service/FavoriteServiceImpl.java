@@ -9,7 +9,12 @@ import com.tackroute.favoriteservice.repository.FavoriteRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 // import lombok.extern.slf4j.Slf4j;
 
@@ -21,11 +26,16 @@ public class FavoriteServiceImpl implements FavoriteService{
 
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
+    @Value("${api.key}")
+    private String apiKey;
 
     private FavoriteRepository favoriteRepository;
 
-   @Autowired
-   public FavoriteServiceImpl(FavoriteRepository favoriteRepository) {this.favoriteRepository = favoriteRepository;}
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    public FavoriteServiceImpl(FavoriteRepository favoriteRepository) {this.favoriteRepository = favoriteRepository;}
 
     @Override
     public Selection addFavorite(UserGifDto userGifDto) throws GifAlreadyExistException {
@@ -99,14 +109,29 @@ public class FavoriteServiceImpl implements FavoriteService{
     }
 
     @Override
-    public HashSet<String> getAllFavorites(int userId)  throws NoFavoriteGifFoundException {
+    public String getAllFavorites(int userId)  throws NoFavoriteGifFoundException {
         if (!favoriteRepository.existsByUserId(userId)) {
             throw new NoFavoriteGifFoundException();
         } else {
-            HashSet<String> h = favoriteRepository.findByUserId(userId).getFavoriteList();
-            LOG.info("list of favorite gifs was successfully retreived");
-            return h;
+            HashSet<String> gifIds = favoriteRepository.findByUserId(userId).getFavoriteList();
 
+            StringBuilder query = new StringBuilder();
+
+            gifIds.forEach(id -> {
+                query.append(id);
+                query.append(",");
+            });
+
+            query.deleteCharAt(query.length() - 1);
+
+            String url = "https://g.tenor.com/v1/gifs?ids=" + query.toString() + "&key=" + apiKey;
+            LOG.info("Sending query to tenor: " + url);
+            var headers = new HttpHeaders();
+            var requestEntity = new HttpEntity<>(headers);
+            var responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
+
+            LOG.info("list of favorite gifs was successfully retreived");
+            return responseEntity.getBody();
         }
     }
 

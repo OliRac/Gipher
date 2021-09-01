@@ -43,7 +43,8 @@ export class DashboardComponent implements OnInit {
   /*For passing a click event from sibling to sibling components*/
   clickedEvent: Event;
   private favoritesList: String[];
-  private user: User;
+  user: User;
+
   constructor(
     private searchService: SearchService,
     private userService: UserService,

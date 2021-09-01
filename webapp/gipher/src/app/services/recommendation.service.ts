@@ -23,6 +23,6 @@ export class RecommendationService {
     let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
     headers.append("Accept", "application/json");
 
-    return this.http.post(this.recommendationURL, user.id, {headers:headers});
+    return this.http.get(this.recommendationURL + "/" + user.id, {headers:headers});
   }
 }

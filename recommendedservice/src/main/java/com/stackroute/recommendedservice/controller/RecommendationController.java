@@ -25,8 +25,8 @@ public class RecommendationController {
     * Responds with an array of JSON objects as strings [{},{}...]
     * Putting userId in the request body to not expose it*/
     @Cacheable(value="recommendationCache", key="#userId")
-    @PostMapping("/recommendation")
-    public ResponseEntity<?> getRecommendation(@RequestBody int userId) throws UserNotFoundException {
+    @GetMapping("/recommendation/{userId}")
+    public ResponseEntity<?> getRecommendation(@PathVariable int userId) throws UserNotFoundException {
         logRequest("post", "/recommendation");
         var response = new ResponseEntity<>(recommendationService.getRecommendation(userId), HttpStatus.OK);
         logResponseStatus(response.getStatusCode());
