@@ -15,15 +15,15 @@ export class LoginGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-//
-/*       let mockUser = {
-        userId: 1,
-        username: "someuser",
-        password: "difficultPassword",
-        image: new File([""], "my_profile_pic.png")
-      };
-         sessionStorage.setItem("user", JSON.stringify(mockUser)) ;
-             return true*/
+// //
+//        let mockUser = {
+//         userId: 1,
+//         username: "someuser",
+//         password: "difficultPassword",
+//         image: new File([""], "my_profile_pic.png")
+//       };
+//          sessionStorage.setItem("user", JSON.stringify(mockUser)) ;
+//              return true
 
     if(this.userService.getUserSession()) {
       return true;
