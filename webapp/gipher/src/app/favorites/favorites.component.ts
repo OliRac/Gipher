@@ -14,6 +14,7 @@ import { User } from '../models/User';
 export class FavoritesComponent implements OnInit {
 @Input() favorites : Gif[];
 user : User;
+favoritesList : String[];
 
 
 
@@ -21,9 +22,7 @@ user : User;
 
   ngOnInit(): void {
     this.user = this.userService.getUserSession();
-  this.favoriteService.getAllFavorites(this.user).subscribe(data => {
-          this.favorites = data;
-        })
+
   }
 
   markAsFavorite( gifUrl : string){
