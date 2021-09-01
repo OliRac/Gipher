@@ -9,7 +9,8 @@ export function parseTenorResponseForGifs(response:TenorResponse): Gif[] {
         gifs.push({
             id: gif.id,
             itemurl: gif.itemurl,
-            media: gif.media[0]
+            media: gif.media[0],
+            favorite:false
         });
     }
 
