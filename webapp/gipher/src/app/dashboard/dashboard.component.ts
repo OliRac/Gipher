@@ -11,15 +11,20 @@ import { Router } from '@angular/router';
 import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
 import { RecommendationService } from '../services/recommendation.service';
 import { UserService } from '../services/user.service';
-import {FavoriteService} from '../services/favorite.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { FavoriteService } from '../services/favorite.service';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { User } from '../models/User';
-
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
   gifData: Gif[];
@@ -37,17 +42,15 @@ export class DashboardComponent implements OnInit {
 
   /*For passing a click event from sibling to sibling components*/
   clickedEvent: Event;
-  private favoritesList : String[];
-
+  private favoritesList: String[];
+  private user: User;
   constructor(
     private searchService: SearchService,
     private userService: UserService,
     private formBuilder: FormBuilder,
     private recommendationService: RecommendationService,
     private router: Router,
-    private favoriteService : FavoriteService,
-    private user : User
-   
+    private favoriteService: FavoriteService
   ) {
     this.form = this.formBuilder.group({
       searchTerm: new FormControl('', [Validators.required]),
@@ -57,9 +60,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.userService.getUserSession();
 
-    this.favoriteService.getAllFavorites(this.user).subscribe(data => {
+    this.favoriteService.getAllFavorites(this.user).subscribe((data) => {
       this.favoritesList = data;
-    })
+    });
 
     this.recommendationService.getTrending().subscribe((data) => {
       this.gifData = parseTenorResponseForGifs(data);
@@ -70,8 +73,6 @@ export class DashboardComponent implements OnInit {
     this.imageUrl = this.userService.getUserSession().imageUrl;
 
     this.message = 'Here are some recommended gifs for you';
-
-    
   }
 
   get searchTerm() {
@@ -106,7 +107,7 @@ export class DashboardComponent implements OnInit {
   }
 
   /*For passing a click event from sibling to sibling components*/
-  validSearchDone(event:Event) {
+  validSearchDone(event: Event) {
     this.clickedEvent = event;
   }
 
