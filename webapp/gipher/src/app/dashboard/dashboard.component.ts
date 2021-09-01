@@ -37,6 +37,8 @@ export class DashboardComponent implements OnInit {
   /*For passing a click event from sibling to sibling components*/
   clickedEvent: Event;
   private favoritesList : String[];
+  private user : User
+
 
   constructor(
     private searchService: SearchService,
@@ -45,7 +47,6 @@ export class DashboardComponent implements OnInit {
     private recommendationService: RecommendationService,
     private router: Router,
     private favoriteService : FavoriteService,
-    private user : User
    
   ) {
     this.form = this.formBuilder.group({

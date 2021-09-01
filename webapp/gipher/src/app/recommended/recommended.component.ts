@@ -39,6 +39,7 @@ export class RecommendedComponent implements OnInit {
     let response = this.recommendationService.getRecommendations(user);
 
     response.subscribe(data => {
+      
       data.forEach(elem => {
         this.recommendations = this.recommendations.concat(parseTenorResponseForGifs(elem));
       });
