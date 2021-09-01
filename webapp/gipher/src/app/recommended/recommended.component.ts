@@ -56,6 +56,7 @@ export class RecommendedComponent implements OnInit {
       
     response.subscribe(data => {
       this.recommendations = parseTenorResponseForGifs(data);
+      console.log(this.recommendations);
     })
   }
 }

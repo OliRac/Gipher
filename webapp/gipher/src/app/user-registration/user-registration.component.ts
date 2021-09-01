@@ -24,6 +24,7 @@ export class UserRegistrationComponent implements OnInit {
   errorMsg: string;
   imageData: File;
   timer: number = 3;
+  showSpinner: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
     this.form = this.formBuilder.group({
@@ -51,16 +52,15 @@ export class UserRegistrationComponent implements OnInit {
       }
 
       this.userService.registerUser(user).subscribe(data => {
-        this.errorMsg = messages.REGISTER_SUCCESS + this.timer;
-
+  
         setInterval(() => {
           this.timer--;
-
+          this.showSpinner = true;
+          
           if(this.timer == 0) {
             this.router.navigate(["/"])
           }
-
-          this.errorMsg = messages.REGISTER_SUCCESS + this.timer;
+        
         }, 1000)
 
       }, (error: HttpErrorResponse) => {

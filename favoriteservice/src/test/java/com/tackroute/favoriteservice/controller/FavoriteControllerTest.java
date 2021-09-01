@@ -133,7 +133,7 @@ public class FavoriteControllerTest {
 
     @Test
     public void givenUserIdThenShouldReturnListOfAllFavorites() throws Exception {
-        when(favoriteService.getAllFavorites(selection.getUserId())).thenReturn(favoriteList);
+        when(favoriteService.getAllFavorites(selection.getUserId())).thenReturn(asJsonString(favoriteList));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/favorite-service/favorites/1")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(favoriteList)))
                 .andDo(MockMvcResultHandlers.print());

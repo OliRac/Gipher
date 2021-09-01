@@ -26,7 +26,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatDialogModule} from '@angular/material/dialog';
 import { GifModalComponent } from './gif-modal/gif-modal.component';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -43,6 +43,7 @@ import { GifModalComponent } from './gif-modal/gif-modal.component';
     GifModalComponent,
   ],
   imports: [
+    MatProgressSpinnerModule,
     MatDialogModule,
     MatCardModule,
     MatFormFieldModule,
