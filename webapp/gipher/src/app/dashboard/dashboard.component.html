@@ -79,11 +79,14 @@
   </div>
 </nav>
 
+<app-search></app-search>
+<div class="container">
+  <div class="row"><div class="col-1"></div>
+    <div class="col-2"><img src="assets/img/trending-sm.png" /></div>
+  </div>
 
-
-
-      <app-search></app-search>
-     <app-gif-grid [gifs]="trendingGifs" ></app-gif-grid>
+  <app-gif-grid [gifs]="trendingGifs"></app-gif-grid>
+</div>
 
 <!--ngIf="{{display}}=='search'"-->
 

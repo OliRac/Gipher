@@ -60,4 +60,7 @@
   border-radius: 50%;
 }
 
-
+.row{
+  margin-top: 10px;
+  padding-top: 10px;
+}

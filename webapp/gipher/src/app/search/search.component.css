@@ -18,3 +18,8 @@ background-size: cover;
 #submit {
   margin-right: 15px;
 }
+
+.row{
+    margin-top: 10px;
+  padding-top: 10px;
+}

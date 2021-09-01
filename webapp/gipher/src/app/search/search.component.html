@@ -10,17 +10,25 @@
           placeholder="search gifs"
           aria-label="Search"
         />
-        
-        <button class="btn btn-outline" type="submit" id="submit">Search</button>
-        <button class="btn btn-outline" type="button" (click)="clearSearch()">Clear</button>
+
+        <button class="btn btn-outline" type="submit" id="submit">
+          Search
+        </button>
+        <button class="btn btn-outline" type="button" (click)="clearSearch()">
+          Clear
+        </button>
       </div>
     </form>
   </nav>
 
   <div class="grid-container" *ngIf="resultList.length > 0">
-    <app-gif-grid
-    [gifs]="resultList"
-    infoText="Search results"
-    ></app-gif-grid>
+    <div class="container">
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-2"><img src="assets/img/search-sm.png" /></div>
+      </div>
+      <app-gif-grid [gifs]="resultList" infoText="Search results">
+      </app-gif-grid>
+    </div>
   </div>
 </div>
