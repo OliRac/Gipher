@@ -18,14 +18,12 @@ export class FavoritesComponent implements OnInit {
   user : User;
   title: string;
 
-  favoriteGifs: Gif[];
-
   constructor(private favoriteService : FavoriteService, private userService : UserService) { }
 
   ngOnInit(): void {
     this.user = this.userService.getUserSession();
     this.favoriteService.getAllFavorites(this.user).subscribe(data => {
-          this.favoriteGifs = parseTenorResponseForGifs(data, true);
+          this.favoriteService.setFavoritesList(parseTenorResponseForGifs(data, true));
           this.title="Favorites";
     }, error => {
       this.title = "You have no favorites!";
@@ -38,4 +36,7 @@ export class FavoritesComponent implements OnInit {
       )
   }
   
+  getFavorites(): Gif[]{
+    return this.favoriteService.getFavoritesList(this.userService.getUserSession());
+  }
 }
