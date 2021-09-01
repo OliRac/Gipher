@@ -11,11 +11,12 @@ import { Router } from '@angular/router';
 import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
 import { RecommendationService } from '../services/recommendation.service';
 import { UserService } from '../services/user.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
   gifData: Gif[];

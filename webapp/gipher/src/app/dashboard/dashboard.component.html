@@ -1,87 +1,88 @@
-<nav class="navbar navbar-light bar1">
-  <div class="container-fluid">
-    <p class="navbar-brand">
-      <a class="navbar-brand" href="/landing">
-        <img class="img-logo" src="assets/img/logo.gif" alt="logo" />
-      </a>
-      <br />
-      Welcome To Gipher {{ username }}
-    </p>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasNavbar"
-      aria-controls="offcanvasNavbar"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div
-      class="offcanvas offcanvas-end"
-      tabindex="-1"
-      id="offcanvasNavbar"
-      aria-labelledby="offcanvasNavbarLabel"
-    >
-      <div class="offcanvas-header">
-        <div class="profile-pic">
-          <img
-            src="{{imageUrl}}"
-            style="
-              position: absolute;
-              width: 60px;
-              height: 60px;
-              border-radius: 50%;
-            "
-          />
-        </div>
-        <h2 class="offcanvas-title" id="offcanvasNavbarLabel">
-          {{ username }}
-        </h2>
+<div class="fade-container">
+  <nav class="navbar navbar-light bar1">
+    <div class="container-fluid">
+      <p class="navbar-brand">
+        <a class="navbar-brand" href="/landing">
+          <img class="img-logo" src="assets/img/logo.gif" alt="logo" />
+        </a>
+        <br />
+        Welcome To Gipher {{ username }}
+      </p>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="offcanvas offcanvas-end"
+        tabindex="-1"
+        id="offcanvasNavbar"
+        aria-labelledby="offcanvasNavbarLabel"
+      >
+        <div class="offcanvas-header">
+          <div class="profile-pic">
+            <img
+              src="{{imageUrl}}"
+              style="
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+              "
+            />
+          </div>
+          <h2 class="offcanvas-title" id="offcanvasNavbarLabel">
+            {{ username }}
+          </h2>
 
-        <button
-          type="button"
-          class="btn-close text-reset"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item">
-            <a
-              class="nav-link active"
-              style="color: #fca311"
-              aria-current="page"
-              href="/dashboard"
-              >Dashboard</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" style="color: #fca311" href="#">View Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" style="color: #fca311" href="/favorites"
-              >List of Favorites</a
-            >
-          </li>
-          <li>
-            <button
-              type="button"
-              class="btn btn-outline-warning"
-              (click)="onClickLogOut()"
-            >
-              Log Out
-            </button>
-          </li>
-        </ul>
+          <button
+            type="button"
+            class="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                style="color: #fca311"
+                aria-current="page"
+                href="/dashboard"
+                >Dashboard</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="color: #fca311" href="#">View Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="color: #fca311" href="/favorites"
+                >List of Favorites</a
+              >
+            </li>
+            <li>
+              <button
+                type="button"
+                class="btn btn-outline-warning"
+                (click)="onClickLogOut()"
+              >
+                Log Out
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<app-search (eventClicked)="validSearchDone($event)"></app-search>
-<app-recommended [refreshEvent]="clickedEvent"></app-recommended>
-
+  <app-search (validSearchEmitter)="validSearchDone($event)"></app-search>
+  <app-recommended [refreshEvent]="clickedEvent"></app-recommended>
+</div>
 <!--ngIf="{{display}}=='search'"-->
 
 <!-- 
