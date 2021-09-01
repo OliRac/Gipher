@@ -85,10 +85,8 @@ export class DashboardComponent implements OnInit {
   }
 
   onClickLogOut(): void {
-    if (sessionStorage.getItem('user') != null) {
-      sessionStorage.clear();
-      this.router.navigate(['/landing']);
-    }
+    sessionStorage.clear();
+    this.router.navigate(['/landing']);
   }
 
   /*For passing a click event from sibling to sibling components*/

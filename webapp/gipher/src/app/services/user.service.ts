@@ -37,6 +37,7 @@ export class UserService {
 
     headers.append('Content-Type','application/json');
     headers.append("Accept", "application/json");
+    headers.append("Cache-Control", "no-cache");
 
     let options = {
       headers: headers,
