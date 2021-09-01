@@ -29,7 +29,7 @@ public class SearchEngineController {
 
 
     @PostMapping("/gifs/search")
-    public ResponseEntity<?>  getGif(@RequestBody UserTermDTO userTerm){
+    public ResponseEntity<?> getGif(@RequestBody UserTermDTO userTerm){
       ResponseEntity<Object> result = new ResponseEntity<> (searchService.getGifs(userTerm.getSearchTerm()), HttpStatus.OK);
       this.searchService.saveSearch(userTerm);
       return result;

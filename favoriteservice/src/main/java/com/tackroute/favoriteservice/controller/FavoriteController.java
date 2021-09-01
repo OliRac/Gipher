@@ -1,5 +1,6 @@
 package com.tackroute.favoriteservice.controller;
 
+import com.tackroute.favoriteservice.domain.UserGifDto;
 import com.tackroute.favoriteservice.exception.GifAlreadyExistException;
 import com.tackroute.favoriteservice.exception.GifNotFoundException;
 import com.tackroute.favoriteservice.exception.NoFavoriteGifFoundException;
@@ -38,19 +39,27 @@ public class FavoriteController {
     }
 
 
-    @PostMapping(value = "/addFavorite/{userId}/{gifUrl}")
-    public ResponseEntity<Selection> addFavorite(@PathVariable int userId, @PathVariable String gifUrl) throws GifAlreadyExistException {
+    @PostMapping(value = "/addFavorite")
+    public ResponseEntity<Selection> addFavorite(@RequestBody UserGifDto userGifDto) throws GifAlreadyExistException {
         LOG.info("Sending post request to add a new gif to the favorites of the user");
+<<<<<<< HEAD
+        return new ResponseEntity<Selection>(favoriteService.addFavorite(userGifDto), HttpStatus.OK);
+
+
+=======
         return new ResponseEntity<Selection>(favoriteService.addFavorite(userId,gifUrl), HttpStatus.OK);
-
-
+>>>>>>> 58ad0fb38d9aa09fdc42988d93ae35e64e031227
     }
 
-    @PostMapping(value = "/removeFavorite/{userId}/{gifUrl}")
-    public ResponseEntity<HashSet<String>> removeFavorite(@PathVariable int userId, @PathVariable String gifUrl)  throws GifNotFoundException, NoFavoriteGifFoundException{
+    @PutMapping(value = "/removeFavorite")
+    public ResponseEntity<HashSet<String>> removeFavorite(@RequestBody UserGifDto userGifDto)  throws GifNotFoundException, NoFavoriteGifFoundException{
         LOG.info("Sending post request to remove a gif to the favorites of the user");
-        return new ResponseEntity<HashSet<String>>(favoriteService.removeFavorite(userId,gifUrl), HttpStatus.OK);
+<<<<<<< HEAD
+        return new ResponseEntity<HashSet<String>>(favoriteService.removeFavorite(userGifDto), HttpStatus.OK);
 
+=======
+        return new ResponseEntity<HashSet<String>>(favoriteService.removeFavorite(userId,gifUrl), HttpStatus.OK);
+>>>>>>> 58ad0fb38d9aa09fdc42988d93ae35e64e031227
     }
 
     @DeleteMapping(value = "/emptyFavoriteList/{userId}")
@@ -59,9 +68,9 @@ public class FavoriteController {
         return new ResponseEntity<HashSet<String>>(favoriteService.emptyFavoriteList(userId), HttpStatus.OK);
     }
 
-    @GetMapping("/favorite/{userId}/{gifUrl}")
-    public ResponseEntity<Boolean> checkIfFavoriteByUrl(@PathVariable(value="userId") int userId, @PathVariable String gifUrl) throws NoFavoriteGifFoundException {
-        return new ResponseEntity<Boolean>(favoriteService.checkIfFavoriteByUrl(userId, gifUrl), HttpStatus.OK);
+    @PostMapping("/favorite")
+    public ResponseEntity<Boolean> checkIfFavoriteByUrl(@RequestBody UserGifDto userGifDto) throws NoFavoriteGifFoundException {
+        return new ResponseEntity<Boolean>(favoriteService.checkIfFavoriteByUrl(userGifDto), HttpStatus.OK);
     }
 
 

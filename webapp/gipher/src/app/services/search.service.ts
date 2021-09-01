@@ -4,21 +4,20 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/User';
 import { UserTerm } from '../models/UserTerm';
+import { UserService } from './user.service';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
-  storedUser: User = JSON.parse(sessionStorage.getItem('user'));
   searchURL: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
   
   storeUserSearchTermWithUserId(user: UserTerm): Observable<any> {
-
-    let header = new HttpHeaders().set("Authorization", `Bearer ${this.storedUser.token}`);
+    let header = new HttpHeaders().set("Authorization", `Bearer ${this.userService.getUserSession().token}`);
     header.set('Content-Type', 'application/json');
     this.searchURL = environment.SEARCH_SERVICE_URL + `/gifs/search`;
 
@@ -27,7 +26,7 @@ export class SearchService {
 
   searchGif(searchTerm: string): Observable<any> {
     var header = {
-    headers: new HttpHeaders().set('Authorization', `Bearer ${this.storedUser.token}`)};
+    headers: new HttpHeaders().set('Authorization', `Bearer ${this.userService.getUserSession().token}`)};
     this.searchURL = environment.SEARCH_SERVICE_URL + `/gifs/${searchTerm}`;
     return this.http.get(this.searchURL, header);
   }

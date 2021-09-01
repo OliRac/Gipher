@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../models/User';
@@ -20,6 +21,9 @@ export class SearchComponent implements OnInit {
   userId: number;
   form: FormGroup;
   refreshGif$ = new BehaviorSubject<boolean>(true);
+
+  @Output()
+  validSearchEmitter = new EventEmitter<Event>();
 
   constructor(
     private searchService: SearchService,
@@ -50,7 +54,7 @@ export class SearchComponent implements OnInit {
       })
 
       this.refreshGif$.next(true);
-      
+      this.validSearchEmitter.emit(new Event("click"));
     }
   }
 
