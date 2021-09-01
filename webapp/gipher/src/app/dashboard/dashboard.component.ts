@@ -30,6 +30,9 @@ export class DashboardComponent implements OnInit {
 
   form: FormGroup;
 
+  /*For passing a click event from sibling to sibling components*/
+  clickedEvent: Event;
+
   constructor(
     private searchService: SearchService,
     private userService: UserService,
@@ -50,6 +53,8 @@ export class DashboardComponent implements OnInit {
     this.imageUrl = this.userService.getUserSession().imageUrl;
 
     this.message = 'Here are some recommended gifs for you';
+
+    
   }
 
   get searchTerm() {
@@ -83,6 +88,11 @@ export class DashboardComponent implements OnInit {
       sessionStorage.clear();
       this.router.navigate(['/landing']);
     }
+  }
+
+  /*For passing a click event from sibling to sibling components*/
+  validSearchDone(event:Event) {
+    this.clickedEvent = event;
   }
 
   // onSubmit(): void {

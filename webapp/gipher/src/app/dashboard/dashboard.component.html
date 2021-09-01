@@ -79,7 +79,8 @@
   </div>
 </nav>
 
-<app-search></app-search>
+<app-search (eventClicked)="validSearchDone($event)"></app-search>
+<app-recommended [refreshEvent]="clickedEvent"></app-recommended>
 
 <!--ngIf="{{display}}=='search'"-->
 
