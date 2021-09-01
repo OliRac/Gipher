@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { User } from '../models/User';
 import { UserService } from '../services/user.service';
 import { UserGif } from '../models/UserGif';
+import { Gif } from '../models/Gif';
 
 
 
@@ -16,6 +17,8 @@ export class FavoriteService {
   favoriteUrl : string ;
   storedUser : User = this.userService.getUserSession();
   userGif : UserGif ;
+
+  favoriteGifs: Gif[];
 
   constructor(private http: HttpClient,
               private userService : UserService) { }
@@ -67,8 +70,7 @@ export class FavoriteService {
     return this.http.post(this.favoriteUrl, this.userGif,{headers:headers});
   }
 
-
-
-
-
+  updateFavorites(newGifs: Gif[]): void {
+    this.favoriteGifs = newGifs;
+  }
 }

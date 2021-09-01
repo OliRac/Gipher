@@ -21,7 +21,9 @@ export class GifGridComponent implements OnInit {
   @Input() gifs: Gif[];
   @Input() infoText : string;
   gifASFavorite : boolean
-  @Output() Favorites : EventEmitter<string[]> = new EventEmitter<string[]>();
+  //@Output() Favorites : EventEmitter<string[]> = new EventEmitter<string[]>();
+  //favorites: Gif[];
+
   user : User;
 
 
@@ -29,9 +31,8 @@ export class GifGridComponent implements OnInit {
 
 
   ngOnInit(): void {
-
-     this.user = this.userService.getUserSession();
-
+    //this.favorites = []
+    this.user = this.userService.getUserSession();
   }
 
   
@@ -45,24 +46,43 @@ export class GifGridComponent implements OnInit {
       }
   }
 
- onClickFavorite(gif: Gif): void {
-       if (gif.favorite==true) {
-         this.favoriteService.removeFavorite(this.user, gif.itemurl).subscribe(
-               (data)=>{ this.Favorites = data
-                         console.log("removed as favorite")
-                         console.log( data)},
-             ) }
-       else{
-        this.favoriteService.addFavorite(this.user, gif.itemurl).subscribe(
-                     (data)=>{ this.Favorites = data.favoriteList
-                                console.log("removed as favorite")
-                                     console.log(data)
-                                     console.log( data.favoriteList)},
+  onClickFavorite(gif: Gif): void {
+    let favoriteStr:string[] = [];
 
-                   )
-       }
+    if (gif.favorite==true) {
+      this.favoriteService.removeFavorite(this.user, gif.id).subscribe(
+            (data)=>{ 
+              favoriteStr = data
+              console.log("removed as favorite")
+              console.log( data)},
+          ) }
+    else{
+    this.favoriteService.addFavorite(this.user, gif.id).subscribe(
+                  (data)=>{ 
+                    favoriteStr = data.favoriteList
+                    console.log("removed as favorite")
+                    console.log(data)
+                    console.log( data.favoriteList)},
 
-       }
+                )
+    } 
+
+    console.log(gif.id);
+    /* API returns list of gif ID / url 
+    compare id to current gifs to figure out which one is a favorite
+    add that to the list of favorites*/
+    /*let favorites: Gif[] = [];
+
+    favoriteStr.forEach(fav => {
+      this.gifs.forEach(gif => {
+        if(gif.itemurl === fav) {
+          favorites.push(gif);
+        }
+      })
+    })
+
+    this.favoriteService.updateFavorites(favorites);*/
+  }
 
   openDialog(gif: Gif) {
     const dialogRef = this.dialog.open(GifModalComponent, {
@@ -79,11 +99,11 @@ export class GifGridComponent implements OnInit {
     )
   }
 
-  getAllFavorites(){
+  /*getAllFavorites(){
     this.favoriteService.getAllFavorites(this.user).subscribe(data => {
       this.Favorites = data;
     },
     (error)=>{console.log(error)})
-  }
+  }*/
 
 }
