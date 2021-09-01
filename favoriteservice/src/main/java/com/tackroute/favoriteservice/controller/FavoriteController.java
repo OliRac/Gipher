@@ -42,16 +42,24 @@ public class FavoriteController {
     @PostMapping(value = "/addFavorite")
     public ResponseEntity<Selection> addFavorite(@RequestBody UserGifDto userGifDto) throws GifAlreadyExistException {
         LOG.info("Sending post request to add a new gif to the favorites of the user");
+<<<<<<< HEAD
         return new ResponseEntity<Selection>(favoriteService.addFavorite(userGifDto), HttpStatus.OK);
 
 
+=======
+        return new ResponseEntity<Selection>(favoriteService.addFavorite(userId,gifUrl), HttpStatus.OK);
+>>>>>>> 58ad0fb38d9aa09fdc42988d93ae35e64e031227
     }
 
     @PutMapping(value = "/removeFavorite")
     public ResponseEntity<HashSet<String>> removeFavorite(@RequestBody UserGifDto userGifDto)  throws GifNotFoundException, NoFavoriteGifFoundException{
         LOG.info("Sending post request to remove a gif to the favorites of the user");
+<<<<<<< HEAD
         return new ResponseEntity<HashSet<String>>(favoriteService.removeFavorite(userGifDto), HttpStatus.OK);
 
+=======
+        return new ResponseEntity<HashSet<String>>(favoriteService.removeFavorite(userId,gifUrl), HttpStatus.OK);
+>>>>>>> 58ad0fb38d9aa09fdc42988d93ae35e64e031227
     }
 
     @DeleteMapping(value = "/emptyFavoriteList/{userId}")

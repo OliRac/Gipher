@@ -1,10 +1,12 @@
-.gif {
-    box-sizing: border-box;
-    cursor: pointer;
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-h3{
-  text-align: center;
+.gif-image {
+  width: 400px;
+  height: 400px;
 }
 
 .overlay {
@@ -15,7 +17,7 @@ h3{
     transition: .3s ease;
 }
 
-.container:hover .overlay {
+.overlay {
     opacity: 1;
 }
 
@@ -26,6 +28,9 @@ img {
     max-height: 80%;
 }
 
-::ng-deep .mat-dialog-container {
-    position: relative;
+.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
 }

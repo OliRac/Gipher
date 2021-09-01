@@ -18,17 +18,16 @@ export class SearchService {
   
   storeUserSearchTermWithUserId(user: UserTerm): Observable<any> {
 
-    var header = {
-      headers: new HttpHeaders().set('Authorization', `Bearer ${this.storedUser.token}`)
-    }
+    let header = new HttpHeaders().set("Authorization", `Bearer ${this.storedUser.token}`);
+    header.set('Content-Type', 'application/json');
     this.searchURL = environment.SEARCH_SERVICE_URL + `/gifs/search`;
 
-    return this.http.post(this.searchURL, user, header);
+    return this.http.post(this.searchURL, user, {headers:header});
   }
 
   searchGif(searchTerm: string): Observable<any> {
     var header = {
-    headers: new HttpHeaders().set('Authorization', `Bearer ${this.storedUser.token}`)}
+    headers: new HttpHeaders().set('Authorization', `Bearer ${this.storedUser.token}`)};
     this.searchURL = environment.SEARCH_SERVICE_URL + `/gifs/${searchTerm}`;
     return this.http.get(this.searchURL, header);
   }
