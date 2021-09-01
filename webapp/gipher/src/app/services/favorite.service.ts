@@ -16,8 +16,9 @@ export class FavoriteService {
 
   favoriteUrl : string ;
   storedUser : User = this.userService.getUserSession();
-  userGif : UserGif ;
+  userGif : UserGif;
 
+  /*Put this in a shared service*/
   favoriteGifs: Gif[];
 
   constructor(private http: HttpClient,
@@ -70,7 +71,19 @@ export class FavoriteService {
     return this.http.post(this.favoriteUrl, this.userGif,{headers:headers});
   }
 
-  updateFavorites(newGifs: Gif[]): void {
-    this.favoriteGifs = newGifs;
+  getFavoritesList(user: User): Gif[] {
+    return this.favoriteGifs;
+  }
+
+  setFavoritesList(gifs: Gif[]): void {
+    this.favoriteGifs = gifs;
+  }
+
+  addToFavoritesList(gif:Gif): void {
+    this.favoriteGifs.push(gif);
+  }
+
+  removeFromFavoritesList(gif: Gif): void {
+    this.favoriteGifs = this.favoriteGifs.filter(elem => elem.id !== gif.id);
   }
 }

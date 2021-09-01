@@ -5,9 +5,7 @@
        <img (click)="openDialog(gif)" class="gif" src="{{gif.media.gif.url}}" alt="gif">
        <div class="overlay">
          <button mat-icon-button  aria-label="favorite" (click)="onClickFavorite(gif)" >
-<!--           (click)="onClickFavorite(gif)"-->
            <mat-icon color="warn"  >favorite</mat-icon>
          </button></div>
     </mat-grid-tile>
 </mat-grid-list>
-<!--color="{{gif.favorite}} ? 'warn' : 'white' "-->

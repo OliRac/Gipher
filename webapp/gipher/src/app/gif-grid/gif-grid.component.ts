@@ -26,12 +26,9 @@ export class GifGridComponent implements OnInit {
 
   user : User;
 
-
   constructor(private  favoriteService : FavoriteService, private userService : UserService,  public dialog: MatDialog)  { }
 
-
   ngOnInit(): void {
-    //this.favorites = []
     this.user = this.userService.getUserSession();
   }
 
@@ -54,34 +51,24 @@ export class GifGridComponent implements OnInit {
             (data)=>{ 
               favoriteStr = data
               console.log("removed as favorite")
-              console.log( data)},
-          ) }
-    else{
+              console.log( data)
+              gif.favorite = false;
+              this.favoriteService.removeFromFavoritesList(gif);
+            },
+          ) 
+        
+    } else {
     this.favoriteService.addFavorite(this.user, gif.id).subscribe(
                   (data)=>{ 
                     favoriteStr = data.favoriteList
-                    console.log("removed as favorite")
+                    console.log("added as favorite")
                     console.log(data)
-                    console.log( data.favoriteList)},
-
+                    console.log( data.favoriteList)
+                    gif.favorite = true;
+                    this.favoriteService.addToFavoritesList(gif);
+                  },                   
                 )
     } 
-
-    console.log(gif.id);
-    /* API returns list of gif ID / url 
-    compare id to current gifs to figure out which one is a favorite
-    add that to the list of favorites*/
-    /*let favorites: Gif[] = [];
-
-    favoriteStr.forEach(fav => {
-      this.gifs.forEach(gif => {
-        if(gif.itemurl === fav) {
-          favorites.push(gif);
-        }
-      })
-    })
-
-    this.favoriteService.updateFavorites(favorites);*/
   }
 
   openDialog(gif: Gif) {
@@ -98,12 +85,4 @@ export class GifGridComponent implements OnInit {
       (error : any)=>{ this.gifASFavorite= false}
     )
   }
-
-  /*getAllFavorites(){
-    this.favoriteService.getAllFavorites(this.user).subscribe(data => {
-      this.Favorites = data;
-    },
-    (error)=>{console.log(error)})
-  }*/
-
 }
