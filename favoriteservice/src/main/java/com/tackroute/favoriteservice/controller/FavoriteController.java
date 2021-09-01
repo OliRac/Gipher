@@ -42,15 +42,12 @@ public class FavoriteController {
     public ResponseEntity<Selection> addFavorite(@PathVariable int userId, @PathVariable String gifUrl) throws GifAlreadyExistException {
         LOG.info("Sending post request to add a new gif to the favorites of the user");
         return new ResponseEntity<Selection>(favoriteService.addFavorite(userId,gifUrl), HttpStatus.OK);
-
-
     }
 
     @PostMapping(value = "/removeFavorite/{userId}/{gifUrl}")
     public ResponseEntity<HashSet<String>> removeFavorite(@PathVariable int userId, @PathVariable String gifUrl)  throws GifNotFoundException, NoFavoriteGifFoundException{
         LOG.info("Sending post request to remove a gif to the favorites of the user");
         return new ResponseEntity<HashSet<String>>(favoriteService.removeFavorite(userId,gifUrl), HttpStatus.OK);
-
     }
 
     @DeleteMapping(value = "/emptyFavoriteList/{userId}")
