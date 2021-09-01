@@ -1,5 +1,6 @@
 package com.tackroute.favoriteservice.service;
 
+import com.tackroute.favoriteservice.domain.UserGifDto;
 import com.tackroute.favoriteservice.exception.GifAlreadyExistException;
 import com.tackroute.favoriteservice.exception.GifNotFoundException;
 import com.tackroute.favoriteservice.exception.NoFavoriteGifFoundException;
@@ -27,23 +28,23 @@ public class FavoriteServiceImpl implements FavoriteService{
    public FavoriteServiceImpl(FavoriteRepository favoriteRepository) {this.favoriteRepository = favoriteRepository;}
 
     @Override
-    public Selection addFavorite(int userId, String gifUrl) throws GifAlreadyExistException {
+    public Selection addFavorite(UserGifDto userGifDto) throws GifAlreadyExistException {
 //        System.out.println(favoriteRepository.existsByUserId(userId));
 
-        Selection userSelections = favoriteRepository.findByUserId(userId);
+        Selection userSelections = favoriteRepository.findByUserId(userGifDto.getUserId());
 
         if(userSelections !=null) {
-            if(userSelections.getFavoriteList().contains(gifUrl)){
+            if(userSelections.getFavoriteList().contains(userGifDto.getGifUrl())){
                 throw new GifAlreadyExistException();
             }
             else {
-                userSelections.getFavoriteList().add(gifUrl);
+                userSelections.getFavoriteList().add(userGifDto.getGifUrl());
             }
         } else {
 
                 var set = new HashSet<String>();
-                set.add(gifUrl);
-                userSelections = new Selection(userId, set);
+                set.add(userGifDto.getGifUrl());
+                userSelections = new Selection(userGifDto.getUserId(), set);
 
         }
         LOG.info("The Gif was successfully added to the favorite list of user" );
@@ -53,18 +54,18 @@ public class FavoriteServiceImpl implements FavoriteService{
 
 
     @Override
-    public HashSet<String> removeFavorite(int userId, String gifUrl) throws GifNotFoundException, NoFavoriteGifFoundException {
-        Selection userSelections = favoriteRepository.findByUserId(userId);
+    public HashSet<String> removeFavorite(UserGifDto userGifDto) throws GifNotFoundException, NoFavoriteGifFoundException {
+        Selection userSelections = favoriteRepository.findByUserId(userGifDto.getUserId());
        Selection updatedSelection;
         if(userSelections==null){
             throw new NoFavoriteGifFoundException();
         }
         else{
-            if(userSelections.getFavoriteList().contains(gifUrl)){
-                userSelections.getFavoriteList().remove(gifUrl);
+            if(userSelections.getFavoriteList().contains(userGifDto.getGifUrl())){
+                userSelections.getFavoriteList().remove(userGifDto.getGifUrl());
                 if(userSelections.getFavoriteList().isEmpty()){
-                    favoriteRepository.deleteByUserId(userId);
-                    updatedSelection= new Selection(userId, new HashSet<String>());
+                    favoriteRepository.deleteByUserId(userGifDto.getUserId());
+                    updatedSelection= new Selection(userGifDto.getUserId(), new HashSet<String>());
                 }
                 else {
                     updatedSelection = favoriteRepository.save(userSelections);
@@ -110,13 +111,13 @@ public class FavoriteServiceImpl implements FavoriteService{
     }
 
     @Override
-    public boolean checkIfFavoriteByUrl(int userId, String gifUrl) throws NoFavoriteGifFoundException{
-        if(!favoriteRepository.existsByUserId(userId)){
+    public boolean checkIfFavoriteByUrl(UserGifDto userGifDto) throws NoFavoriteGifFoundException{
+        if(!favoriteRepository.existsByUserId(userGifDto.getUserId())){
             throw new NoFavoriteGifFoundException();
         }
         else{
-            HashSet<String> list = favoriteRepository.findByUserId(userId).getFavoriteList();
-            return list.contains(gifUrl);
+            HashSet<String> list = favoriteRepository.findByUserId(userGifDto.getUserId()).getFavoriteList();
+            return list.contains(userGifDto.getGifUrl());
         }
 
     }

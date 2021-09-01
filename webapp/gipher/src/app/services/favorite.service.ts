@@ -1,46 +1,70 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/User';
+import { UserService } from '../services/user.service';
+import { UserGif } from '../models/UserGif';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavoriteService {
 
-  storedUser: User = JSON.parse(sessionStorage.getItem("user"));
   favoriteUrl : string ;
+  storedUser : User = this.userService.getUserSession();
+  userGif : UserGif ;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private userService : UserService) { }
 
-  getAllFavorites(): Observable<any>{
-    this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/favorites/${this.storedUser.id}`
-    return this.http.get(this.favoriteUrl);
+  getAllFavorites( user : User ): Observable<any>{
+  let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
+           headers.append("Accept", "application/json");
+    this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/favorites/${user.id}`
+    return this.http.get(this.favoriteUrl,  {headers:headers} );
   }
 
-  checkifFavorite(gifUrl: string): Observable<any>{
-    this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/favorite/${this.storedUser.id}/${gifUrl}`
-    return this.http.get(this.favoriteUrl);
+  checkifFavorite(user : User, gifUrl: string): Observable<any>{
+    this.userGif= {
+      userId : user.id,
+      gifUrl : gifUrl
+    }
+  let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
+           headers.append("Accept", "application/json");
+    this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/favorite`
+    return this.http.post(this.favoriteUrl,   {headers:headers});
   }
 
-  emptyFavoriteList(): Observable<any>{
-    this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/emptyFavoriteList/${this.storedUser.id}`
-    return this.http.delete(this.favoriteUrl);
+  emptyFavoriteList(user : User): Observable<any>{
+  let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
+         headers.append("Accept", "application/json");
+    this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/emptyFavoriteList/${user.id}`
+    return this.http.delete(this.favoriteUrl,  {headers:headers});
   }
 
-  removeFavorite(gifUrl : string): Observable<any>{
-    const headers = { 'content-type': 'application/json'} 
-    const body= null     //JSON.stringify(person);
-    this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/removeFavorite/${this.storedUser.id}/${gifUrl}`
-    return this.http.post(this.favoriteUrl,   body,{'headers':headers});
+  removeFavorite(user : User, gifUrl : string): Observable<any>{
+    this.userGif= {
+      userId : user.id,
+      gifUrl : gifUrl
+    }
+   let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
+       headers.append("Accept", "application/json");
+    this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/removeFavorite`
+    return this.http.put(this.favoriteUrl,this.userGif,  {headers:headers});
   }
 
-  addFavorite(gifUrl : string): Observable<any>{
-    const headers = { 'content-type': 'application/json'} 
-    const body= null     //JSON.stringify(person);
-    this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/addFavorite/${this.storedUser.id}/${gifUrl}`
-    return this.http.post(this.favoriteUrl,  body,{'headers':headers});
+  addFavorite(user : User, gifUrl : string): Observable<any>{
+    this.userGif= {
+      userId : user.id,
+      gifUrl : gifUrl
+    }
+    let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
+    headers.append("Accept", "application/json");
+    this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/addFavorite`
+    return this.http.post(this.favoriteUrl, this.userGif,{headers:headers});
   }
 
 
