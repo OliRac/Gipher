@@ -14,10 +14,10 @@
 .overlay {
   opacity: 0;
   position: absolute;
-  color: rgb(253, 209, 209);
+  color: rgb(247, 231, 231);
   font-size: 4em;
   transition: 0.3s ease;
-  text-shadow: 6px 4px 4px #493366;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 .overlay {
