@@ -25,7 +25,3 @@ img {
     max-width: 80%;
     max-height: 80%;
 }
-
-::ng-deep .mat-dialog-container {
-    position: relative;
-}

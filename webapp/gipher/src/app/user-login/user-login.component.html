@@ -1,7 +1,7 @@
 <!--<h3 class="center">Login page</h3>-->
 <app-header></app-header>
 <div class="container">
-  <form class="px-5" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form class="px-5" [formGroup]="form" (ngSubmit)="onSubmit()" style="margin-top: 2.5rem">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Username</label>
       <input
@@ -19,6 +19,7 @@
         We'll never share your personal credentials with anyone else.
       </div>
     </div>
+    
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">Password</label>
       <input
@@ -32,6 +33,28 @@
         ng-required
       />
     </div>
+    
+    <div *ngIf="errorMsg">
+      <p>{{ errorMsg }}</p>
+    </div>
+    
+    <div
+      *ngIf="username.invalid && (username.dirty || username.touched)"
+      class="alert"
+    >
+      <div *ngIf="username.errors?.required">
+        <p id="usernameRequired">Username is missing!</p>
+      </div>
+    </div>
+  
+    <div
+      *ngIf="password.invalid && (password.dirty || password.touched)"
+      class="alert"
+    >
+      <div *ngIf="password.errors?.required">
+        <p id="passwordRequired">Password is missing!</p>
+      </div>
+    </div>
 
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
       <button type="submit" class="btn btn-warning">Login</button>
@@ -39,30 +62,12 @@
         Cancel
       </button>
     </div>
+    
   </form>
   
   <div class="spinner_overlay" *ngIf="showSpinner">
     <mat-spinner class="spinner" *ngIf="showSpinner"></mat-spinner>
   </div>
-  
-  <div *ngIf="errorMsg">
-    <p>{{ errorMsg }}</p>
-  </div>
-  <div
-    *ngIf="username.invalid && (username.dirty || username.touched)"
-    class="alert"
-  >
-    <div *ngIf="username.errors?.required">
-      <p id="usernameRequired">Username is missing!</p>
-    </div>
-  </div>
 
-  <div
-    *ngIf="password.invalid && (password.dirty || password.touched)"
-    class="alert"
-  >
-    <div *ngIf="password.errors?.required">
-      <p id="passwordRequired">Password is missing!</p>
-    </div>
-  </div>
+  
 </div>
