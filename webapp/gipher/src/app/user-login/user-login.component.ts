@@ -39,7 +39,7 @@ export class UserLoginComponent implements OnInit {
 
       this.userService.login(user).subscribe(data => {
         //data contains the JWT followed by the user object
-        console.log(data);
+
         let loggedIn: User = {
           username: data.user.username,
           password: data.user.password,

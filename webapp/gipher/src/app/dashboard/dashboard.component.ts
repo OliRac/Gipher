@@ -11,11 +11,12 @@ import { Router } from '@angular/router';
 import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
 import { RecommendationService } from '../services/recommendation.service';
 import { UserService } from '../services/user.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
   gifData: Gif[];
@@ -29,6 +30,9 @@ export class DashboardComponent implements OnInit {
   imageUrl: string;
 
   form: FormGroup;
+
+  /*For passing a click event from sibling to sibling components*/
+  clickedEvent: Event;
 
   constructor(
     private searchService: SearchService,
@@ -50,6 +54,8 @@ export class DashboardComponent implements OnInit {
     this.imageUrl = this.userService.getUserSession().imageUrl;
 
     this.message = 'Here are some recommended gifs for you';
+
+    
   }
 
   get searchTerm() {
@@ -83,6 +89,11 @@ export class DashboardComponent implements OnInit {
       sessionStorage.clear();
       this.router.navigate(['/landing']);
     }
+  }
+
+  /*For passing a click event from sibling to sibling components*/
+  validSearchDone(event:Event) {
+    this.clickedEvent = event;
   }
 
   // onSubmit(): void {

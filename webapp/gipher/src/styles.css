@@ -10,3 +10,19 @@ body {
   background-color: #272640;
   color: #fca311;
 }
+
+.fade-container {
+  animation: fadeInAnimation ease 1.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
