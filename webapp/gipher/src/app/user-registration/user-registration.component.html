@@ -58,6 +58,10 @@
     </div>
   </form>
 
+  <div class="spinner_overlay" *ngIf="showSpinner">
+    <mat-spinner class="spinner" *ngIf="showSpinner"></mat-spinner>
+  </div>
+  
   <div class="px-5">
     <div *ngIf="errorMsg">
       <p>{{ errorMsg }}</p>

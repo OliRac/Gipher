@@ -18,6 +18,7 @@ export class UserLoginComponent implements OnInit {
   form: FormGroup;
   errorMsg: string;
   timer: number = 3;
+  showSpinner: boolean = false;
 
   constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router) {
     this.form = this.formBuilder.group({
@@ -49,17 +50,15 @@ export class UserLoginComponent implements OnInit {
         }
         
         this.userService.setUserSession(loggedIn);
-
-        this.errorMsg = messages.LOGIN_GREET + this.timer;
-
+    
         setInterval(() => {
+          this.showSpinner = true;
           this.timer--;
 
           if(this.timer == 0) {
             this.router.navigate(["/dashboard"])
           }
-
-          this.errorMsg = messages.LOGIN_GREET + this.timer;
+  
         }, 1000)
 
       }, error => {

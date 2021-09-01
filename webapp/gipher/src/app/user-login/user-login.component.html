@@ -40,7 +40,11 @@
       </button>
     </div>
   </form>
-
+  
+  <div class="spinner_overlay" *ngIf="showSpinner">
+    <mat-spinner class="spinner" *ngIf="showSpinner"></mat-spinner>
+  </div>
+  
   <div *ngIf="errorMsg">
     <p>{{ errorMsg }}</p>
   </div>
