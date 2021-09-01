@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
   imageUrl: string;
 
   form: FormGroup;
-
+  trendingGifs: Gif[];
   constructor(
     private searchService: SearchService,
     private userService: UserService,
@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.recommendationService.getTrending().subscribe((data) => {
       this.gifData = parseTenorResponseForGifs(data);
+      this.trendingGifs = parseTenorResponseForGifs(data);
     });
     this.username = this.userService.getUserSession().username;
     this.imageUrl = this.userService.getUserSession().imageUrl;

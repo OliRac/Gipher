@@ -25,7 +25,7 @@
       <div class="offcanvas-header">
         <div class="profile-pic">
           <img
-            src="{{imageUrl}}"
+            src="{{ imageUrl }}"
             style="
               position: absolute;
               width: 60px;
@@ -79,7 +79,11 @@
   </div>
 </nav>
 
-<app-search></app-search>
+
+
+
+      <app-search></app-search>
+     <app-gif-grid [gifs]="trendingGifs" ></app-gif-grid>
 
 <!--ngIf="{{display}}=='search'"-->
 

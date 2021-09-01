@@ -30,7 +30,7 @@ import static java.util.stream.Collectors.toMap;
 public class RecommendationServiceImpl implements RecommendationService, RabbitListenerConfigurer {
     private UserTermsRepository userTermsRepository;
 
-    private static final int MAX_TRENDING_GIFS = 10;
+    private static final int MAX_TRENDING_GIFS = 12;
     private static final int MAX_TERM_SUGGESTIONS = 2;
     private static final int MAX_SUGGESTIONS_PER_QUERY = 2;
     private static final int MAX_GIFS_PER_SUGGESTION = 3;
