@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
-public class UserControllerIntegrationTest {
+public class UserControllerIT {
 
     @Autowired
     private UserService userService;

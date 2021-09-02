@@ -17,7 +17,7 @@ import java.util.HashSet;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class FavoriteControllerIntegrationTest {
+public class FavoriteControllerIT {
 
     @Autowired
     private FavoriteService favoriteService;
