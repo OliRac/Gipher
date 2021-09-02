@@ -15,16 +15,15 @@ import { Gif } from '../models/Gif';
 export class FavoriteService {
 
   favoriteUrl : string ;
-  storedUser : User = this.userService.getUserSession();
-  userGif : UserGif ;
+  userGif : UserGif;
 
+  /*Put this in a shared service*/
   favoriteGifs: Gif[];
 
-  constructor(private http: HttpClient,
-              private userService : UserService) { }
+  constructor(private http: HttpClient) { }
 
   getAllFavorites( user : User ): Observable<any>{
-  let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
+    let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
            headers.append("Accept", "application/json");
     this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/favorites/${user.id}`
     return this.http.get(this.favoriteUrl,  {headers:headers} );
@@ -35,14 +34,14 @@ export class FavoriteService {
       userId : user.id,
       gifUrl : gifUrl
     }
-  let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
+    let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
            headers.append("Accept", "application/json");
     this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/favorite`
     return this.http.post(this.favoriteUrl,   {headers:headers});
   }
 
   emptyFavoriteList(user : User): Observable<any>{
-  let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
+    let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
          headers.append("Accept", "application/json");
     this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/emptyFavoriteList/${user.id}`
     return this.http.delete(this.favoriteUrl,  {headers:headers});
@@ -53,7 +52,7 @@ export class FavoriteService {
       userId : user.id,
       gifUrl : gifUrl
     }
-   let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
+    let headers = new HttpHeaders().set('Authorization', "Bearer " + user.token);
        headers.append("Accept", "application/json");
     this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/removeFavorite`
     return this.http.put(this.favoriteUrl,this.userGif,  {headers:headers});
@@ -68,9 +67,5 @@ export class FavoriteService {
     headers.append("Accept", "application/json");
     this.favoriteUrl = environment.FAVORITE_SERVICE_URL + `/addFavorite`
     return this.http.post(this.favoriteUrl, this.userGif,{headers:headers});
-  }
-
-  updateFavorites(newGifs: Gif[]): void {
-    this.favoriteGifs = newGifs;
   }
 }

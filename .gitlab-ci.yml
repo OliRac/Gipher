@@ -2,21 +2,21 @@ image: maven:3-jdk-11
 before_script:
   - apt-get update -qq && apt-get install
 
-services:
-  - mysql:latest
-  - mongo:latest
+#services:
+#  - mysql:latest
+#  - mongo:latest
 
-connect:
-  stage: database_setup_mysql
-  image: mysql:latest
-  script:
-    - echo "CREATE TABLE user  (
-      user_id INT NOT NULL AUTO_INCREMENT,
-      username VARCHAR(45) NOT NULL,
-      password VARCHAR(256) NOT NULL,
-      photo VARCHAR(256) NULL,
-      PRIMARY KEY (user_id)
-      );" | mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql "$MYSQL_DATABASE"
+#connect:
+#  stage: database_setup_mysql
+#  image: mysql:latest
+#  script:
+#    - echo "CREATE TABLE user  (
+#      user_id INT NOT NULL AUTO_INCREMENT,
+#      username VARCHAR(45) NOT NULL,
+#      password VARCHAR(256) NOT NULL,
+#      photo VARCHAR(256) NULL,
+#      PRIMARY KEY (user_id)
+#      );" | mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql "$MYSQL_DATABASE"
 
 cache:
   key: "maven3"
@@ -28,8 +28,8 @@ variables:
   SONAR_LOGIN: "admin"
   SONAR_PASSWORD: "admin"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
-  MYSQL_DATABASE: "gipher"
-  MYSQL_ROOT_PASSWORD: "admin"
+#  MYSQL_DATABASE: "gipher"
+#  MYSQL_ROOT_PASSWORD: "admin"
 
 stages:
   - database_setup_mysql

@@ -17,7 +17,6 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<skipTests>true</skipTests>
 	</properties>
 
 	<dependencies>
@@ -149,6 +148,15 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.0.0-M2</version>
+				<configuration>
+					<skipITs>true</skipITs>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

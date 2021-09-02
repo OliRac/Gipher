@@ -1,13 +1,22 @@
 <h3 class="mt-3">{{infoText}}</h3>
 
-<mat-grid-list cols=3 rowHeight="2:1">
+<!--if gif collection is empty, show error message-->
+<ng-template *ngIf="gifs.length == 0; then showError; else showGrid">
+</ng-template>
+
+
+<ng-template #showError>
+  <h5>There are no gifs!</h5>
+</ng-template>
+
+<ng-template #showGrid>
+  <mat-grid-list cols=3 rowHeight="2:1">
     <mat-grid-tile class="container" *ngFor="let gif of gifs">
        <img (click)="openDialog(gif)" class="gif" src="{{gif.media.gif.url}}" alt="gif">
        <div class="overlay">
          <button mat-icon-button  aria-label="favorite" (click)="onClickFavorite(gif)" >
-<!--           (click)="onClickFavorite(gif)"-->
-           <mat-icon color=setColor(gif.favorite)  >favorite</mat-icon>
+           <mat-icon color="warn"  >favorite</mat-icon>
          </button></div>
     </mat-grid-tile>
-</mat-grid-list>
-<!--color="{{gif.favorite}} ? 'warn' : 'white' "-->
+  </mat-grid-list>
+</ng-template>

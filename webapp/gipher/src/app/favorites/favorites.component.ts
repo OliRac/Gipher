@@ -4,6 +4,7 @@ import { Gif } from '../models/Gif';
 import {UserService} from '../services/user.service';
 import { User } from '../models/User';
 import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
+import { SharedfavoriteslistService } from '../services/sharedfavoriteslist.service';
 
 
 
@@ -15,27 +16,27 @@ import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
 export class FavoritesComponent implements OnInit {
   @Input() 
   favorites : string[];
-  user : User;
-  title: string;
+  title: string = "Favorites";
 
-  favoriteGifs: Gif[];
-
-  constructor(private favoriteService : FavoriteService, private userService : UserService) { }
+  constructor(private favoriteService : FavoriteService, 
+              private userService : UserService,
+              private sharedFavoritesList: SharedfavoriteslistService) { }
 
   ngOnInit(): void {
-    this.user = this.userService.getUserSession();
-    this.favoriteService.getAllFavorites(this.user).subscribe(data => {
-          this.favoriteGifs = parseTenorResponseForGifs(data, true);
-          this.title="Favorites";
-    }, error => {
-      this.title = "You have no favorites!";
-    })
+    if(this.sharedFavoritesList.isEmpty) {
+      this.favoriteService.getAllFavorites(this.userService.getUserSession()).subscribe(data => {
+        this.sharedFavoritesList.favorites = parseTenorResponseForGifs(data, true);
+      });
+    }
   }
 
   markAsFavorite( gifUrl : string){
-      this.favoriteService.checkifFavorite(this.user, gifUrl).subscribe(
+      this.favoriteService.checkifFavorite(this.userService.getUserSession(), gifUrl).subscribe(
         (data)=>{ this.favorites = data}
       )
   }
   
+  getFavorites(): Gif[]{
+    return this.sharedFavoritesList.favorites;
+  }
 }
