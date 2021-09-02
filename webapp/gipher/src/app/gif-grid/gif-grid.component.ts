@@ -21,6 +21,7 @@ export interface GifDialogData {
 export class GifGridComponent implements OnInit {
   @Input() gifs: Gif[];
   @Input() infoText : string;
+  @Input() icon:string;
   gifASFavorite : boolean
 
   constructor(private  favoriteService : FavoriteService, 
