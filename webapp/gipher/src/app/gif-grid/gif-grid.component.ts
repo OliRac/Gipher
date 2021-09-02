@@ -44,15 +44,19 @@ export class GifGridComponent implements OnInit {
   onClickFavorite(gif: Gif): void {
     if (gif.favorite==true) {
       this.favoriteService.removeFavorite(this.userService.getUserSession(), gif.id).subscribe(data => { 
-        gif.favorite = false;
         this.sharedFavoritesList.removeFromFavorites(gif);
       }) 
     } else {
       this.favoriteService.addFavorite(this.userService.getUserSession(), gif.id).subscribe(data => { 
-          gif.favorite = true;
           this.sharedFavoritesList.addToFavorites(gif);
       })
     } 
+  }
+
+  OnClearFavorite(): void{
+    this.favoriteService.emptyFavoriteList(this.userService.getUserSession()).subscribe(data => { 
+      this.sharedFavoritesList.resetFavorites();
+    }) 
   }
 
   openDialog(gif: Gif) {

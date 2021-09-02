@@ -15,7 +15,8 @@
        <img (click)="openDialog(gif)" class="gif" src="{{gif.media.tinygif.url}}" alt="gif">
        <div class="overlay">
          <button mat-icon-button  aria-label="favorite" (click)="onClickFavorite(gif)" >
-           <mat-icon color="warn"  >favorite</mat-icon>
+           <mat-icon color="white"  [ngClass]="{ 'colorRed' :gif.favorite }" >favorite</mat-icon>
+           <!-- "  -->
          </button></div>
     </mat-grid-tile>
   </mat-grid-list>
