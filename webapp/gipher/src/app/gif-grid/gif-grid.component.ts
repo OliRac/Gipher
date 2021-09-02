@@ -7,6 +7,7 @@ import { User } from '../models/User';
 
 import { MatDialog } from '@angular/material/dialog';
 import { GifModalComponent } from '../gif-modal/gif-modal.component';
+import { SharedfavoriteslistService } from '../services/sharedfavoriteslist.service';
 
 export interface GifDialogData {
   gif: Gif;
@@ -21,15 +22,15 @@ export class GifGridComponent implements OnInit {
   @Input() gifs: Gif[];
   @Input() infoText : string;
   gifASFavorite : boolean
-  //@Output() Favorites : EventEmitter<string[]> = new EventEmitter<string[]>();
-  //favorites: Gif[];
 
-  user : User;
-
-  constructor(private  favoriteService : FavoriteService, private userService : UserService,  public dialog: MatDialog)  { }
+  constructor(private  favoriteService : FavoriteService, 
+              private sharedFavoritesList: SharedfavoriteslistService,
+              private userService : UserService,  
+              public dialog: MatDialog
+              )  { }
 
   ngOnInit(): void {
-    this.user = this.userService.getUserSession();
+
   }
 
   
@@ -47,25 +48,25 @@ export class GifGridComponent implements OnInit {
     let favoriteStr:string[] = [];
 
     if (gif.favorite==true) {
-      this.favoriteService.removeFavorite(this.user, gif.id).subscribe(
+      this.favoriteService.removeFavorite(this.userService.getUserSession(), gif.id).subscribe(
             (data)=>{ 
               favoriteStr = data
               console.log("removed as favorite")
               console.log( data)
               gif.favorite = false;
-              this.favoriteService.removeFromFavoritesList(gif);
+              this.sharedFavoritesList.removeFromFavorites(gif);
             },
           ) 
         
     } else {
-    this.favoriteService.addFavorite(this.user, gif.id).subscribe(
+    this.favoriteService.addFavorite(this.userService.getUserSession(), gif.id).subscribe(
                   (data)=>{ 
                     favoriteStr = data.favoriteList
                     console.log("added as favorite")
                     console.log(data)
                     console.log( data.favoriteList)
                     gif.favorite = true;
-                    this.favoriteService.addToFavoritesList(gif);
+                    this.sharedFavoritesList.addToFavorites(gif);
                   },                   
                 )
     } 
@@ -80,7 +81,7 @@ export class GifGridComponent implements OnInit {
   }
 
   markAsFavorite( gifUrl : string){
-    this.favoriteService.checkifFavorite(this.user, gifUrl).subscribe(
+    this.favoriteService.checkifFavorite(this.userService.getUserSession(), gifUrl).subscribe(
       (data)=>{ this.gifASFavorite = data},
       (error : any)=>{ this.gifASFavorite= false}
     )
