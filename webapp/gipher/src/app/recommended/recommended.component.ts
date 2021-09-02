@@ -40,6 +40,7 @@ export class RecommendedComponent implements OnInit {
     let response = this.recommendationService.getRecommendations(user);
 
     response.subscribe(data => {
+      /*Recommendations responds with an array of TenorResponses*/
       data.forEach(elem => {
         this.recommendations = this.recommendations.concat(parseTenorResponseForGifs(elem));
       });
