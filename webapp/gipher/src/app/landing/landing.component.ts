@@ -18,10 +18,6 @@ export class LandingComponent implements OnInit {
   constructor(private recommendationService:RecommendationService, private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    if(this.userService.getUserSession()) {
-      this.router.navigate(["/dashboard"]);
-    }
-
     this.recommendationService.getTrending().subscribe(data => {
       this.trendingGifs = parseTenorResponseForGifs(data);
     })
