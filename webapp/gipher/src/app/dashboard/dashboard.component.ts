@@ -50,8 +50,7 @@ export class DashboardComponent implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private recommendationService: RecommendationService,
-    private router: Router,
-    private favoriteService: FavoriteService
+    private router: Router
   ) {
     this.form = this.formBuilder.group({
       searchTerm: new FormControl('', [Validators.required]),
@@ -59,12 +58,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = this.userService.getUserSession();
-
-    this.favoriteService.getAllFavorites(this.user).subscribe((data) => {
-      this.favoritesList = data;
-    });
-
     this.recommendationService.getTrending().subscribe((data) => {
       this.gifData = parseTenorResponseForGifs(data);
       this.trendingGifs = parseTenorResponseForGifs(data);

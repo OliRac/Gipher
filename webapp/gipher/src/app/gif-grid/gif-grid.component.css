@@ -3,7 +3,7 @@
   cursor: pointer;
 }
 
-h3 {
+h3, h5{
   text-align: center;
 }
 
@@ -17,16 +17,16 @@ h3 {
 }
 
 .container:hover .overlay {
-  opacity: 1;
-}
+    opacity: 1;
+}   
 
 img {
-  border-radius: 0.5rem;
-  display: block;
-  max-width: 80%;
-  max-height: 80%;
+    border-radius: 0.5rem;
+    display: block;
+    max-width: 80%;
+    max-height: 80%;
 }
 
 ::ng-deep .mat-dialog-container {
-  position: relative;
+    position: relative;
 }
