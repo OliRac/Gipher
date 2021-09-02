@@ -24,18 +24,23 @@ export class FavoritesComponent implements OnInit {
 
   /*Fill the shared favorites list on start*/
   ngOnInit(): void {
-    
-    if(this.sharedFavoritesList.isEmpty) {
-      this.favoriteService.getAllFavorites(this.userService.getUserSession()).subscribe(data => {
+    let user = this.userService.getUserSession();
+
+    if(user && this.sharedFavoritesList.isEmpty) {
+      this.favoriteService.getAllFavorites(user).subscribe(data => {
         this.sharedFavoritesList.favorites = parseTenorResponseForGifs(data, true);
       });
     }
   }
 
   markAsFavorite( gifUrl : string){
-    this.favoriteService.checkifFavorite(this.userService.getUserSession(), gifUrl).subscribe(
-      (data)=>{ this.favorites = data}
-    )
+    let user = this.userService.getUserSession();
+
+    if(user) {
+      this.favoriteService.checkifFavorite(user, gifUrl).subscribe(
+        (data)=>{ this.favorites = data}
+      )
+    }
   }
   
   getFavorites(): Gif[]{
