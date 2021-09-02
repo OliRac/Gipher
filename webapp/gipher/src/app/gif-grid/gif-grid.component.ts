@@ -56,10 +56,9 @@ export class GifGridComponent implements OnInit {
   }
 
   openDialog(gif: Gif) {
+    let multiplier = 1.5;
     const dialogRef = this.dialog.open(GifModalComponent, {
-      data: {gif: gif},
-      height: '450px',
-      width: '450px',
+      data: {gif: gif}
     });
   }
 
