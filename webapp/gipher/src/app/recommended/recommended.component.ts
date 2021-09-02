@@ -28,6 +28,7 @@ export class RecommendedComponent implements OnInit {
     this.getRecommendations(this.user);
   }
 
+  /*Listening for refresh event. Need to refresh recommendations if a new search is done*/
   ngOnChanges() {
     if(this.refreshEvent) {
       this.getRecommendations(this.user);
