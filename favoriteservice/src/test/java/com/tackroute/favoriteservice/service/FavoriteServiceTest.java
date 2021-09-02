@@ -13,6 +13,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -31,6 +34,7 @@ public class FavoriteServiceTest {
     String gif2 = "https://giphy.com/stories/welcome-to-the-high-rollers-room-8d7b09cb-a920";
 
 
+
     private HashSet<String> favoriteList = new HashSet<String>() {{
         add(gif1);
         add(gif2);
@@ -41,12 +45,12 @@ public class FavoriteServiceTest {
         add(gif1);
     }};
 
-
     @Mock
     private FavoriteRepository favoriteRepository;
 
     @InjectMocks
     private FavoriteServiceImpl favoriteService;
+
     private Selection selection;
 
     @BeforeEach

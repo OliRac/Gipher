@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
-public class FavoriteRepositoryIntegrationTest {
+public class FavoriteRepositoryIT {
 
     @Autowired
     private FavoriteRepository favoriteRepository;

@@ -66,7 +66,7 @@ public class FavoriteServiceImpl implements FavoriteService{
     @Override
     public HashSet<String> removeFavorite(UserGifDto userGifDto) throws GifNotFoundException, NoFavoriteGifFoundException {
         Selection userSelections = favoriteRepository.findByUserId(userGifDto.getUserId());
-       Selection updatedSelection;
+        Selection updatedSelection;
         if(userSelections==null){
             throw new NoFavoriteGifFoundException();
         }
