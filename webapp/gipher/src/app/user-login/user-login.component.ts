@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { timer } from 'rxjs';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { messages } from '../messages/registration.messages';
 import { User } from '../models/User';
@@ -16,6 +17,8 @@ export class UserLoginComponent implements OnInit {
 
   form: FormGroup;
   errorMsg: string;
+  timer: number = 3;
+  showSpinner: boolean = false;
 
   constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router) {
     this.form = this.formBuilder.group({
@@ -36,24 +39,28 @@ export class UserLoginComponent implements OnInit {
       }
 
       this.userService.login(user).subscribe(data => {
-        //Need to get in touch to figure out what is returned with login
-        //how jwt token will be managed (local storage, cookie...)
+        //data contains the JWT followed by the user object
 
         let loggedIn: User = {
           username: data.user.username,
           password: data.user.password,
-          image: data.user.photo,
+          imageUrl: data.user.photo,
           id: data.user.userId,
           token: data.jwtToken
         }
         
-        sessionStorage.setItem("user", JSON.stringify(loggedIn));
+        this.userService.setUserSession(loggedIn);
+    
+        setInterval(() => {
+          this.showSpinner = true;
+          this.timer--;
 
-        this.errorMsg = messages.LOGIN_GREET;
+          if(this.timer == 0) {
+            this.router.navigate(["/dashboard"])
+          }
+  
+        }, 1000)
 
-        setTimeout(() => {
-          this.router.navigate(["/"])
-        }, 5000);
       }, error => {
         this.errorMsg = error.error;
       })

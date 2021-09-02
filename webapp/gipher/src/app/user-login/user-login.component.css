@@ -1,0 +1,24 @@
+
+.form-label{
+  font-size: large;
+}
+.form-control{
+  background-color: white;
+}
+.form-text{
+  color:beige;
+}
+
+.spinner_overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  opacity: 0.8;
+  z-index: 1000;
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+}

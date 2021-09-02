@@ -12,10 +12,10 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    @Value("${jwt.secret}")
+    @Value("${jwt.secret:test}")
     private String jwtSecret;
 
-    @Value("${jwt.token.validity}")
+    @Value("${jwt.token.validity:180000}")
     private long tokenValidity;
 
     public void validateToken(final String token) throws JwtTokenMalformedException, JwtTokenMissingException {
@@ -43,6 +43,12 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
     }
 
+    public String getFirstProperty() {
+        return jwtSecret;
+    }
 
+    public long getSecondProperty() {
+        return tokenValidity;
+    }
 
 }

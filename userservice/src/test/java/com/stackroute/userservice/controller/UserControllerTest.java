@@ -5,6 +5,7 @@ import com.stackroute.userservice.entity.User;
 import com.stackroute.userservice.exception.GlobalExceptionHandler;
 import com.stackroute.userservice.exception.UserAlreadyExistException;
 import com.stackroute.userservice.service.UserService;
+import com.stackroute.userservice.utility.JwtUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,13 +16,16 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,6 +35,12 @@ public class UserControllerTest {
 
     @Mock
     UserService userService;
+
+    @Mock
+    JwtUtil jwtUtill;
+
+    @Mock
+    PasswordEncoder passwordEncoder;
 
     @InjectMocks
     private UserController userController;
@@ -59,7 +69,7 @@ public class UserControllerTest {
 
         when(userService.registerUser(any())).thenReturn(user);
         mockMvc.perform(
-                multipart("/register")
+                multipart("/auth/register")
                         .file(file1)
                         .file(file2)
                         .accept(MediaType.APPLICATION_JSON))
@@ -73,11 +83,33 @@ public class UserControllerTest {
 
         when(userService.registerUser((User) any())).thenThrow(UserAlreadyExistException.class);
         mockMvc.perform(
-                multipart("/register")
+                multipart("/auth/register")
                         .file(file1)
                         .file(file2)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isConflict());
+    }
+
+    @Test
+    void givenUserToLoginThenShouldNotReturnTokenAndLoginUser() throws Exception {
+        when(userService.findUserByUsername(any())).thenThrow(UserAlreadyExistException.class);
+        mockMvc.perform(post("/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(user)))
+                .andExpect(status().isConflict())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    void givenUserToLoginThenShouldReturnTokenAndLoginUser() throws Exception {
+        when(userService.findUserByUsername(any())).thenReturn(user);
+        when(jwtUtill.generateToken(any())).thenReturn("testtoken");
+        when(passwordEncoder.matches(any(), any())).thenReturn(true);
+        mockMvc.perform(post("/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(user)))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
     }
 
     public static String asJsonString(final Object obj) {

@@ -37,11 +37,20 @@ export class UserService {
 
     headers.append('Content-Type','application/json');
     headers.append("Accept", "application/json");
+    headers.append("Cache-Control", "no-cache");
 
     let options = {
       headers: headers,
     }
 
     return this.http.post(this.loginURL, user, options);
+  }
+
+  getUserSession(): User {
+    return JSON.parse(sessionStorage.getItem("user"));
+  }
+
+  setUserSession(user:User) {
+    sessionStorage.setItem("user", JSON.stringify(user));
   }
 }

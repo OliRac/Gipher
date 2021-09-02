@@ -2,11 +2,12 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { timer } from 'rxjs';
 import { messages } from '../messages/registration.messages';
 import { User } from '../models/User';
 import { UserService } from '../services/user.service';
 
-const MAX_FILE_SIZE = 10485760  //10 MB;
+const MAX_FILE_SIZE = 10485760/10  //1 MB;
 const PASSWORD_MIN_SIZE = 8
 const PASSWORD_MAX_SIZE = 25
 const USERNAME_MIN_SIZE = 3
@@ -22,6 +23,8 @@ export class UserRegistrationComponent implements OnInit {
   form: FormGroup;
   errorMsg: string;
   imageData: File;
+  timer: number = 3;
+  showSpinner: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
     this.form = this.formBuilder.group({
@@ -49,11 +52,17 @@ export class UserRegistrationComponent implements OnInit {
       }
 
       this.userService.registerUser(user).subscribe(data => {
-        this.errorMsg = messages.REGISTER_SUCCESS;
+  
+        setInterval(() => {
+          this.timer--;
+          this.showSpinner = true;
+          
+          if(this.timer == 0) {
+            this.router.navigate(["/"])
+          }
+        
+        }, 1000)
 
-        setTimeout(() => {
-          this.router.navigate(["/"])
-        }, 5000);
       }, (error: HttpErrorResponse) => {
         this.errorMsg = error.error;
       })

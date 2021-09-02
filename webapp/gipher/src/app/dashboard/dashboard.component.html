@@ -1,1 +1,73 @@
-<p>dashboard works!</p>
+<div class="fade-container">
+  <nav class="navbar navbar-light bar1">
+    <div class="container-fluid">
+      <p class="navbar-brand">
+        <a class="navbar-brand" href="/landing">
+          <img class="img-logo" src="assets/img/logo.gif" alt="logo" />
+        </a>
+        <br />
+        Welcome To Gipher {{ username }}
+      </p>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="offcanvas offcanvas-end"
+        tabindex="-1"
+        id="offcanvasNavbar"
+        aria-labelledby="offcanvasNavbarLabel"
+      >
+        <div class="offcanvas-header">
+          <div class="profile-pic">
+            <img src="{{imageUrl}}" alt="profile pic"/>
+          </div>
+          <h2 class="offcanvas-title" id="offcanvasNavbarLabel">
+            {{ username }}
+          </h2>
+
+          <button
+            type="button"
+            class="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <p>More features to come sometime soon!</p>
+            </li>
+            <li>
+              <p
+              type="button" 
+              class="btn btn-outline-warning"
+                (click)="OnClearFavorite()"
+              >
+                Clear list of favorites
+            </p>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="btn btn-outline-warning"
+                (click)="onClickLogOut()"
+              >
+                Log Out
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <app-search (validSearchEmitter)="validSearchDone($event)"></app-search>
+  <app-favorites></app-favorites>
+  <app-recommended [refreshEvent]="clickedEvent"></app-recommended>
+</div>

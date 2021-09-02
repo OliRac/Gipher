@@ -1,44 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Gif } from '../models/Gif';
+import { BehaviorSubject } from 'rxjs';
+import { User } from '../models/User';
+import { UserTerm } from '../models/UserTerm';
 import { SearchService } from '../services/search.service';
+import { UserService } from '../services/user.service';
+import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  styleUrls: ['./search.component.css'],
 })
-export class SearchComponent implements OnInit {
-
+export class SearchComponent implements OnInit {  
   searchValue: string;
   errorMsg: string;
-  gifData: Gif[];
-
+  parentData: any[] = [];
+  resultList: any[] = [];
+  userId: number;
   form: FormGroup;
-  
-  constructor(private searchService: SearchService, private formBuilder: FormBuilder) {
-    this.form = this.formBuilder.group({
-      searchTerm: new FormControl("", [Validators.required])
-    })
-   }
+  refreshGif$ = new BehaviorSubject<boolean>(true);
 
-  ngOnInit(): void {
+  @Output()
+  validSearchEmitter = new EventEmitter<Event>();
+
+  constructor(
+    private searchService: SearchService,
+    private userService: UserService,
+    private formBuilder: FormBuilder
+  ) {
+    this.form = this.formBuilder.group({
+      searchTerm: new FormControl('', [Validators.required]),
+    });
   }
 
+  ngOnInit(): void {}
+
   get searchTerm() {
-    return this.form.get("searchTerm");
+    return this.form.get('searchTerm');
   }
 
   onSubmit(): void {
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.searchValue = this.searchTerm.value;
+      const userTerm: UserTerm = {
+        searchTerm: this.searchValue,
+        userId: this.userService.getUserSession().id
+      }
 
-      this.searchService.searchGifs(this.searchValue).subscribe(data => {
-        this.gifData.push(data);
-      }, error => {
-        this.errorMsg = error.error;
+      this.searchService.storeUserSearchTermWithUserId(userTerm).subscribe(data => {
+        this.resultList = parseTenorResponseForGifs(data);
       })
+
+      this.refreshGif$.next(true);
+      this.validSearchEmitter.emit(new Event("click"));
     }
   }
 
+  clearSearch(): void {
+    this.searchTerm.setValue("");
+    this.resultList = [];
+  }
 }
