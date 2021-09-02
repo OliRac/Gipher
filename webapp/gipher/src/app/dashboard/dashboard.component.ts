@@ -53,12 +53,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = this.userService.getUserSession();
-
-    this.favoriteService.getAllFavorites(this.user).subscribe(data => {
-      this.favoritesList = data;
-    })
-
+    
     this.recommendationService.getTrending().subscribe((data) => {
       this.gifData = parseTenorResponseForGifs(data);
     });
