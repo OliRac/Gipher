@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../models/User';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -17,7 +16,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     let user = this.userService.getUserSession();
 
-    if(user) {
+    if(this.userService.getUserSession()) {
       this.image = user.imageUrl
     }
   }

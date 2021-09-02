@@ -28,6 +28,7 @@ export class RecommendedComponent implements OnInit {
     this.getRecommendations(this.user);
   }
 
+  /*Listening for refresh event. Need to refresh recommendations if a new search is done*/
   ngOnChanges() {
     if(this.refreshEvent) {
       this.getRecommendations(this.user);
@@ -39,7 +40,7 @@ export class RecommendedComponent implements OnInit {
     let response = this.recommendationService.getRecommendations(user);
 
     response.subscribe(data => {
-      
+      /*Recommendations responds with an array of TenorResponses*/
       data.forEach(elem => {
         this.recommendations = this.recommendations.concat(parseTenorResponseForGifs(elem));
       });

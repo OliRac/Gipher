@@ -6,6 +6,7 @@ import { LandingComponent } from './landing/landing.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { SearchComponent } from './search/search.component';
+import { LandingGuard } from './guards/landing.guard';
 
 const routes: Routes = [
   {
@@ -14,16 +15,15 @@ const routes: Routes = [
   },
   {
     path:"login", component: UserLoginComponent
-},
-{
+  },
+  {
     path: 'register',
     component: UserRegistrationComponent,
   },
-
-
   {
     path: 'landing',
     component: LandingComponent,
+    canActivate:[LandingGuard]
   },
   {
     path: 'dashboard',

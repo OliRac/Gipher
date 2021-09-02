@@ -29,5 +29,4 @@ export class SearchService {
     this.searchURL = environment.SEARCH_SERVICE_URL + `/gifs/${searchTerm}`;
     return this.http.get(this.searchURL, header);
   }
-
 }

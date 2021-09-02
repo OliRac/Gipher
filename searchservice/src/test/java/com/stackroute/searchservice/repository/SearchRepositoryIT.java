@@ -15,7 +15,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-class SearchRepositoryIntegrationTest {
+class SearchRepositoryIT {
     @Autowired
     private SearchRepository searchRepo;
     private SearchEngine searchEngine;

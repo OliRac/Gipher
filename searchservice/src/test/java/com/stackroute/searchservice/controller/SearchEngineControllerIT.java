@@ -17,7 +17,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-class SearchEngineControllerIntegrationTest {
+class SearchEngineControllerIT {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
