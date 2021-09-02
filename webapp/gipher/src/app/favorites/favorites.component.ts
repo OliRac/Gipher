@@ -22,6 +22,7 @@ export class FavoritesComponent implements OnInit {
               private userService : UserService,
               private sharedFavoritesList: SharedfavoriteslistService) { }
 
+  /*Fill the shared favorites list on start*/
   ngOnInit(): void {
     if(this.sharedFavoritesList.isEmpty) {
       this.favoriteService.getAllFavorites(this.userService.getUserSession()).subscribe(data => {
@@ -31,9 +32,9 @@ export class FavoritesComponent implements OnInit {
   }
 
   markAsFavorite( gifUrl : string){
-      this.favoriteService.checkifFavorite(this.userService.getUserSession(), gifUrl).subscribe(
-        (data)=>{ this.favorites = data}
-      )
+    this.favoriteService.checkifFavorite(this.userService.getUserSession(), gifUrl).subscribe(
+      (data)=>{ this.favorites = data}
+    )
   }
   
   getFavorites(): Gif[]{

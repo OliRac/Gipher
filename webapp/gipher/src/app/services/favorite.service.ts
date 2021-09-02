@@ -17,9 +17,6 @@ export class FavoriteService {
   favoriteUrl : string ;
   userGif : UserGif;
 
-  /*Put this in a shared service*/
-  favoriteGifs: Gif[];
-
   constructor(private http: HttpClient) { }
 
   getAllFavorites( user : User ): Observable<any>{
