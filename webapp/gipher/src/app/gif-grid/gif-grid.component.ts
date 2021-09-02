@@ -43,10 +43,12 @@ export class GifGridComponent implements OnInit {
   /* On click, if its a favorite remove it and vice versa */
   onClickFavorite(gif: Gif): void {
     if (gif.favorite==true) {
+      gif.favorite=false
       this.favoriteService.removeFavorite(this.userService.getUserSession(), gif.id).subscribe(data => { 
         this.sharedFavoritesList.removeFromFavorites(gif);
       }) 
     } else {
+      gif.favorite=true
       this.favoriteService.addFavorite(this.userService.getUserSession(), gif.id).subscribe(data => { 
           this.sharedFavoritesList.addToFavorites(gif);
       })

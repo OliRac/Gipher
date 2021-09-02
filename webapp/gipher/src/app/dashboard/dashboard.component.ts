@@ -46,6 +46,9 @@ export class DashboardComponent implements OnInit {
   }
 
   OnClearFavorite(): void{
+    this.sharedFavoritesList.favorites.forEach(element => { element.favorite=false
+      
+    });
     this.favoriteService.emptyFavoriteList(this.userService.getUserSession()).subscribe(data => { 
       this.sharedFavoritesList.resetFavorites();
     }) 
