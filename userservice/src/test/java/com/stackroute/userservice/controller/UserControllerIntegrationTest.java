@@ -25,26 +25,16 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 public class UserControllerIntegrationTest {
 
-    private MockMvc mockMvc;
-
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
     private UserRepository userRepository;
-
-    @Mock
-    private UserService userService2;
-
-    @InjectMocks
-    private UserController userController;
 
     private User user;
 
     @BeforeEach
     public void setUp(){
-        MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).setControllerAdvice(new GlobalExceptionHandler()).build();
         user = new User();
         user.setUserId(-1);
         user.setUsername("leo");
