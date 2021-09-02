@@ -50,6 +50,9 @@ services:
     expose:
       - 9999
     environment:
+      eureka.instance.preferIpAddress: "true"
+      eureka.client.registerWithEureka: "true"
+      eureka.client.fetchRegistry: "true"
       eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
     depends_on:
       - userservicedb
@@ -68,6 +71,9 @@ services:
     ports:
       - 9090:9090
     environment:
+      eureka.instance.preferIpAddress: "true"
+      eureka.client.registerWithEureka: "true"
+      eureka.client.fetchRegistry: "true"
       eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
   #EUREKA-CLIENT FAVORITE SERVICE
   springboot-favoriteservice:
@@ -81,6 +87,9 @@ services:
     expose:
       - 8080
     environment:
+      eureka.instance.preferIpAddress: "true"
+      eureka.client.registerWithEureka: "true"
+      eureka.client.fetchRegistry: "true"
       eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
   #EUREKA-CLIENT SEARCH SERVICE
   springboot-searchservice:
@@ -95,6 +104,9 @@ services:
     expose:
       - 8082
     environment:
+      eureka.instance.preferIpAddress: "true"
+      eureka.client.registerWithEureka: "true"
+      eureka.client.fetchRegistry: "true"
       eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
   #EUREKA-CLIENT RECOMMENDED SERVICE
   springboot-recommendedservice:
@@ -109,6 +121,9 @@ services:
     expose:
       - 9095
     environment:
+      eureka.instance.preferIpAddress: "true"
+      eureka.client.registerWithEureka: "true"
+      eureka.client.fetchRegistry: "true"
       eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
 volumes:
   mongodbdata:

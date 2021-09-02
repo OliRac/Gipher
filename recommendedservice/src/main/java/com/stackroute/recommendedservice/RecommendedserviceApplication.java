@@ -9,7 +9,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableRabbit
 @EnableCaching
 @SpringBootApplication
-//@EnableEurekaClient
+@EnableEurekaClient
 public class RecommendedserviceApplication {
 
 	public static void main(String[] args) {
