@@ -16,7 +16,7 @@ import { SharedfavoriteslistService } from '../services/sharedfavoriteslist.serv
 export class FavoritesComponent implements OnInit {
   @Input() 
   favorites : string[];
-  title: string;
+  title: string = "Favorites";
 
   constructor(private favoriteService : FavoriteService, 
               private userService : UserService,
@@ -26,9 +26,6 @@ export class FavoritesComponent implements OnInit {
     if(this.sharedFavoritesList.isEmpty) {
       this.favoriteService.getAllFavorites(this.userService.getUserSession()).subscribe(data => {
         this.sharedFavoritesList.favorites = parseTenorResponseForGifs(data, true);
-        this.title="Favorites";
-      }, error => {
-        this.title = "No favorites";
       });
     }
   }
