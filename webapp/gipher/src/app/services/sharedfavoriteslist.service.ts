@@ -26,11 +26,15 @@ export class SharedfavoriteslistService {
   }
 
   addToFavorites(gif:Gif): void {
+    gif.favorite=true;
     this.favoritesList.push(gif);
+    console.log(gif)
   }
 
   removeFromFavorites(gif: Gif): void {
+    gif.favorite=false;
     this.favoritesList = this.favorites.filter(elem => elem.id !== gif.id);
+    console.log(gif)
   }
 
   resetFavorites(): void {

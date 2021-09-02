@@ -5,8 +5,10 @@
 }
 
 .gif-image {
-  width: 400px;
-  height: 400px;
+  border-radius: 0.5rem;
+  display: block;
+  width:100%;
+  max-width: 500px;
 }
 
 .overlay {
@@ -19,13 +21,6 @@
 
 .overlay {
     opacity: 1;
-}
-
-img {
-    border-radius: 0.5rem;
-    display: block;
-    max-width: 80%;
-    max-height: 80%;
 }
 
 .close {

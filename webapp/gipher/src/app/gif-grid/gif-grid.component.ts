@@ -42,31 +42,44 @@ export class GifGridComponent implements OnInit {
 
   /* On click, if its a favorite remove it and vice versa */
   onClickFavorite(gif: Gif): void {
-    if (gif.favorite==true) {
-      this.favoriteService.removeFavorite(this.userService.getUserSession(), gif.id).subscribe(data => { 
-        gif.favorite = false;
-        this.sharedFavoritesList.removeFromFavorites(gif);
-      }) 
-    } else {
-      this.favoriteService.addFavorite(this.userService.getUserSession(), gif.id).subscribe(data => { 
-          gif.favorite = true;
-          this.sharedFavoritesList.addToFavorites(gif);
-      })
-    } 
+    let user = this.userService.getUserSession();
+
+    if(user){
+      if (gif.favorite==true) {
+        gif.favorite=false
+        this.favoriteService.removeFavorite(user, gif.id).subscribe(data => { 
+          this.sharedFavoritesList.removeFromFavorites(gif);
+        }) 
+      } else {
+        gif.favorite=true
+        this.favoriteService.addFavorite(user, gif.id).subscribe(data => { 
+            this.sharedFavoritesList.addToFavorites(gif);
+        })
+      } 
+    }
+  }
+
+  OnClearFavorite(): void{
+    this.favoriteService.emptyFavoriteList(this.userService.getUserSession()).subscribe(data => { 
+      this.sharedFavoritesList.resetFavorites();
+    }) 
   }
 
   openDialog(gif: Gif) {
+    let multiplier = 1.5;
     const dialogRef = this.dialog.open(GifModalComponent, {
-      data: {gif: gif},
-      height: '450px',
-      width: '450px',
+      data: {gif: gif}
     });
   }
 
   markAsFavorite( gifUrl : string){
-    this.favoriteService.checkifFavorite(this.userService.getUserSession(), gifUrl).subscribe(
-      (data)=>{ this.gifASFavorite = data},
-      (error : any)=>{ this.gifASFavorite= false}
-    )
+    let user = this.userService.getUserSession();
+
+    if(user) {
+      this.favoriteService.checkifFavorite(user, gifUrl).subscribe(
+        (data)=>{ this.gifASFavorite = data},
+        (error : any)=>{ this.gifASFavorite= false}
+      )
+    }
   }
 }
