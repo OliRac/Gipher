@@ -45,12 +45,10 @@ export class GifGridComponent implements OnInit {
   }
 
   onClickFavorite(gif: Gif): void {
-    let favoriteStr:string[] = [];
 
     if (gif.favorite==true) {
       this.favoriteService.removeFavorite(this.userService.getUserSession(), gif.id).subscribe(
             (data)=>{ 
-              favoriteStr = data
               console.log("removed as favorite")
               console.log( data)
               gif.favorite = false;
@@ -61,7 +59,6 @@ export class GifGridComponent implements OnInit {
     } else {
     this.favoriteService.addFavorite(this.userService.getUserSession(), gif.id).subscribe(
                   (data)=>{ 
-                    favoriteStr = data.favoriteList
                     console.log("added as favorite")
                     console.log(data)
                     console.log( data.favoriteList)

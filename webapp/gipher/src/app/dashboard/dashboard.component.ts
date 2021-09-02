@@ -52,6 +52,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.recommendationService.getTrending().subscribe((data) => {
       this.gifData = parseTenorResponseForGifs(data);
     });
