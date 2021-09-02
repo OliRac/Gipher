@@ -1013,3 +1013,47 @@ Caused by: java.net.UnknownHostException: mongodbservice
 2021-09-02 11:37:58.727  INFO 20632 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_SEARCHSERVICE/CA-LBDT18C3.groupinfra.com:searchservice:8082 - deregister  status: 200
 2021-09-02 11:37:58.731  INFO 20632 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
 2021-09-02 11:45:54.522  INFO 31828 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+2021-09-02 13:56:16.964  INFO 23156 --- [main] c.s.s.SearchserviceApplicationTests      : Starting SearchserviceApplicationTests using Java 11.0.11 on CA-LBDT18C3 with PID 23156 (started by julieamanda.tchouand in C:\Users\julieamanda.tchouand\Documents\capstoneProject\gipher\searchservice)
+2021-09-02 13:56:16.965  INFO 23156 --- [main] c.s.s.SearchserviceApplicationTests      : No active profile set, falling back to default profiles: default
+2021-09-02 13:56:17.699  INFO 23156 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-09-02 13:56:17.769  INFO 23156 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 65 ms. Found 1 MongoDB repository interfaces.
+2021-09-02 13:56:18.030  INFO 23156 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=4319529b-5d8e-3cfc-86f5-919916439f02
+2021-09-02 13:56:18.190  INFO 23156 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-09-02 13:56:18.192  INFO 23156 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-09-02 13:56:18.196  INFO 23156 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'reactorDeferringLoadBalancerExchangeFilterFunction' of type [org.springframework.cloud.client.loadbalancer.reactive.DeferringLoadBalancerExchangeFilterFunction] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-09-02 13:56:19.000  INFO 23156 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[mongodbservice:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-09-02 13:56:19.126  WARN 23156 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-09-02 13:56:19.265  WARN 23156 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-09-02 13:56:19.916  INFO 23156 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-09-02 13:56:21.166  INFO 23156 --- [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2021-09-02 13:56:22.722  WARN 23156 --- [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2021-09-02 13:56:22.751  INFO 23156 --- [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2021-09-02 13:56:22.832  INFO 23156 --- [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2021-09-02 13:56:22.840  INFO 23156 --- [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-09-02 13:56:22.876  INFO 23156 --- [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2021-09-02 13:56:22.876  INFO 23156 --- [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2021-09-02 13:56:22.877  INFO 23156 --- [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2021-09-02 13:56:22.877  INFO 23156 --- [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2021-09-02 13:56:22.877  INFO 23156 --- [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2021-09-02 13:56:22.877  INFO 23156 --- [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2021-09-02 13:56:22.877  INFO 23156 --- [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2021-09-02 13:56:23.205  INFO 23156 --- [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2021-09-02 13:56:23.208  INFO 23156 --- [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2021-09-02 13:56:23.210  INFO 23156 --- [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2021-09-02 13:56:23.215  INFO 23156 --- [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1630605383214 with initial instances count: 3
+2021-09-02 13:56:23.220  INFO 23156 --- [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application SEARCHSERVICE with eureka with status UP
+2021-09-02 13:56:23.221  INFO 23156 --- [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1630605383221, current=UP, previous=STARTING]
+2021-09-02 13:56:23.223  INFO 23156 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_SEARCHSERVICE/CA-LBDT18C3.groupinfra.com:searchservice:8082: registering service...
+2021-09-02 13:56:23.236  INFO 23156 --- [main] c.s.s.SearchserviceApplicationTests      : Started SearchserviceApplicationTests in 7.421 seconds (JVM running for 10.139)
+2021-09-02 13:56:23.266  INFO 23156 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_SEARCHSERVICE/CA-LBDT18C3.groupinfra.com:searchservice:8082 - registration status: 204
+2021-09-02 13:56:23.360  INFO 23156 --- [main] c.s.s.service.SearchEngineServiceImpl    : searchstring url:   https://g.tenor.com/v1/search?q=b&key=null&limit=9
+2021-09-02 13:56:23.360  INFO 23156 --- [main] c.s.s.service.SearchEngineServiceImpl    : User id : -1
+2021-09-02 13:56:23.381  INFO 23156 --- [SpringContextShutdownHook] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application SEARCHSERVICE with eureka with status DOWN
+2021-09-02 13:56:23.381  INFO 23156 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1630605383381, current=DOWN, previous=UP]
+2021-09-02 13:56:23.381  INFO 23156 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_SEARCHSERVICE/CA-LBDT18C3.groupinfra.com:searchservice:8082: registering service...
+2021-09-02 13:56:23.389  INFO 23156 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_SEARCHSERVICE/CA-LBDT18C3.groupinfra.com:searchservice:8082 - registration status: 204
+2021-09-02 13:56:23.420  INFO 23156 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-09-02 13:56:23.427  INFO 23156 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2021-09-02 13:56:26.431  INFO 23156 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2021-09-02 13:56:26.436  INFO 23156 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_SEARCHSERVICE/CA-LBDT18C3.groupinfra.com:searchservice:8082 - deregister  status: 200
+2021-09-02 13:56:26.441  INFO 23156 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient

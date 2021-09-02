@@ -6,6 +6,10 @@ import { parseTenorResponseForGifs } from '../util/tenorResponse.parser';
 import { RecommendationService } from '../services/recommendation.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/User';
+import {FavoriteService} from '../services/favorite.service';
+import { SharedfavoriteslistService } from '../services/sharedfavoriteslist.service';
+
+
 
 
 @Component({
@@ -20,7 +24,9 @@ export class DashboardComponent implements OnInit {
   /*For passing a click event from sibling to sibling components*/
   clickedEvent: Event;
   
-  constructor( private userService: UserService, private router: Router) {
+  constructor( private userService: UserService, private router: Router,
+                private favoriteService : FavoriteService, 
+                private sharedFavoritesList: SharedfavoriteslistService,) {
 
   }
 
@@ -37,5 +43,11 @@ export class DashboardComponent implements OnInit {
   /*For passing a click event from sibling to sibling components*/
   validSearchDone(event:Event) {
     this.clickedEvent = event;
+  }
+
+  OnClearFavorite(): void{
+    this.favoriteService.emptyFavoriteList(this.userService.getUserSession()).subscribe(data => { 
+      this.sharedFavoritesList.resetFavorites();
+    }) 
   }
 }
