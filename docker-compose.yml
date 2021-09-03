@@ -125,6 +125,13 @@ services:
       eureka.client.registerWithEureka: "true"
       eureka.client.fetchRegistry: "true"
       eureka.client.serviceUrl.defaultZone: http://springboot-eureka-server:8761/eureka
+  angular-gipher-frontend:
+    build: ./webapp/gipher
+    ports:
+      - 4200:4200
+    volumes:
+      - "/webapp/gipher/app/node_modules"
+      - ".:/webapp/gipher/app"
 volumes:
   mongodbdata:
   userservice-mysql-data:
