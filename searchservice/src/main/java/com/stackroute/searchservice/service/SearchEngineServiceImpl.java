@@ -34,7 +34,7 @@ public class SearchEngineServiceImpl implements SearchEngineService{
     private RestTemplate restTemplate;
 
     private final String URL = "https://g.tenor.com/v1/search?q=";
-    private final String LIMIT = "&limit=9";
+    private final String LIMIT = "&limit=36";
 
     @Value("${api.key:test}")
     private String apiKey;
