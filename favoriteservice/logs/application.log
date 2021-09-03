@@ -1262,3 +1262,60 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at org.springframework.context.support.AbstractApplicationContext$1.run(AbstractApplicationContext.java:996) ~[spring-context-5.3.2.jar:5.3.2]
 
 2021-09-03 09:06:47.401  INFO 11588 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+2021-09-03 12:29:26.189  INFO 21448 --- [main] c.t.f.FavoriteserviceApplicationTests    : Starting FavoriteserviceApplicationTests using Java 11.0.11 on CA-LBJ4WMQ2 with PID 21448 (started by leo.silao in C:\Users\leo.silao\Desktop\Gipher\favoriteservice)
+2021-09-03 12:29:26.192  INFO 21448 --- [main] c.t.f.FavoriteserviceApplicationTests    : No active profile set, falling back to default profiles: default
+2021-09-03 12:29:28.783  INFO 21448 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-09-03 12:29:29.070  INFO 21448 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 277 ms. Found 1 MongoDB repository interfaces.
+2021-09-03 12:29:29.973  INFO 21448 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=6e53bbe4-b98d-3193-a464-b8b4f86b4677
+2021-09-03 12:29:31.859  INFO 21448 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27019], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-09-03 12:29:31.969  INFO 21448 --- [cluster-ClusterId{value='61324d6be95d6443c7745821', description='null'}-localhost:27019] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server localhost:27019
+
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:112) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:131) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:648) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessageWithAdditionalTimeout(InternalStreamConnection.java:513) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:356) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:280) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.CommandHelper.sendAndReceive(CommandHelper.java:83) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.CommandHelper.executeCommand(CommandHelper.java:33) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.initializeConnectionDescription(InternalStreamConnectionInitializer.java:107) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnectionInitializer.initialize(InternalStreamConnectionInitializer.java:62) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:144) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:188) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:144) ~[mongodb-driver-core-4.1.1.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:829) ~[na:na]
+
+2021-09-03 12:29:32.128  WARN 21448 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-09-03 12:29:32.430  WARN 21448 --- [main] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-09-03 12:29:33.583  INFO 21448 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-09-03 12:29:36.067  INFO 21448 --- [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2021-09-03 12:29:38.020  WARN 21448 --- [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2021-09-03 12:29:38.180  INFO 21448 --- [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2021-09-03 12:29:38.464  INFO 21448 --- [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2021-09-03 12:29:38.481  INFO 21448 --- [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-09-03 12:29:38.568  INFO 21448 --- [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2021-09-03 12:29:38.569  INFO 21448 --- [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2021-09-03 12:29:38.570  INFO 21448 --- [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2021-09-03 12:29:38.570  INFO 21448 --- [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2021-09-03 12:29:38.571  INFO 21448 --- [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2021-09-03 12:29:38.571  INFO 21448 --- [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2021-09-03 12:29:38.571  INFO 21448 --- [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2021-09-03 12:29:39.186  INFO 21448 --- [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2021-09-03 12:29:39.191  INFO 21448 --- [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2021-09-03 12:29:39.195  INFO 21448 --- [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2021-09-03 12:29:39.202  INFO 21448 --- [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1630686579201 with initial instances count: 5
+2021-09-03 12:29:39.213  INFO 21448 --- [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application FAVORITE-SERVICE with eureka with status UP
+2021-09-03 12:29:39.216  INFO 21448 --- [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1630686579216, current=UP, previous=STARTING]
+2021-09-03 12:29:39.221  INFO 21448 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_FAVORITE-SERVICE/CA-LBJ4WMQ2.groupinfra.com:favorite-service:8080: registering service...
+2021-09-03 12:29:39.250  INFO 21448 --- [main] c.t.f.FavoriteserviceApplicationTests    : Started FavoriteserviceApplicationTests in 15.596 seconds (JVM running for 22.466)
+2021-09-03 12:29:39.303  INFO 21448 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_FAVORITE-SERVICE/CA-LBJ4WMQ2.groupinfra.com:favorite-service:8080 - registration status: 204
+2021-09-03 12:29:39.503  INFO 21448 --- [SpringContextShutdownHook] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application FAVORITE-SERVICE with eureka with status DOWN
+2021-09-03 12:29:39.504  INFO 21448 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1630686579504, current=DOWN, previous=UP]
+2021-09-03 12:29:39.505  INFO 21448 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_FAVORITE-SERVICE/CA-LBJ4WMQ2.groupinfra.com:favorite-service:8080: registering service...
+2021-09-03 12:29:39.522  INFO 21448 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-09-03 12:29:39.534  INFO 21448 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_FAVORITE-SERVICE/CA-LBJ4WMQ2.groupinfra.com:favorite-service:8080 - registration status: 204
+2021-09-03 12:29:39.543  INFO 21448 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2021-09-03 12:29:42.547  INFO 21448 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2021-09-03 12:29:42.559  INFO 21448 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_FAVORITE-SERVICE/CA-LBJ4WMQ2.groupinfra.com:favorite-service:8080 - deregister  status: 200
+2021-09-03 12:29:42.566  INFO 21448 --- [SpringContextShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient

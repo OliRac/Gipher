@@ -11,14 +11,32 @@ services:
     expose:
       - 5673
       - 15673
-  #MONGODB SERVICE
-  mongodbservice:
+  #MONGODB SEARCH SERVICE
+  mongodbsearchservice:
     image: mongo:latest
-    container_name: mongodbservice
-    volumes:
-      - mongodbdata:/data/db
+    container_name: mongodbsearchservice
     ports:
       - 27017:27017
+    volumes:
+      - mongodbsearchdata:/data/db
+  #MONGODB RECOMMENDED SERVICE
+  mongodbrecommendedservice:
+    image: mongo:latest
+    container_name: mongodbrecommendedservice
+    command: mongod --port 27018
+    ports:
+      - 27018:27017
+    volumes:
+      - mongodbrecommendeddata:/data/db
+  #MONGODB FAVORITE SERVICE
+  mongodbfavoriteservice:
+    image: mongo:latest
+    container_name: mongodbfavoriteservice
+    command: mongod --port 27019
+    ports:
+      - 27019:27017
+    volumes:
+      - mongodbfavoritedata:/data/db
   #MYSQL SERVICE
   userservicedb:
     image: mysql:8.0
@@ -82,13 +100,13 @@ services:
     container_name: favoriteservice
     depends_on:
       - springboot-eureka-server
-      - mongodbservice
+      - mongodbfavoriteservice
     ports:
       - 8080:8080
     expose:
       - 8080
     environment:
-      spring.data.mongodb.host: mongodbservice
+      spring.data.mongodb.host: mongodbfavoriteservice
       eureka.instance.preferIpAddress: "true"
       eureka.client.registerWithEureka: "true"
       eureka.client.fetchRegistry: "true"
@@ -99,14 +117,14 @@ services:
     container_name: searchservice
     depends_on:
       - springboot-eureka-server
-      - mongodbservice
+      - mongodbsearchservice
       - rabbitmqservice
     ports:
       - 8082:8082
     expose:
       - 8082
     environment:
-      spring.data.mongodb.host: mongodbservice
+      spring.data.mongodb.host: mongodbsearchservice
       eureka.instance.preferIpAddress: "true"
       eureka.client.registerWithEureka: "true"
       eureka.client.fetchRegistry: "true"
@@ -117,14 +135,14 @@ services:
     container_name: recommendedservice
     depends_on:
       - springboot-eureka-server
-      - mongodbservice
+      - mongodbrecommendedservice
       - rabbitmqservice
     ports:
       - 9095:9095
     expose:
       - 9095
     environment:
-      spring.data.mongodb.host: mongodbservice
+      spring.data.mongodb.host: mongodbrecommendedservice
       eureka.instance.preferIpAddress: "true"
       eureka.client.registerWithEureka: "true"
       eureka.client.fetchRegistry: "true"
@@ -138,5 +156,7 @@ services:
       - "/webapp/gipher/app/node_modules"
       - ".:/webapp/gipher/app"
 volumes:
-  mongodbdata:
+  mongodbrecommendeddata:
+  mongodbsearchdata:
+  mongodbfavoritedata:
   userservice-mysql-data:
