@@ -12,9 +12,7 @@ export class SharedfavoriteslistService {
   private favoritesList: Gif[];
 
   constructor() { 
-    if(!this.favoritesList) {
-      this.favoritesList = [];
-    }
+    this.favoritesList = [];
   }
 
   get favorites() {
@@ -28,13 +26,11 @@ export class SharedfavoriteslistService {
   addToFavorites(gif:Gif): void {
     gif.favorite=true;
     this.favoritesList.push(gif);
-    console.log(gif)
   }
 
   removeFromFavorites(gif: Gif): void {
     gif.favorite=false;
     this.favoritesList = this.favorites.filter(elem => elem.id !== gif.id);
-    console.log(gif)
   }
 
   resetFavorites(): void {

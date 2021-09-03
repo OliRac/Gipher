@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
 
   onClickLogOut(): void {
     sessionStorage.clear();
+    this.sharedFavoritesList.resetFavorites();
     this.router.navigate(['/landing']);
   }
 
