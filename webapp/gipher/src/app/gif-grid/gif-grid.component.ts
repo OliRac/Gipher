@@ -24,7 +24,7 @@ export class GifGridComponent implements OnInit {
               private sharedFavoritesList: SharedfavoriteslistService,
               private userService : UserService,  
               public dialog: MatDialog)  { 
-
+    this.gifs = [];
   }
 
   ngOnInit(): void {
